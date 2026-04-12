@@ -18,7 +18,7 @@
   --r:8px;--r2:12px
 }
 body{font-family:'Segoe UI',-apple-system,sans-serif;background:var(--bg);color:var(--tx);font-size:14px;line-height:1.5;min-height:100vh}
-#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#0f172a}
+#login-screen{display:none}
 .lbox{background:#fff;border-radius:20px;padding:40px;width:340px}
 .llg{text-align:center;margin-bottom:26px}
 .llg h1{font-size:18px;font-weight:900;color:#0f172a;margin-bottom:3px}
@@ -135,7 +135,7 @@ tbody tr:last-child td{border-bottom:none}
 <body>
 
 <!-- 로그인 -->
-<div id="login-screen">
+<div id="login-screen" style="display:none">
   <div class="lbox">
     <div class="llg">
       <div style="width:52px;height:52px;background:#0f172a;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:24px">📊</div>
@@ -159,7 +159,7 @@ tbody tr:last-child td{border-bottom:none}
 </div>
 
 <!-- 앱 본체 -->
-<div class="app" id="erp" style="display:none">
+<div class="app" id="erp" style="display:flex">
 <div class="sidebar">
   <div class="slogo">
     <h1>거래관리시스템</h1>
@@ -944,7 +944,10 @@ function handleImp(ev){
 // ═══ MODAL ═══
 function openM(sz,title,body,footer){document.getElementById('mc').innerHTML=`<div class="moverlay" onclick="if(event.target===this)closeM()"><div class="modal ${sz}"><div class="mh"><span class="mt2">${title}</span><button class="xbtn" onclick="closeM()">×</button></div><div class="mb2">${body}</div>${footer?`<div class="mf">${footer}</div>`:''}</div></div>`;}
 function closeM(){document.getElementById('mc').innerHTML='';}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeM();});
+
+// 자동 시작
+ldDB();seed();go("dash");chkAlerts();
 </script>
 </body>
 </html>
