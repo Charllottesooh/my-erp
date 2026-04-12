@@ -430,7 +430,7 @@ function rDash(){
   ${!isHttps?`<div class="abl a-og no-print" style="margin-bottom:13px">⚠ 현재 로컬 파일(file://)로 실행 중입니다. Google Sheets 자동동기화는 <b>https://</b> 환경(GitHub Pages)에서만 작동합니다. 엑셀 수동백업은 정상 작동합니다.</div>`:'<div class="abl a-gn no-print" style="margin-bottom:13px"><span class="online-badge"><span class="online-dot"></span>온라인 모드</span>&nbsp; Google Sheets 자동동기화 사용 가능합니다.</div>'}
   <div class="sgrid">
     <div class="sc"><div class="sl">거래처</div><div class="sv bl">${DB.partners.length}개</div><div class="sdiff">경고 ${over}개</div></div>
-    <div class="sc"><div class="sl">기간 매출</div><div class="sv">${fmt(sales)}<span style="font-size:10px;color:var(--mu)">원</span></div><div class="sdiff">${fT.length}건</div></div>
+    <div class="sc"><div class="sl">기간 매입</div><div class="sv">${fmt(sales)}<span style="font-size:10px;color:var(--mu)">원</span></div><div class="sdiff">${fT.length}건</div></div>
     <div class="sc"><div class="sl">기간 지급</div><div class="sv gn">${fmt(paid)}<span style="font-size:10px;color:var(--mu)">원</span></div><div class="sdiff">${fP.length}건</div></div>
     <div class="sc"><div class="sl">총 미수금</div><div class="sv rd">${fmt(recv)}<span style="font-size:10px;color:var(--mu)">원</span></div><div class="sdiff">전체기간</div></div>
   </div>
@@ -446,7 +446,7 @@ function rDash(){
       </table></div></div>
   </div>
   <div class="card mt16"><div class="ch"><span class="ct">거래처별 미수금</span></div>
-    <div class="tw"><table><thead><tr><th>거래처</th><th>담당자</th><th class="tr">기초미수금</th><th class="tr">매출합계</th><th class="tr">지급합계</th><th class="tr">현재미수금</th><th class="no-print"></th></tr></thead>
+    <div class="tw"><table><thead><tr><th>거래처</th><th>담당자</th><th class="tr">기초미수금</th><th class="tr">매입합계</th><th class="tr">지급합계</th><th class="tr">현재미수금</th><th class="no-print"></th></tr></thead>
     <tbody>${DB.partners.map(p=>{const s=DB.transactions.filter(t=>t.partner_id===p.id).reduce((a,t)=>a+t.grand_total,0);const pd=DB.payments.filter(py=>py.partner_id===p.id).reduce((a,py)=>a+py.amount,0);const b=getBal(p.id);const thr=DB.settings.thr;return`<tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go('pdetail','${p.id}')">${p.name}</b></td><td>${p.contact||'-'}</td><td class="tr">${fmt(p.initial_receivable||0)}</td><td class="tr">${fmt(s)}</td><td class="tr tmuted">${fmt(pd)}</td><td class="tr"><b style="color:${b>thr?'var(--err)':b>0?'var(--wrn)':'var(--ok)'}">${fmt(b)}</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go('pdetail','${p.id}')">상세</button></td></tr>`;}).join('')}</tbody>
     </table></div></div>`;
 }
@@ -504,11 +504,11 @@ function rPDetail(pid){
       <div class="flex gap6 no-print"><button class="btn bs" style="font-size:11px" onclick="showPM('${pid}')">✏ 수정</button><button class="btn bs" style="font-size:11px;color:var(--pri)" onclick="showStmt('${pid}')">📄 명세서</button></div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px">
-      ${[['기초미수금',fmt(p.initial_receivable||0)+'원',''],['총 매출',fmt(sales)+'원',''],['총 지급',fmt(paid)+'원',''],['현재미수금',fmt(bal)+'원',bal>thr?'#fca5a5':bal>0?'#fcd34d':'#86efac']].map(([l,v,c])=>`<div style="background:rgba(255,255,255,.1);border-radius:6px;padding:10px;text-align:center"><div style="font-size:14px;font-weight:800${c?';color:'+c:''}">${v}</div><div style="font-size:10px;opacity:.7;margin-top:2px">${l}</div></div>`).join('')}
+      ${[['기초미수금',fmt(p.initial_receivable||0)+'원',''],['총 매입',fmt(sales)+'원',''],['총 지급',fmt(paid)+'원',''],['현재미수금',fmt(bal)+'원',bal>thr?'#fca5a5':bal>0?'#fcd34d':'#86efac']].map(([l,v,c])=>`<div style="background:rgba(255,255,255,.1);border-radius:6px;padding:10px;text-align:center"><div style="font-size:14px;font-weight:800${c?';color:'+c:''}">${v}</div><div style="font-size:10px;opacity:.7;margin-top:2px">${l}</div></div>`).join('')}
     </div>
   </div>
   <div class="card" style="margin-bottom:14px"><div class="ch"><span class="ct">월별 추이 (최근 6개월)</span></div><div class="cb">
-    <div class="flex gap12" style="margin-bottom:8px;font-size:11px;color:var(--mu)"><span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#1a56db"></span>매출</span><span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#0d9f6e"></span>지급</span></div>
+    <div class="flex gap12" style="margin-bottom:8px;font-size:11px;color:var(--mu)"><span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#1a56db"></span>매입</span><span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#0d9f6e"></span>지급</span></div>
     <div style="position:relative;width:100%;height:180px"><canvas id="pd-chart" role="img" aria-label="월별 추이 차트">월별 매출 지급 추이</canvas></div>
   </div></div>
   <div class="tabs">
@@ -530,7 +530,7 @@ function rPDetail(pid){
     ${(()=>{const imap={};allTx.forEach(t=>t.items.forEach(i=>{if(!imap[i.name])imap[i.name]={qty:0,rev:0,cnt:0,prices:[]};imap[i.name].qty+=i.qty;imap[i.name].rev+=i.total;imap[i.name].cnt++;imap[i.name].prices.push(i.price);}));const items=Object.entries(imap).sort((a,b)=>b[1].rev-a[1].rev);const total=items.reduce((s,[,v])=>s+v.rev,0);return items.length?items.map(([name,v])=>{const pct=total>0?Math.round(v.rev/total*100):0;const avg=Math.round(v.prices.reduce((s,p)=>s+p,0)/v.prices.length);return`<div style="margin-bottom:14px"><div class="flex jb aic" style="margin-bottom:5px"><span style="font-weight:700;font-size:12px">${name}</span><span class="tsm tmuted">${pct}% · 평균단가 ${fmt(avg)}원</span></div><div class="progress-bar" style="margin-bottom:5px"><div class="progress-fill" style="width:${pct}%"></div></div><div class="flex gap8 tsm tmuted"><span>수량: <b style="color:var(--tx)">${fmt(v.qty)}</b></span><span>매출: <b style="color:var(--tx)">${fmt(v.rev)}원</b></span><span>${v.cnt}건</span></div></div>`;}).join(''):'<p class="tc tmuted" style="padding:20px 0">품목 없음</p>';})()}
   </div></div></div>
   <script>
-  (function(){if(!window.Chart)return;const ml=${JSON.stringify(ml)};const md=${JSON.stringify(months)};const ctx=document.getElementById('pd-chart');if(!ctx)return;new Chart(ctx,{type:'bar',data:{labels:ml,datasets:[{label:'매출',data:ml.map(m=>md[m]?md[m].s:0),backgroundColor:'#1a56db',borderRadius:3},{label:'지급',data:ml.map(m=>md[m]?md[m].p:0),backgroundColor:'#0d9f6e',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:10}}},y:{ticks:{callback:v=>Math.round(v/10000)+'만',font:{size:10}}}}}});})();
+  (function(){if(!window.Chart)return;const ml=${JSON.stringify(ml)};const md=${JSON.stringify(months)};const ctx=document.getElementById('pd-chart');if(!ctx)return;new Chart(ctx,{type:'bar',data:{labels:ml,datasets:[{label:'매입',data:ml.map(m=>md[m]?md[m].s:0),backgroundColor:'#1a56db',borderRadius:3},{label:'지급',data:ml.map(m=>md[m]?md[m].p:0),backgroundColor:'#0d9f6e',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:10}}},y:{ticks:{callback:v=>Math.round(v/10000)+'만',font:{size:10}}}}}});})();
   <\/script>`;
 }
 function sTab(ev,...ids){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));ev.target.classList.add('active');ids.forEach((id,i)=>{const el=document.getElementById(id);if(el)el.style.display=i===0?'':'none';});}
@@ -637,7 +637,7 @@ function delPay(id){if(!confirm('지급내역을 삭제하시겠습니까?'))ret
 function rRecv(){
   const sorted=[...DB.partners].map(p=>({...p,bal:getBal(p.id)})).sort((a,b)=>b.bal-a.bal);
   return`<div class="card"><div class="ch"><span class="ct">거래처별 미수금 현황</span></div>
-    <div class="tw"><table><thead><tr><th>거래처</th><th>담당자</th><th class="tr">기초미수금</th><th class="tr">총 매출</th><th class="tr">총 지급</th><th class="tr">현재미수금</th><th>상태</th><th class="no-print"></th></tr></thead>
+    <div class="tw"><table><thead><tr><th>거래처</th><th>담당자</th><th class="tr">기초미수금</th><th class="tr">총 매입</th><th class="tr">총 지급</th><th class="tr">현재미수금</th><th>상태</th><th class="no-print"></th></tr></thead>
     <tbody>${sorted.map(p=>{const s=DB.transactions.filter(t=>t.partner_id===p.id).reduce((a,t)=>a+t.grand_total,0);const pd=DB.payments.filter(py=>py.partner_id===p.id).reduce((a,py)=>a+py.amount,0);const thr=DB.settings.thr;return`<tr><td><b>${p.name}</b></td><td>${p.contact||'-'}</td><td class="tr">${fmt(p.initial_receivable||0)}</td><td class="tr">${fmt(s)}</td><td class="tr tmuted">${fmt(pd)}</td><td class="tr"><b style="font-size:13px;color:${p.bal>thr?'var(--err)':p.bal>0?'var(--wrn)':'var(--ok)'}">${fmt(p.bal)}</b></td><td>${p.bal>thr?'<span class="badge brd">경고</span>':p.bal>0?'<span class="badge bog">주의</span>':'<span class="badge bgn">정상</span>'}</td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go('pdetail','${p.id}')">상세</button></td></tr>`;}).join('')}
     </tbody>
     <tfoot style="background:#fff7ed"><tr><td colspan="2" style="padding:7px 10px;font-weight:700">합계</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(DB.partners.reduce((s,p)=>s+(p.initial_receivable||0),0))}</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(DB.transactions.reduce((s,t)=>s+t.grand_total,0))}</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(DB.payments.reduce((s,p)=>s+p.amount,0))}</td><td class="tr" style="padding:7px 10px;font-weight:700;color:var(--err)">${fmt(DB.partners.reduce((s,p)=>s+getBal(p.id),0))}</td><td colspan="2"></td></tr></tfoot>
@@ -648,11 +648,11 @@ function rRecv(){
 function rStats(){
   return`${rFBar()}
   <div class="g2 g22" style="margin-bottom:13px">
-    <div class="card"><div class="ch"><span class="ct">월별 매출/지급 추이</span></div><div class="cb">
-      <div class="flex gap12" style="margin-bottom:8px;font-size:11px;color:var(--mu)"><span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#1a56db"></span>매출</span><span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#0d9f6e"></span>지급</span></div>
+    <div class="card"><div class="ch"><span class="ct">월별 매입/지급 추이</span></div><div class="cb">
+      <div class="flex gap12" style="margin-bottom:8px;font-size:11px;color:var(--mu)"><span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#1a56db"></span>매입</span><span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#0d9f6e"></span>지급</span></div>
       <div style="position:relative;width:100%;height:220px"><canvas id="c1" role="img" aria-label="월별 추이">월별 추이</canvas></div>
     </div></div>
-    <div class="card"><div class="ch"><span class="ct">거래처별 매출 비중</span></div><div class="cb">
+    <div class="card"><div class="ch"><span class="ct">거래처별 매입 비중</span></div><div class="cb">
       <div id="leg1" style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:7px;font-size:11px;color:var(--mu)"></div>
       <div style="position:relative;width:100%;height:190px"><canvas id="c2" role="img" aria-label="거래처별 도넛">거래처별</canvas></div>
     </div></div>
@@ -662,7 +662,7 @@ function rStats(){
       <div id="leg2" style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:7px;font-size:11px;color:var(--mu)"></div>
       <div style="position:relative;width:100%;height:190px"><canvas id="c3" role="img" aria-label="지급방법">지급방법</canvas></div>
     </div></div>
-    <div class="card"><div class="ch"><span class="ct">품목별 매출 TOP 8</span></div><div class="cb">
+    <div class="card"><div class="ch"><span class="ct">품목별 매입 TOP 8</span></div><div class="cb">
       <div style="position:relative;width:100%;height:260px"><canvas id="c4" role="img" aria-label="품목별 순위">품목 순위</canvas></div>
     </div></div>
   </div>`;
@@ -671,7 +671,7 @@ function bCharts(){
   const fT=flP(DB.transactions);const fP=flP(DB.payments);
   const M={};fT.forEach(t=>{const m=t.date.slice(0,7);if(!M[m])M[m]={s:0,p:0};M[m].s+=t.grand_total;});fP.forEach(p=>{const m=p.date.slice(0,7);if(!M[m])M[m]={s:0,p:0};M[m].p+=p.amount;});
   const ml=Object.keys(M).sort();
-  if(document.getElementById('c1'))CHARTS.push(new Chart(document.getElementById('c1'),{type:'bar',data:{labels:ml,datasets:[{label:'매출',data:ml.map(m=>M[m].s),backgroundColor:'#1a56db',borderRadius:3},{label:'지급',data:ml.map(m=>M[m].p),backgroundColor:'#0d9f6e',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{autoSkip:false,maxRotation:45,font:{size:10}}},y:{ticks:{callback:v=>Math.round(v/10000)+'만',font:{size:10}}}}}}));
+  if(document.getElementById('c1'))CHARTS.push(new Chart(document.getElementById('c1'),{type:'bar',data:{labels:ml,datasets:[{label:'매입',data:ml.map(m=>M[m].s),backgroundColor:'#1a56db',borderRadius:3},{label:'지급',data:ml.map(m=>M[m].p),backgroundColor:'#0d9f6e',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{autoSkip:false,maxRotation:45,font:{size:10}}},y:{ticks:{callback:v=>Math.round(v/10000)+'만',font:{size:10}}}}}}));
   const PS={};fT.forEach(t=>{if(!PS[t.partner_id])PS[t.partner_id]=0;PS[t.partner_id]+=t.grand_total;});const pids=Object.keys(PS);
   const leg1=document.getElementById('leg1');if(leg1)leg1.innerHTML=pids.map((pid,i)=>`<span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:${PC[i%PC.length]}"></span>${gPN(pid)}</span>`).join('');
   if(document.getElementById('c2')&&pids.length)CHARTS.push(new Chart(document.getElementById('c2'),{type:'doughnut',data:{labels:pids.map(pid=>gPN(pid)),datasets:[{data:pids.map(pid=>PS[pid]),backgroundColor:PC,borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${fmt(ctx.raw)}원`}}},cutout:'65%'}}));
@@ -679,27 +679,119 @@ function bCharts(){
   const leg2=document.getElementById('leg2');if(leg2)leg2.innerHTML=pym.map(m=>`<span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:${PyC[m]||'#888'}"></span>${PM[m]||m}</span>`).join('');
   if(document.getElementById('c3')&&pym.length)CHARTS.push(new Chart(document.getElementById('c3'),{type:'doughnut',data:{labels:pym.map(m=>PM[m]||m),datasets:[{data:pym.map(m=>PyS[m]),backgroundColor:pym.map(m=>PyC[m]||'#888'),borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${fmt(ctx.raw)}원`}}},cutout:'65%'}}));
   const IS={};fT.forEach(t=>t.items.forEach(i=>{if(!IS[i.name])IS[i.name]=0;IS[i.name]+=i.total;}));const iS=Object.entries(IS).sort((a,b)=>b[1]-a[1]).slice(0,8);
-  if(document.getElementById('c4')&&iS.length)CHARTS.push(new Chart(document.getElementById('c4'),{type:'bar',data:{labels:iS.map(x=>x[0]),datasets:[{label:'매출',data:iS.map(x=>x[1]),backgroundColor:'#1a56db',borderRadius:3}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>Math.round(v/10000)+'만',font:{size:10}}},y:{ticks:{font:{size:11}}}}}}));
+  if(document.getElementById('c4')&&iS.length)CHARTS.push(new Chart(document.getElementById('c4'),{type:'bar',data:{labels:iS.map(x=>x[0]),datasets:[{label:'매입',data:iS.map(x=>x[1]),backgroundColor:'#1a56db',borderRadius:3}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>Math.round(v/10000)+'만',font:{size:10}}},y:{ticks:{font:{size:11}}}}}}));
 }
 
 // ═══ ITEM STATS ═══
 function rIStat(){
   const pid=document.getElementById('is-pid')?document.getElementById('is-pid').value:'';
   const itemSel=document.getElementById('is-item')?document.getElementById('is-item').value:'';
+  const fT=flP(DB.transactions).filter(t=>!pid||t.partner_id===pid);
+
+  // 품목별 집계
+  const imap={};
+  fT.forEach(t=>t.items.forEach(i=>{
+    if(!imap[i.name])imap[i.name]={qty:0,rev:0,supply:0,tax:0,cnt:0,prices:[],rows:[]};
+    imap[i.name].qty+=i.qty;
+    imap[i.name].rev+=i.total;
+    imap[i.name].supply+=i.supply;
+    imap[i.name].tax+=i.tax;
+    imap[i.name].cnt++;
+    imap[i.name].prices.push(i.price);
+    imap[i.name].rows.push({date:t.date,partner:gPN(t.partner_id),qty:i.qty,price:i.price,supply:i.supply,tax:i.tax,total:i.total,tax_type:TAX[i.tax_type]||i.tax_type});
+  }));
+  const items=Object.entries(imap).sort((a,b)=>b[1].rev-a[1].rev);
+  const grandTotal=items.reduce((s,[,v])=>s+v.rev,0);
+
+  // 선택된 품목 상세 rows (날짜순)
+  const detailRows=itemSel&&imap[itemSel]?[...imap[itemSel].rows].sort((a,b)=>a.date.localeCompare(b.date)):[];
+
   return`${rFBar()}
   <div class="flex gap8 aic fw no-print" style="margin-bottom:13px">
     <div class="fg"><label class="fl">거래처</label><select class="fs" id="is-pid" onchange="rc()" style="width:auto"><option value="">전체</option>${DB.partners.map(p=>`<option value="${p.id}" ${pid===p.id?'selected':''}>${p.name}</option>`).join('')}</select></div>
-    <div class="fg"><label class="fl">품목 (추이 분석)</label><select class="fs" id="is-item" onchange="rc()" style="width:auto"><option value="">선택...</option>${(()=>{const all={};DB.transactions.forEach(t=>{if(!pid||t.partner_id===pid)t.items.forEach(i=>{all[i.name]=1;});});return Object.keys(all).sort().map(n=>`<option value="${n}" ${itemSel===n?'selected':''}>${n}</option>`).join('');})()}</select></div>
+    <div class="fg"><label class="fl">품목 선택 (단가이력 확인)</label><select class="fs" id="is-item" onchange="rc()" style="width:auto"><option value="">전체보기</option>${Object.keys(imap).sort().map(n=>`<option value="${n}" ${itemSel===n?'selected':''}>${n}</option>`).join('')}</select></div>
   </div>
-  <div class="g2 g22" style="margin-bottom:13px">
-    <div class="card"><div class="ch"><span class="ct">품목별 매출 통계</span></div><div class="cb">
-      ${(()=>{const fT=flP(DB.transactions).filter(t=>!pid||t.partner_id===pid);const imap={};fT.forEach(t=>t.items.forEach(i=>{if(!imap[i.name])imap[i.name]={qty:0,rev:0,cnt:0,avgP:[]};imap[i.name].qty+=i.qty;imap[i.name].rev+=i.total;imap[i.name].cnt++;imap[i.name].avgP.push(i.price);}));const items=Object.entries(imap).sort((a,b)=>b[1].rev-a[1].rev);const total=items.reduce((s,[,v])=>s+v.rev,0);return items.length?items.map(([name,v])=>{const pct=total>0?Math.round(v.rev/total*1000)/10:0;const avg=Math.round(v.avgP.reduce((s,p)=>s+p,0)/v.avgP.length);return`<div style="margin-bottom:14px"><div class="flex jb aic" style="margin-bottom:5px"><span style="font-weight:700;font-size:12px">${name}</span><span class="tsm tmuted">${pct}% · 평균단가 ${fmt(avg)}원</span></div><div class="progress-bar" style="margin-bottom:5px"><div class="progress-fill" style="width:${pct}%"></div></div><div class="flex gap8 tsm tmuted"><span>수량: <b style="color:var(--tx)">${fmt(v.qty)}</b></span><span>매출: <b style="color:var(--tx)">${fmt(v.rev)}원</b></span><span>${v.cnt}건</span></div></div>`;}).join(''):'<p class="tc tmuted" style="padding:20px 0">데이터 없음</p>';})()}
-    </div></div>
-    <div class="card"><div class="ch"><span class="ct">${itemSel?`"${itemSel}" 수량/단가 추이`:'품목 선택 시 추이 표시'}</span></div><div class="cb">
-      ${itemSel?`<div class="flex gap8" style="margin-bottom:8px;font-size:11px;color:var(--mu)"><span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#1a56db"></span>수량(좌)</span><span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#0d9f6e"></span>단가(우)</span></div><div style="position:relative;width:100%;height:200px"><canvas id="c-itrend" role="img" aria-label="추이">추이</canvas></div>`:'<p class="tc tmuted" style="padding:40px 0">위에서 품목을 선택하면<br>수량 및 단가 추이가 표시됩니다</p>'}
-    </div></div>
-  </div>`;
+
+  <!-- 차트 (품목 선택 시) -->
+  ${itemSel?`<div class="card" style="margin-bottom:13px"><div class="ch"><span class="ct">"${itemSel}" 수량/단가 추이</span></div><div class="cb">
+    <div class="flex gap8" style="margin-bottom:8px;font-size:11px;color:var(--mu)"><span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#1a56db"></span>수량(좌)</span><span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#0d9f6e"></span>단가(우)</span></div>
+    <div style="position:relative;width:100%;height:180px"><canvas id="c-itrend" role="img" aria-label="추이">추이</canvas></div>
+  </div></div>`:''}
+
+  <!-- 품목별 요약 카드 -->
+  <div class="card" style="margin-bottom:13px"><div class="ch"><span class="ct">품목별 매입 통계 요약</span><span class="tsm tmuted">${items.length}개 품목</span></div>
+  <div class="cb" style="padding-bottom:4px">
+    ${items.length?items.map(([name,v])=>{
+      const pct=grandTotal>0?Math.round(v.rev/grandTotal*1000)/10:0;
+      const avg=Math.round(v.prices.reduce((s,p)=>s+p,0)/v.prices.length);
+      const minP=Math.min(...v.prices);const maxP=Math.max(...v.prices);
+      return`<div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--bd);cursor:pointer" onclick="document.getElementById('is-item').value='${name}';rc()">
+        <div class="flex jb aic" style="margin-bottom:5px">
+          <span style="font-weight:700;font-size:12px;color:${itemSel===name?'var(--pri)':'var(--tx)'}">${name} ${itemSel===name?'▼':''}</span>
+          <span class="tsm tmuted">${pct}%</span>
+        </div>
+        <div class="progress-bar" style="margin-bottom:6px"><div class="progress-fill" style="width:${pct}%"></div></div>
+        <div style="display:flex;gap:14px;font-size:11px;flex-wrap:wrap">
+          <span style="color:var(--mu)">총수량: <b style="color:var(--tx)">${fmt(v.qty)}</b></span>
+          <span style="color:var(--mu)">공급가: <b style="color:var(--tx)">${fmt(v.supply)}원</b></span>
+          <span style="color:var(--mu)">세액: <b style="color:var(--tx)">${fmt(v.tax)}원</b></span>
+          <span style="color:var(--mu)">합계: <b style="color:var(--pri)">${fmt(v.rev)}원</b></span>
+          <span style="color:var(--mu)">평균단가: <b style="color:var(--tx)">${fmt(avg)}원</b></span>
+          ${minP!==maxP?`<span style="color:var(--wrn);font-weight:700">단가변동: ${fmt(minP)}~${fmt(maxP)}원</span>`:''}
+          <span style="color:var(--mu)">${v.cnt}건</span>
+        </div>
+      </div>`;
+    }).join(''):'<p class="tc tmuted" style="padding:20px 0">데이터 없음</p>'}
+  </div></div>
+
+  <!-- 날짜별 상세 리스트 -->
+  <div class="card"><div class="ch">
+    <span class="ct">${itemSel?`"${itemSel}" 날짜별 상세 내역`:'전체 거래 상세 내역'}</span>
+    <span class="tsm tmuted">${itemSel?detailRows.length+'건':(fT.flatMap(t=>t.items).length)+'건'}</span>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>날짜</th><th>거래처</th><th>품목명</th><th>부가세</th><th class="tr">수량</th><th class="tr">단가</th><th class="tr">공급가액</th><th class="tr">세액</th><th class="tr">합계</th></tr></thead>
+    <tbody>
+    ${(()=>{
+      let rows=[];
+      if(itemSel){
+        rows=detailRows;
+        return rows.map(r=>`<tr>
+          <td>${r.date}</td><td>${r.partner}</td><td><b>${itemSel}</b></td><td><span class="badge bgy">${r.tax_type}</span></td>
+          <td class="tr">${fmt(r.qty)}</td>
+          <td class="tr"><b>${fmt(r.price)}</b></td>
+          <td class="tr">${fmt(r.supply)}</td>
+          <td class="tr">${fmt(r.tax)}</td>
+          <td class="tr bold">${fmt(r.total)}</td>
+        </tr>`).join('')||'<tr><td colspan="9" class="tc tmuted" style="padding:18px">데이터 없음</td></tr>';
+      } else {
+        const allRows=[];
+        fT.forEach(t=>t.items.forEach(i=>allRows.push({date:t.date,partner:gPN(t.partner_id),name:i.name,tax_type:TAX[i.tax_type]||i.tax_type,qty:i.qty,price:i.price,supply:i.supply,tax:i.tax,total:i.total})));
+        allRows.sort((a,b)=>b.date.localeCompare(a.date));
+        return allRows.map(r=>`<tr>
+          <td>${r.date}</td><td>${r.partner}</td><td><b>${r.name}</b></td><td><span class="badge bgy">${r.tax_type}</span></td>
+          <td class="tr">${fmt(r.qty)}</td>
+          <td class="tr"><b>${fmt(r.price)}</b></td>
+          <td class="tr">${fmt(r.supply)}</td>
+          <td class="tr">${fmt(r.tax)}</td>
+          <td class="tr bold">${fmt(r.total)}</td>
+        </tr>`).join('')||'<tr><td colspan="9" class="tc tmuted" style="padding:18px">데이터 없음</td></tr>';
+      }
+    })()}
+    </tbody>
+    <tfoot style="background:#f0f7ff">
+      <tr>
+        <td colspan="4" style="padding:7px 10px;font-weight:700">합계</td>
+        <td class="tr" style="padding:7px 10px;font-weight:700">${fmt(itemSel&&imap[itemSel]?imap[itemSel].qty:fT.flatMap(t=>t.items).reduce((s,i)=>s+i.qty,0))}</td>
+        <td></td>
+        <td class="tr" style="padding:7px 10px;font-weight:700">${fmt(itemSel&&imap[itemSel]?imap[itemSel].supply:fT.flatMap(t=>t.items).reduce((s,i)=>s+i.supply,0))}</td>
+        <td class="tr" style="padding:7px 10px;font-weight:700">${fmt(itemSel&&imap[itemSel]?imap[itemSel].tax:fT.flatMap(t=>t.items).reduce((s,i)=>s+i.tax,0))}</td>
+        <td class="tr" style="padding:7px 10px;font-weight:700;color:var(--pri)">${fmt(itemSel&&imap[itemSel]?imap[itemSel].rev:grandTotal)}</td>
+      </tr>
+    </tfoot>
+  </table></div></div>`;
 }
+
 function bIChart(){
   const pid=document.getElementById('is-pid')?document.getElementById('is-pid').value:'';
   const itemSel=document.getElementById('is-item')?document.getElementById('is-item').value:'';
@@ -740,12 +832,12 @@ function bStmt(ym,pid){
         <div style="padding:11px 15px"><div class="tsm tmuted" style="margin-bottom:4px">공급받는자</div><div style="font-weight:700;font-size:13px">${p.name}</div><div class="tsm tmuted">${p.biz_no||'-'} · ${p.contact||'-'}</div></div>
       </div>
       <div style="padding:10px 15px;background:#f8fafc;border-bottom:1px solid var(--bd);display:flex;gap:18px;font-size:12px;flex-wrap:wrap">
-        <span>전월이월: <b>${fmt(prevBal)}원</b></span><span>당월매출: <b>${fmt(ptx.reduce((s,t)=>s+t.grand_total,0))}원</b></span><span>당월지급: <b>${fmt(ppy.reduce((s,py)=>s+py.amount,0))}원</b></span><span style="color:var(--err)">잔액: <b>${fmt(getBal(p.id))}원</b></span>
+        <span>전월이월: <b>${fmt(prevBal)}원</b></span><span>당월매입: <b>${fmt(ptx.reduce((s,t)=>s+t.grand_total,0))}원</b></span><span>당월지급: <b>${fmt(ppy.reduce((s,py)=>s+py.amount,0))}원</b></span><span style="color:var(--err)">잔액: <b>${fmt(getBal(p.id))}원</b></span>
       </div>
       <div class="tw"><table><thead><tr><th>날짜</th><th>구분</th><th>내용</th><th class="tr">공급가액</th><th class="tr">세액</th><th class="tr">합계/지급</th><th class="tr">잔액</th></tr></thead>
       <tbody>
         <tr style="background:#fff7ed"><td colspan="3" style="padding:7px 10px;font-weight:700">전월 이월</td><td colspan="3"></td><td class="tr bold">${fmt(prevBal)}</td></tr>
-        ${rows.map(item=>{if(item.kind==='tx'){run+=item.grand_total;return`<tr><td>${item.date}</td><td><span class="badge bbl">매출</span></td><td class="tsm">${item.items.map(i=>`${i.name}×${i.qty}`).join(', ')}</td><td class="tr">${fmt(item.supply_total)}</td><td class="tr">${fmt(item.tax_total)}</td><td class="tr bold">${fmt(item.grand_total)}</td><td class="tr bold">${fmt(run)}</td></tr>`;}else{run-=item.amount;return`<tr><td>${item.date}</td><td><span class="badge ${PBG[item.method]||'bgy'}">${PM[item.method]||item.method}</span></td><td class="tsm tmuted">${item.memo||'-'}</td><td colspan="3" class="tr" style="color:var(--ok)">-${fmt(item.amount)}</td><td class="tr bold">${fmt(run)}</td></tr>`;}}).join('')}
+        ${rows.map(item=>{if(item.kind==='tx'){run+=item.grand_total;return`<tr><td>${item.date}</td><td><span class="badge bbl">매입</span></td><td class="tsm">${item.items.map(i=>`${i.name}×${i.qty}`).join(', ')}</td><td class="tr">${fmt(item.supply_total)}</td><td class="tr">${fmt(item.tax_total)}</td><td class="tr bold">${fmt(item.grand_total)}</td><td class="tr bold">${fmt(run)}</td></tr>`;}else{run-=item.amount;return`<tr><td>${item.date}</td><td><span class="badge ${PBG[item.method]||'bgy'}">${PM[item.method]||item.method}</span></td><td class="tsm tmuted">${item.memo||'-'}</td><td colspan="3" class="tr" style="color:var(--ok)">-${fmt(item.amount)}</td><td class="tr bold">${fmt(run)}</td></tr>`;}}).join('')}
       </tbody></table></div>
     </div>`;
   }).filter(Boolean);
@@ -901,7 +993,7 @@ function doExport(){
   const txRows=[];DB.transactions.forEach(t=>t.items.forEach((item,i)=>txRows.push({날짜:t.date,거래처:gPN(t.partner_id),품목:item.name,부가세:TAXF[item.tax_type],수량:item.qty,단가:item.price,공급가액:item.supply,세액:item.tax,합계:item.total,비고:i===0?t.memo||'':''})));
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(txRows),'거래내역');
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(DB.payments.map(py=>({날짜:py.date,거래처:gPN(py.partner_id),지급방법:PM[py.method]||py.method,금액:py.amount,비고:py.memo||''}))),'지급내역');
-  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(DB.partners.map(p=>{const s=DB.transactions.filter(t=>t.partner_id===p.id).reduce((a,t)=>a+t.grand_total,0);const pd=DB.payments.filter(py=>py.partner_id===p.id).reduce((a,py)=>a+py.amount,0);return{거래처:p.name,기초미수금:p.initial_receivable||0,총매출:s,총지급:pd,현재미수금:getBal(p.id)};})),'미수금현황');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(DB.partners.map(p=>{const s=DB.transactions.filter(t=>t.partner_id===p.id).reduce((a,t)=>a+t.grand_total,0);const pd=DB.payments.filter(py=>py.partner_id===p.id).reduce((a,py)=>a+py.amount,0);return{거래처:p.name,기초미수금:p.initial_receivable||0,총매입:s,총지급:pd,현재미수금:getBal(p.id)};})),'미수금현황');
   XLSX.writeFile(wb,'거래관리_'+new Date().toISOString().slice(0,10).replace(/-/g,'')+'.xlsx');
 }
 function trigImp(){document.getElementById('impf').click();}
