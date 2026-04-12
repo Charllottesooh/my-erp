@@ -329,16 +329,13 @@ function doLogout(){
   document.getElementById('lpw').value='';
 }
 
-// ═══ GOOGLE SHEETS 자동동기화 (https:// 환경 전용) ═══
+// ═══ 자동 엑셀 백업 시스템 ═══
 function startGSSync(){
   stopGSSync();
   const s=DB.settings;
-  if(!s.gs_key||!s.gs_id){updSS('⚪','설정 필요');return;}
-  updSS('🟡','동기화 준비 중...');
-  gsPushAll();
   const ms=(s.gs_interval||30)*60*1000;
-  GS_TIMER=setInterval(gsPushAll,ms);
-  updSS('🟢',`${s.gs_interval}분마다 자동동기화`);
+  updSS('🟢',`${s.gs_interval}분마다 자동백업 대기 중`);
+  GS_TIMER=setInterval(()=>{autoBackup();},ms);
 }
 function stopGSSync(){
   if(GS_TIMER){clearInterval(GS_TIMER);GS_TIMER=null;}
@@ -349,46 +346,23 @@ function updSS(dot,msg){
   const colors={'🟢':'#0d9f6e','🟡':'#c27803','🔴':'#e02424','⚪':'#94a3b8'};
   el.innerHTML=msg?`<span class="sync-dot" style="background:${colors[dot]||'#94a3b8'}"></span>${msg}`:'';
 }
-
-// ═══ GOOGLE SHEETS API (4가지 시트 전체 업로드) ═══
-async function gsPushAll(){
-  const s=DB.settings;
-  if(!s.gs_key||!s.gs_id)return;
-  updSS('🟡','동기화 중...');
-  try{
-    const sheets=[
-      {name:'거래처',rows:[['거래처명','사업자번호','담당자','연락처','이메일','기초미수금','현재미수금'],...DB.partners.map(p=>[p.name,p.biz_no||'',p.contact||'',p.phone||'',p.email||'',p.initial_receivable||0,getBal(p.id)])]},
-      {name:'거래내역',rows:[['날짜','거래처','품목','부가세','수량','단가','공급가액','세액','합계','비고']]},
-      {name:'지급내역',rows:[['날짜','거래처','지급방법','금액','비고'],...DB.payments.map(py=>[py.date,gPN(py.partner_id),PM[py.method]||py.method,py.amount,py.memo||''])]},
-      {name:'미수금현황',rows:[['거래처','기초미수금','총매출','총지급','현재미수금'],...DB.partners.map(p=>{const s2=DB.transactions.filter(t=>t.partner_id===p.id).reduce((a,t)=>a+t.grand_total,0);const pd=DB.payments.filter(py=>py.partner_id===p.id).reduce((a,py)=>a+py.amount,0);return[p.name,p.initial_receivable||0,s2,pd,getBal(p.id)];})]}
-    ];
-    DB.transactions.forEach(t=>t.items.forEach((item,i)=>{
-      sheets[1].rows.push([t.date,gPN(t.partner_id),item.name,TAXF[item.tax_type],item.qty,item.price,item.supply,item.tax,item.total,i===0?t.memo||'':'']);
-    }));
-
-    let ok=0;
-    for(const sh of sheets){
-      const url=`https://sheets.googleapis.com/v4/spreadsheets/${s.gs_id}/values/${encodeURIComponent(sh.name+'!A1')}?valueInputOption=RAW&key=${s.gs_key}`;
-      const res=await fetch(url,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({values:sh.rows})});
-      const d=await res.json();
-      if(!d.error)ok++;
-    }
-    const now=new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});
-    if(ok===sheets.length){updSS('🟢',`동기화 완료 ${now}`);}
-    else{updSS('🔴',`일부 실패 (${ok}/${sheets.length})`);}
-  }catch(e){updSS('🔴','연결 오류: '+e.message);}
+function autoBackup(){
+  if(!window.XLSX)return;
+  doExport();
+  const now=new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});
+  updSS('🟢',`마지막 백업: ${now}`);
 }
 
-async function gsTest(){
-  const s=DB.settings;
-  if(!s.gs_key||!s.gs_id){showGSR('wn','API 키와 스프레드시트 ID를 먼저 입력하고 저장하세요');return;}
-  showGSR('wn','⏳ 연결 테스트 중...');
-  try{
-    const res=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${s.gs_id}?key=${s.gs_key}`);
-    const d=await res.json();
-    if(d.error)showGSR('er','❌ '+d.error.message+'  (API 키 또는 스프레드시트 ID 확인)');
-    else showGSR('ok','✅ 연결 성공 — 스프레드시트: "'+d.properties.title+'"  시트 수: '+d.sheets.length+'개');
-  }catch(e){showGSR('er','네트워크 오류: '+e.message);}
+// ═══ 백업 함수 ═══
+function gsPushAll(){
+  if(!window.XLSX){alert('잠시 후 다시 시도해주세요');return;}
+  doExport();
+  const now=new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});
+  updSS('🟢',`백업완료: ${now}`);
+  showGSR('ok','✅ 엑셀 파일로 백업 완료 ('+now+')<br>📁 다운로드된 파일을 구글 드라이브에 업로드하면 백업 완료입니다.');
+}
+function gsTest(){
+  showGSR('ok','✅ 백업 시스템 정상 작동 중입니다.<br>"지금 백업" 버튼으로 엑셀 파일을 저장하세요.');
 }
 
 // ═══ ALERTS ═══
@@ -825,53 +799,56 @@ function svThr(){DB.settings.thr=parseFloat(document.getElementById('thrv').valu
 
 // ═══ GOOGLE SHEETS ═══
 function rGSheets(){
-  const s=DB.settings;const isHttps=location.protocol==='https:';
-  return`<div style="max-width:700px">
-  ${!isHttps?`<div class="abl a-og" style="margin-bottom:13px">⚠ 현재 로컬 파일(file://)로 실행 중입니다. Google Sheets 동기화는 <b>GitHub Pages</b>에 업로드 후 <b>https://</b>로 접속해야 작동합니다.</div>`:''}
-  <div class="card" style="margin-bottom:13px"><div class="ch"><span class="ct">연동 설정</span>
+  const s=DB.settings;
+  return`<div style="max-width:660px">
+  <div class="card" style="margin-bottom:13px"><div class="ch"><span class="ct">자동 백업 설정</span>
     <div class="flex aic gap6">
       <span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${GS_TIMER?'#0d9f6e':'#94a3b8'}"></span>
-      <span class="tsm tmuted">${GS_TIMER?'자동동기화 실행 중':'꺼짐'}</span>
+      <span class="tsm tmuted">${GS_TIMER?'자동백업 실행 중':'꺼짐'}</span>
     </div></div>
   <div class="cb">
-    <div class="g2 g22">
-      <div class="fg"><label class="fl">Google API Key</label><input class="fi" id="gsK" value="${s.gs_key||''}" placeholder="AIzaSy..."></div>
-      <div class="fg"><label class="fl">스프레드시트 ID</label><input class="fi" id="gsI" value="${s.gs_id||''}" placeholder="URL의 /d/ 뒤 문자열"></div>
+    <div style="background:var(--okl);border:1px solid #6ee7b7;border-radius:var(--r);padding:12px 14px;font-size:12px;color:#065f46;margin-bottom:14px">
+      ✅ <b>API 키 불필요!</b> 버튼 하나로 엑셀 파일 저장 → 구글 드라이브에 업로드하면 백업 완료입니다.
     </div>
-    <div class="g2 g22 mt12">
-      <div class="fg"><label class="fl">자동동기화 주기 (분)</label><input class="fi" id="gsInt" type="number" min="5" max="1440" value="${s.gs_interval||30}"></div>
-      <div class="fg"><label class="fl">자동동기화 활성화</label><div class="flex aic gap6" style="margin-top:8px"><input type="checkbox" id="gsAuto" ${s.gs_auto?'checked':''} style="width:16px;height:16px"><label for="gsAuto" style="font-size:12px;cursor:pointer">로그인 시 자동 시작</label></div></div>
+    <div class="g2 g22" style="margin-bottom:14px">
+      <div class="fg"><label class="fl">자동백업 주기 (분)</label><input class="fi" id="gsInt" type="number" min="5" max="1440" value="${s.gs_interval||30}"><span class="tsm tmuted" style="margin-top:3px">설정한 시간마다 자동으로 엑셀 파일 저장</span></div>
+      <div class="fg"><label class="fl">자동백업 활성화</label><div class="flex aic gap6" style="margin-top:8px"><input type="checkbox" id="gsAuto" ${s.gs_auto?'checked':''} style="width:16px;height:16px"><label for="gsAuto" style="font-size:12px;cursor:pointer">앱 시작 시 자동 활성화</label></div></div>
     </div>
-    <div class="flex gap6 fw mt12">
+    <div class="flex gap6 fw">
       <button class="btn bp" onclick="gsSave()">💾 설정 저장</button>
-      <button class="btn bs" onclick="gsTest()">🔗 연결 테스트</button>
-      <button class="btn bok" onclick="gsPushAll()">⬆ 지금 전체 동기화</button>
-      ${GS_TIMER?`<button class="btn bw" onclick="stopGSSync();rc()">⏹ 동기화 중지</button>`:`<button class="btn bok" onclick="gsSave();startGSSync();rc()" ${!isHttps?'disabled title="https:// 환경에서만 작동합니다"':''}>▶ 동기화 시작</button>`}
+      <button class="btn bok" onclick="gsPushAll()" style="font-size:13px;padding:8px 16px">📥 지금 엑셀 백업</button>
+      ${GS_TIMER?`<button class="btn bw" onclick="stopGSSync();rc()">⏹ 자동백업 중지</button>`:`<button class="btn bok" onclick="gsSave();startGSSync();rc()">▶ 자동백업 시작</button>`}
     </div>
     <div id="gsr" style="margin-top:10px"></div>
   </div></div>
-  <div class="card" style="margin-bottom:13px"><div class="ch"><span class="ct">동기화 대상 시트 구성</span></div><div class="cb">
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:12px">
-      ${[['거래처','거래처명·사업자번호·미수금'],['거래내역','날짜·품목·금액·세액'],['지급내역','날짜·방법·금액'],['미수금현황','거래처별 잔액 요약']].map(([n,d])=>`<div style="background:#f8fafc;border-radius:var(--r);padding:10px;border:1px solid var(--bd)"><div style="font-weight:700;margin-bottom:4px">${n}</div><div class="tsm tmuted">${d}</div></div>`).join('')}
-    </div>
-    <div class="tsm tmuted mt12">※ 스프레드시트에 <b>거래처 / 거래내역 / 지급내역 / 미수금현황</b> 이름의 시트 4개를 미리 생성해두세요.</div>
-  </div></div>
-  <div class="card"><div class="ch"><span class="ct">GitHub Pages 배포 가이드</span></div><div class="cb">
+
+  <div class="card" style="margin-bottom:13px"><div class="ch"><span class="ct">구글 드라이브 백업 방법</span></div><div class="cb">
     <div style="display:flex;flex-direction:column;gap:10px;font-size:12px">
-      ${[['1','github.com 접속 후 회원가입/로그인','무료 계정으로 충분합니다'],['2','New repository 클릭','저장소 이름 예: my-erp · Public 선택 · Create repository'],['3','index.html 파일 업로드','Add file → Upload files → 다운로드한 index.html 업로드 → Commit changes'],['4','GitHub Pages 활성화','Settings → Pages → Source: Deploy from branch → Branch: main / (root) → Save'],['5','접속 주소 확인','약 1~2분 후 https://[사용자명].github.io/[저장소명]/ 으로 접속'],['6','Google Sheets 연동','앱 내 Google Sheets 메뉴에서 API 키와 시트 ID 입력 후 저장']].map(([n,t,d])=>`<div style="display:flex;gap:10px;align-items:flex-start"><div style="width:24px;height:24px;border-radius:50%;background:var(--prl);color:var(--pri);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0">${n}</div><div><div style="font-weight:700;margin-bottom:1px">${t}</div><div style="color:var(--mu)">${d}</div></div></div>`).join('')}
+      ${[['1','📥 지금 엑셀 백업 버튼 클릭','엑셀 파일이 자동으로 다운로드됩니다'],['2','drive.google.com 접속','구글 드라이브 열기'],['3','파일 업로드','+ 새로 만들기 → 파일 업로드 → 다운로드된 엑셀 파일 선택'],['4','완료','구글 드라이브에 백업 저장 완료! 언제 어디서나 열람 가능']].map(([n,t,d])=>`
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--prl);color:var(--pri);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0">${n}</div>
+          <div><div style="font-weight:700;margin-bottom:1px">${t}</div><div style="color:var(--mu)">${d}</div></div>
+        </div>`).join('')}
     </div>
+  </div></div>
+
+  <div class="card"><div class="ch"><span class="ct">백업 현황</span></div><div class="cb">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;font-size:12px;text-align:center">
+      <div style="background:#f8fafc;border-radius:var(--r);padding:12px"><div style="font-size:18px;font-weight:800;color:var(--pri)">${DB.partners.length}</div><div style="color:var(--mu);margin-top:2px">거래처</div></div>
+      <div style="background:#f8fafc;border-radius:var(--r);padding:12px"><div style="font-size:18px;font-weight:800;color:var(--ok)">${DB.transactions.length}</div><div style="color:var(--mu);margin-top:2px">거래내역</div></div>
+      <div style="background:#f8fafc;border-radius:var(--r);padding:12px"><div style="font-size:18px;font-weight:800;color:var(--wrn)">${DB.payments.length}</div><div style="color:var(--mu);margin-top:2px">지급내역</div></div>
+    </div>
+    <button class="btn bok mt12" style="width:100%;justify-content:center;padding:10px;font-size:13px" onclick="gsPushAll()">📥 전체 데이터 엑셀로 백업하기</button>
   </div></div>
   </div>`;
 }
 function gsSave(){
-  DB.settings.gs_key=document.getElementById('gsK').value.trim();
-  DB.settings.gs_id=document.getElementById('gsI').value.trim();
   DB.settings.gs_interval=parseInt(document.getElementById('gsInt').value)||30;
   DB.settings.gs_auto=document.getElementById('gsAuto').checked;
   svDB();
-  if(DB.settings.gs_auto&&DB.settings.gs_key&&DB.settings.gs_id)startGSSync();
-  else if(!DB.settings.gs_auto)stopGSSync();
-  showGSR('ok','✅ 설정이 저장되었습니다');
+  if(DB.settings.gs_auto)startGSSync();
+  else stopGSSync();
+  showGSR('ok','✅ 설정이 저장되었습니다.');
 }
 function showGSR(t,m){const el=document.getElementById('gsr');if(!el)return;const cls={ok:'gs-ok',er:'gs-er',wn:'gs-wn'}[t]||'gs-wn';el.innerHTML=`<div class="gs-s ${cls}">${m}</div>`;}
 
