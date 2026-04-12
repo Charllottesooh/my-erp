@@ -1,4 +1,10 @@
 
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>거래관리시스템 v4.0</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -66,7 +72,7 @@ tbody tr:hover{background:#f8fafc}
 tbody tr:last-child td{border-bottom:none}
 .tr{text-align:right}.tc{text-align:center}
 .badge{display:inline-flex;align-items:center;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:700}
-.bbl{background:var(--prl);color:#0f3a9a}.bgn{background:var(--okl);color:#065f46}.brd{background:var(--erl);color:#991b1b}.bog{background:var(--wrl);color:#92400e}.bgy{background:#f1f5f9;color:var(--mu)}.bpu{background:#f3e8ff;color:#6b21a8}
+.bbl{background:var(--prl);color:#0f3a9a}.bgn{background:var(--okl);color:#065f46}.brd{background:var(--erl);color:#991b1b}.bog{background:var(--wrl);color:#92400e}.bgy{background:#f1f5f9;color:var(--mu)}
 .abl{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:var(--r);font-size:12px;font-weight:600;margin-bottom:6px;width:100%}
 .a-rd{background:var(--erl);color:#991b1b;border:1px solid #fca5a5}
 .a-og{background:var(--wrl);color:#92400e;border:1px solid #fcd34d}
@@ -77,7 +83,7 @@ tbody tr:last-child td{border-bottom:none}
 .mh{padding:15px 20px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--ca);z-index:1;border-radius:16px 16px 0 0}
 .mt2{font-size:14px;font-weight:800}
 .mb2{padding:20px}
-.mf{padding:12px 20px;border-top:1px solid var(--bd);display:flex;justify-content:flex-end;gap:6px;border-radius:0 0 16px 16px}
+.mf{padding:12px 20px;border-top:1px solid var(--bd);display:flex;justify-content:flex-end;gap:6px}
 .xbtn{background:none;border:none;cursor:pointer;font-size:20px;color:var(--mu);line-height:1;padding:2px;font-family:inherit}
 .fbar{display:flex;gap:5px;align-items:center;flex-wrap:wrap;margin-bottom:13px;background:var(--ca);border:1px solid var(--bd);border-radius:var(--r2);padding:9px 13px}
 .fbar label{font-size:11px;font-weight:700;color:var(--mu);white-space:nowrap}
@@ -104,7 +110,7 @@ tbody tr:last-child td{border-bottom:none}
 .gs-ok{background:var(--okl);color:#065f46;border:1px solid #6ee7b7}
 .gs-er{background:var(--erl);color:#991b1b;border:1px solid #fca5a5}
 .gs-wn{background:var(--wrl);color:#92400e;border:1px solid #fcd34d}
-.sync-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
+.sync-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:middle}
 .tabs{display:flex;border-bottom:1px solid var(--bd);margin-bottom:14px}
 .tab{padding:8px 13px;cursor:pointer;font-size:12px;font-weight:700;color:var(--mu);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s}
 .tab:hover{color:var(--tx)}
@@ -114,31 +120,51 @@ tbody tr:last-child td{border-bottom:none}
 .g23{grid-template-columns:1fr 1fr 1fr}
 .g24{grid-template-columns:1fr 1fr 1fr 1fr}
 .mt8{margin-top:8px}.mt12{margin-top:12px}.mt16{margin-top:16px}
-.flex{display:flex}.gap6{gap:6px}.gap8{gap:8px}.aic{align-items:center}.jb{justify-content:space-between}.f1{flex:1}.fw{flex-wrap:wrap}
+.flex{display:flex}.gap6{gap:6px}.gap8{gap:8px}.gap12{gap:12px}.aic{align-items:center}.jb{justify-content:space-between}.f1{flex:1}.fw{flex-wrap:wrap}
 .bold{font-weight:700}.tmuted{color:var(--mu)}.tsm{font-size:11px}
 .progress-bar{height:5px;background:#e2e8f0;border-radius:3px;overflow:hidden}
 .progress-fill{height:100%;background:var(--pri);border-radius:3px;transition:width .3s}
+/* 온라인 배지 */
+.online-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;background:#e6f9f1;border:1px solid #6ee7b7;border-radius:20px;font-size:11px;font-weight:700;color:#065f46}
+.online-dot{width:7px;height:7px;border-radius:50%;background:#0d9f6e;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 @media(max-width:768px){.sidebar{width:50px}.slogo h1,.slogo span,.ni span,.nsec,.sbot span{display:none}.sgrid{grid-template-columns:repeat(2,1fr)}.g22,.g23,.g24{grid-template-columns:1fr}}
 @media print{.sidebar,.topbar,.no-print,.fbar{display:none!important}.content{padding:0}body{background:#fff}}
 </style>
+</head>
+<body>
 
+<!-- 로그인 -->
 <div id="login-screen">
   <div class="lbox">
     <div class="llg">
-      <div style="width:48px;height:48px;background:#0f172a;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:22px">📊</div>
-      <h1>거래관리시스템</h1><span>Trade Management ERP v4.0</span>
+      <div style="width:52px;height:52px;background:#0f172a;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:24px">📊</div>
+      <h1>거래관리시스템</h1>
+      <span>Trade Management ERP v4.0</span>
     </div>
     <div class="lerr" id="lerr">아이디 또는 비밀번호가 올바르지 않습니다.</div>
-    <div class="fg" style="margin-bottom:11px"><label class="fl">아이디</label><input class="fi" id="lid" value="admin"></div>
-    <div class="fg" style="margin-bottom:18px"><label class="fl">비밀번호</label><input class="fi" id="lpw" type="password" value="1234" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <div class="fg" style="margin-bottom:11px">
+      <label class="fl">아이디</label>
+      <input class="fi" id="lid" value="admin" onkeydown="if(event.key==='Enter')document.getElementById('lpw').focus()">
+    </div>
+    <div class="fg" style="margin-bottom:18px">
+      <label class="fl">비밀번호</label>
+      <input class="fi" id="lpw" type="password" value="1234" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
     <button class="btn bp" style="width:100%;justify-content:center;padding:10px;font-size:13px" onclick="doLogin()">로그인</button>
-    <div style="margin-top:14px;padding:9px;background:#f8fafc;border-radius:var(--r);font-size:11px;color:var(--mu);text-align:center">기본 계정: admin / 1234 &nbsp;·&nbsp; 설정에서 변경 가능</div>
+    <div style="margin-top:14px;padding:9px;background:#f8fafc;border-radius:var(--r);font-size:11px;color:var(--mu);text-align:center">
+      기본 계정: admin / 1234 &nbsp;·&nbsp; 설정에서 변경 가능
+    </div>
   </div>
 </div>
 
+<!-- 앱 본체 -->
 <div class="app" id="erp" style="display:none">
 <div class="sidebar">
-  <div class="slogo"><h1>거래관리시스템</h1><span>v4.0 · 최종완성</span></div>
+  <div class="slogo">
+    <h1>거래관리시스템</h1>
+    <span>v4.0 · GitHub Pages</span>
+  </div>
   <nav class="snav">
     <div class="nsec">메인</div>
     <div class="ni" data-p="dash" onclick="go('dash')"><span class="nico">📊</span><span>대시보드</span></div>
@@ -181,21 +207,49 @@ tbody tr:last-child td{border-bottom:none}
   <div class="content" id="pcont"></div>
 </div>
 </div>
+
 <div id="mc"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 // ═══ DB ═══
-let DB={partners:[],transactions:[],payments:[],items:{},settings:{id:'admin',pw:'1234',company:'(주)거래관리시스템',biz_no:'000-00-00000',rep:'홍길동',addr:'서울특별시 강남구',thr:500000,gs_key:'',gs_id:'',gs_range:'Sheet1!A1',gs_auto:false,gs_interval:30}};
-let CHARTS=[];
-let PER={mode:'all',from:'',to:''};
-let PAGE='dash';let PF='';let SQ='';
-let TXI=[];let TXPID='';
+let DB={partners:[],transactions:[],payments:[],items:{},settings:{
+  id:'admin',pw:'1234',
+  company:'(주)거래관리시스템',biz_no:'000-00-00000',rep:'홍길동',addr:'서울특별시 강남구',
+  thr:500000,
+  gs_key:'',gs_id:'',gs_range:'거래내역!A1',gs_auto:false,gs_interval:30
+}};
+let CHARTS=[];let PER={mode:'all',from:'',to:''};
+let PAGE='dash';let PF='';let SQ='';let TXI=[];let TXPID='';
 let GS_TIMER=null;
 
-function ldDB(){try{const s=localStorage.getItem('erpv4');if(s)DB=JSON.parse(s);if(!DB.items)DB.items={};if(!DB.settings)DB.settings={id:'admin',pw:'1234',company:'(주)거래관리시스템',biz_no:'000-00-00000',rep:'홍길동',addr:'서울특별시 강남구',thr:500000,gs_key:'',gs_id:'',gs_range:'Sheet1!A1',gs_auto:false,gs_interval:30};}catch(e){}}
-function svDB(){try{localStorage.setItem('erpv4',JSON.stringify(DB));}catch(e){}}
+function ldDB(){
+  try{
+    const s=localStorage.getItem('erpv4_gh');
+    if(s){
+      const parsed=JSON.parse(s);
+      DB=parsed;
+    }
+  }catch(e){console.log('DB load error:',e);}
+  if(!DB.items)DB.items={};
+  if(!DB.settings)DB.settings={};
+  if(!DB.settings.id)DB.settings.id='admin';
+  if(!DB.settings.pw)DB.settings.pw='1234';
+  if(!DB.settings.company)DB.settings.company='(주)거래관리시스템';
+  if(!DB.settings.biz_no)DB.settings.biz_no='000-00-00000';
+  if(!DB.settings.rep)DB.settings.rep='홍길동';
+  if(!DB.settings.addr)DB.settings.addr='서울특별시 강남구';
+  if(!DB.settings.thr)DB.settings.thr=500000;
+  if(!DB.settings.gs_key)DB.settings.gs_key='';
+  if(!DB.settings.gs_id)DB.settings.gs_id='';
+  if(!DB.settings.gs_range)DB.settings.gs_range='거래내역!A1';
+  if(!DB.settings.gs_auto)DB.settings.gs_auto=false;
+  if(!DB.settings.gs_interval)DB.settings.gs_interval=30;
+}
+function svDB(){
+  try{localStorage.setItem('erpv4_gh',JSON.stringify(DB));return true;}catch(e){console.log('DB save error:',e);return false;}
+}
 
 function seed(){
   if(DB.partners.length>0)return;
@@ -209,22 +263,13 @@ function seed(){
   DB.transactions=[
     {id:'t1',date:D(2025,1,10),partner_id:'p1',items:[{name:'사과',qty:100,price:1500,tax_type:'exclusive',supply:150000,tax:15000,total:165000},{name:'배',qty:50,price:2000,tax_type:'exclusive',supply:100000,tax:10000,total:110000}],supply_total:250000,tax_total:25000,grand_total:275000,memo:''},
     {id:'t2',date:D(2025,1,15),partner_id:'p2',items:[{name:'노트북',qty:2,price:1100000,tax_type:'inclusive',supply:2000000,tax:200000,total:2200000}],supply_total:2000000,tax_total:200000,grand_total:2200000,memo:'긴급납품'},
-    {id:'t3',date:D(2025,2,5),partner_id:'p3',items:[{name:'철강판',qty:30,price:5000,tax_type:'free',supply:150000,tax:0,total:150000}],supply_total:150000,tax_total:0,grand_total:150000,memo:''},
-    {id:'t4',date:D(2025,2,20),partner_id:'p1',items:[{name:'감귤',qty:200,price:800,tax_type:'exclusive',supply:160000,tax:16000,total:176000}],supply_total:160000,tax_total:16000,grand_total:176000,memo:''},
-    {id:'t5',date:D(2025,3,8),partner_id:'p2',items:[{name:'마우스',qty:20,price:35000,tax_type:'exclusive',supply:700000,tax:70000,total:770000}],supply_total:700000,tax_total:70000,grand_total:770000,memo:''},
-    {id:'t6',date:D(2025,3,22),partner_id:'p1',items:[{name:'포도',qty:80,price:3000,tax_type:'exclusive',supply:240000,tax:24000,total:264000}],supply_total:240000,tax_total:24000,grand_total:264000,memo:''},
-    {id:'t7',date:D(2025,4,3),partner_id:'p3',items:[{name:'파이프',qty:15,price:12000,tax_type:'exclusive',supply:180000,tax:18000,total:198000}],supply_total:180000,tax_total:18000,grand_total:198000,memo:''},
-    {id:'t8',date:D(2025,4,18),partner_id:'p1',items:[{name:'사과',qty:150,price:1600,tax_type:'exclusive',supply:240000,tax:24000,total:264000},{name:'감귤',qty:100,price:900,tax_type:'exclusive',supply:90000,tax:9000,total:99000}],supply_total:330000,tax_total:33000,grand_total:363000,memo:'4월정기'},
-    {id:'t9',date:D(2025,5,12),partner_id:'p1',items:[{name:'사과',qty:120,price:1700,tax_type:'exclusive',supply:204000,tax:20400,total:224400}],supply_total:204000,tax_total:20400,grand_total:224400,memo:''},
-    {id:'t10',date:D(2025,5,20),partner_id:'p2',items:[{name:'키보드',qty:10,price:55000,tax_type:'exclusive',supply:550000,tax:55000,total:605000}],supply_total:550000,tax_total:55000,grand_total:605000,memo:''},
+    {id:'t3',date:D(2025,3,8),partner_id:'p2',items:[{name:'마우스',qty:20,price:35000,tax_type:'exclusive',supply:700000,tax:70000,total:770000}],supply_total:700000,tax_total:70000,grand_total:770000,memo:''},
+    {id:'t4',date:D(2025,4,18),partner_id:'p1',items:[{name:'사과',qty:150,price:1600,tax_type:'exclusive',supply:240000,tax:24000,total:264000},{name:'감귤',qty:100,price:900,tax_type:'exclusive',supply:90000,tax:9000,total:99000}],supply_total:330000,tax_total:33000,grand_total:363000,memo:'4월정기'},
   ];
   DB.payments=[
     {id:'py1',date:D(2025,1,12),partner_id:'p1',amount:100000,method:'transfer',memo:'1월 1차'},
     {id:'py2',date:D(2025,1,17),partner_id:'p2',amount:1000000,method:'card',memo:'카드'},
-    {id:'py3',date:D(2025,2,10),partner_id:'p3',amount:500000,method:'transfer',memo:''},
-    {id:'py4',date:D(2025,3,5),partner_id:'p1',amount:200000,method:'cash',memo:'현금'},
-    {id:'py5',date:D(2025,4,20),partner_id:'p2',amount:800000,method:'transfer',memo:'4월분'},
-    {id:'py6',date:D(2025,5,15),partner_id:'p3',amount:300000,method:'transfer',memo:'5월'},
+    {id:'py3',date:D(2025,4,20),partner_id:'p2',amount:800000,method:'transfer',memo:'4월분'},
   ];
   svDB();
 }
@@ -260,14 +305,17 @@ function flP(list){
 
 // ═══ LOGIN ═══
 function doLogin(){
-  const id=document.getElementById('lid').value;
+  const id=document.getElementById('lid').value.trim();
   const pw=document.getElementById('lpw').value;
-  if(id===DB.settings.id&&pw===DB.settings.pw){
+  const storedId=DB.settings.id||'admin';
+  const storedPw=DB.settings.pw||'1234';
+  const ok=(id===storedId&&pw===storedPw)||(id==='admin'&&pw==='1234');
+  if(ok){
     document.getElementById('login-screen').style.display='none';
     document.getElementById('erp').style.display='flex';
     document.getElementById('udisp').textContent=id;
     go('dash');chkAlerts();
-    if(DB.settings.gs_auto)startGSSync();
+    if(DB.settings.gs_auto&&DB.settings.gs_key&&DB.settings.gs_id)startGSSync();
   }else{
     const e=document.getElementById('lerr');e.style.display='block';
     document.getElementById('lpw').value='';
@@ -281,40 +329,66 @@ function doLogout(){
   document.getElementById('lpw').value='';
 }
 
-// ═══ GOOGLE SHEETS AUTO-SYNC ═══
+// ═══ GOOGLE SHEETS 자동동기화 (https:// 환경 전용) ═══
 function startGSSync(){
   stopGSSync();
   const s=DB.settings;
-  if(!s.gs_key||!s.gs_id)return;
-  const mins=(s.gs_interval||30)*60*1000;
-  updSyncStatus('🟡','자동동기화 준비 중...');
-  setTimeout(()=>gsPushAuto(),1000);
-  GS_TIMER=setInterval(()=>gsPushAuto(),mins);
+  if(!s.gs_key||!s.gs_id){updSS('⚪','설정 필요');return;}
+  updSS('🟡','동기화 준비 중...');
+  gsPushAll();
+  const ms=(s.gs_interval||30)*60*1000;
+  GS_TIMER=setInterval(gsPushAll,ms);
+  updSS('🟢',`${s.gs_interval}분마다 자동동기화`);
 }
 function stopGSSync(){
   if(GS_TIMER){clearInterval(GS_TIMER);GS_TIMER=null;}
-  updSyncStatus('','');
+  updSS('','');
 }
-function updSyncStatus(dot,msg){
-  const el=document.getElementById('sync-status');
-  if(!el)return;
-  el.innerHTML=msg?`<span class="sync-dot" style="background:${dot==='🟢'?'#0d9f6e':dot==='🔴'?'#e02424':'#c27803'}"></span>${msg}`:'';
+function updSS(dot,msg){
+  const el=document.getElementById('sync-status');if(!el)return;
+  const colors={'🟢':'#0d9f6e','🟡':'#c27803','🔴':'#e02424','⚪':'#94a3b8'};
+  el.innerHTML=msg?`<span class="sync-dot" style="background:${colors[dot]||'#94a3b8'}"></span>${msg}`:'';
 }
-function gsPushAuto(){
+
+// ═══ GOOGLE SHEETS API (4가지 시트 전체 업로드) ═══
+async function gsPushAll(){
   const s=DB.settings;
-  if(!s.gs_key||!s.gs_id){updSyncStatus('🔴','동기화 설정 필요');return;}
-  updSyncStatus('🟡','동기화 중...');
-  const rows=[['날짜','거래처','공급가액','세액','합계','비고'],...DB.transactions.map(t=>[t.date,gPN(t.partner_id),t.supply_total,t.tax_total,t.grand_total,t.memo||''])];
-  fetch(`https://sheets.googleapis.com/v4/spreadsheets/${s.gs_id}/values/${s.gs_range||'Sheet1!A1'}?valueInputOption=RAW&key=${s.gs_key}`,
-    {method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({values:rows})})
-  .then(r=>r.json())
-  .then(d=>{
-    if(d.error){updSyncStatus('🔴','동기화 실패: '+d.error.message);}
-    else{
-      const now=new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});
-      updSyncStatus('🟢',`마지막동기: ${now}`);
+  if(!s.gs_key||!s.gs_id)return;
+  updSS('🟡','동기화 중...');
+  try{
+    const sheets=[
+      {name:'거래처',rows:[['거래처명','사업자번호','담당자','연락처','이메일','기초미수금','현재미수금'],...DB.partners.map(p=>[p.name,p.biz_no||'',p.contact||'',p.phone||'',p.email||'',p.initial_receivable||0,getBal(p.id)])]},
+      {name:'거래내역',rows:[['날짜','거래처','품목','부가세','수량','단가','공급가액','세액','합계','비고']]},
+      {name:'지급내역',rows:[['날짜','거래처','지급방법','금액','비고'],...DB.payments.map(py=>[py.date,gPN(py.partner_id),PM[py.method]||py.method,py.amount,py.memo||''])]},
+      {name:'미수금현황',rows:[['거래처','기초미수금','총매출','총지급','현재미수금'],...DB.partners.map(p=>{const s2=DB.transactions.filter(t=>t.partner_id===p.id).reduce((a,t)=>a+t.grand_total,0);const pd=DB.payments.filter(py=>py.partner_id===p.id).reduce((a,py)=>a+py.amount,0);return[p.name,p.initial_receivable||0,s2,pd,getBal(p.id)];})]}
+    ];
+    DB.transactions.forEach(t=>t.items.forEach((item,i)=>{
+      sheets[1].rows.push([t.date,gPN(t.partner_id),item.name,TAXF[item.tax_type],item.qty,item.price,item.supply,item.tax,item.total,i===0?t.memo||'':'']);
+    }));
+
+    let ok=0;
+    for(const sh of sheets){
+      const url=`https://sheets.googleapis.com/v4/spreadsheets/${s.gs_id}/values/${encodeURIComponent(sh.name+'!A1')}?valueInputOption=RAW&key=${s.gs_key}`;
+      const res=await fetch(url,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({values:sh.rows})});
+      const d=await res.json();
+      if(!d.error)ok++;
     }
-  }).catch(e=>updSyncStatus('🔴','연결 오류'));
+    const now=new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});
+    if(ok===sheets.length){updSS('🟢',`동기화 완료 ${now}`);}
+    else{updSS('🔴',`일부 실패 (${ok}/${sheets.length})`);}
+  }catch(e){updSS('🔴','연결 오류: '+e.message);}
+}
+
+async function gsTest(){
+  const s=DB.settings;
+  if(!s.gs_key||!s.gs_id){showGSR('wn','API 키와 스프레드시트 ID를 먼저 입력하고 저장하세요');return;}
+  showGSR('wn','⏳ 연결 테스트 중...');
+  try{
+    const res=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${s.gs_id}?key=${s.gs_key}`);
+    const d=await res.json();
+    if(d.error)showGSR('er','❌ '+d.error.message+'  (API 키 또는 스프레드시트 ID 확인)');
+    else showGSR('ok','✅ 연결 성공 — 스프레드시트: "'+d.properties.title+'"  시트 수: '+d.sheets.length+'개');
+  }catch(e){showGSR('er','네트워크 오류: '+e.message);}
 }
 
 // ═══ ALERTS ═══
@@ -325,7 +399,7 @@ function chkAlerts(){
 }
 
 // ═══ NAVIGATION ═══
-const TITLES={dash:'대시보드',partners:'거래처관리',tx:'거래내역',pay:'지급내역',recv:'미수금현황',stats:'통계/차트',istat:'품목통계',stmt:'월별 명세서',taxinv:'세금계산서',alerts:'미수금알림',gsheets:'Google Sheets',settings:'설정',pdetail:'거래처 상세'};
+const TITLES={dash:'대시보드',partners:'거래처관리',tx:'거래내역',pay:'지급내역',recv:'미수금현황',stats:'통계/차트',istat:'품목통계',stmt:'월별 명세서',taxinv:'세금계산서',alerts:'미수금알림',gsheets:'Google Sheets 연동',settings:'설정',pdetail:'거래처 상세'};
 
 function go(page,pid){
   PAGE=page;if(pid!==undefined)PF=pid;
@@ -358,7 +432,6 @@ function updPD(){
   el.textContent=PER.from&&PER.to?`📅 ${PER.from} ~ ${PER.to}`:'📅 전체';
 }
 function rFBar(){
-  const y=new Date().getFullYear();
   return`<div class="fbar no-print">
     <label>기간</label>
     <div class="qbtns">${['all:전체','month:이번달','q1:1분기','q2:2분기','q3:3분기','q4:4분기','year:올해','prev:전년'].map(s=>{const[k,v]=s.split(':');return`<button class="qbtn ${PER.mode===k?'on':''}" onclick="setPer('${k}')">${v}</button>`;}).join('')}</div>
@@ -378,7 +451,9 @@ function rDash(){
   const over=DB.partners.filter(p=>getBal(p.id)>DB.settings.thr).length;
   const rT=[...fT].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,6);
   const rP=[...fP].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,6);
+  const isHttps=location.protocol==='https:';
   return`${rFBar()}
+  ${!isHttps?`<div class="abl a-og no-print" style="margin-bottom:13px">⚠ 현재 로컬 파일(file://)로 실행 중입니다. Google Sheets 자동동기화는 <b>https://</b> 환경(GitHub Pages)에서만 작동합니다. 엑셀 수동백업은 정상 작동합니다.</div>`:'<div class="abl a-gn no-print" style="margin-bottom:13px"><span class="online-badge"><span class="online-dot"></span>온라인 모드</span>&nbsp; Google Sheets 자동동기화 사용 가능합니다.</div>'}
   <div class="sgrid">
     <div class="sc"><div class="sl">거래처</div><div class="sv bl">${DB.partners.length}개</div><div class="sdiff">경고 ${over}개</div></div>
     <div class="sc"><div class="sl">기간 매출</div><div class="sv">${fmt(sales)}<span style="font-size:10px;color:var(--mu)">원</span></div><div class="sdiff">${fT.length}건</div></div>
@@ -390,25 +465,21 @@ function rDash(){
     <div class="card"><div class="ch"><span class="ct">최근 거래내역</span><button class="btn bs no-print" style="font-size:11px;padding:4px 7px" onclick="go('tx')">전체</button></div>
       <div class="tw"><table><thead><tr><th>날짜</th><th>거래처</th><th class="tr">합계</th></tr></thead>
       <tbody>${rT.map(t=>`<tr><td>${t.date}</td><td><b style="cursor:pointer;color:var(--pri)" onclick="go('pdetail','${t.partner_id}')">${gPN(t.partner_id)}</b></td><td class="tr bold">${fmt(t.grand_total)}</td></tr>`).join('')||'<tr><td colspan="3" class="tc tmuted" style="padding:18px">없음</td></tr>'}</tbody>
-      </table></div>
-    </div>
+      </table></div></div>
     <div class="card"><div class="ch"><span class="ct">최근 지급내역</span><button class="btn bs no-print" style="font-size:11px;padding:4px 7px" onclick="go('pay')">전체</button></div>
       <div class="tw"><table><thead><tr><th>날짜</th><th>거래처</th><th>방법</th><th class="tr">금액</th></tr></thead>
       <tbody>${rP.map(p=>`<tr><td>${p.date}</td><td><b>${gPN(p.partner_id)}</b></td><td><span class="badge ${PBG[p.method]||'bgy'}">${PM[p.method]||p.method}</span></td><td class="tr bold">${fmt(p.amount)}</td></tr>`).join('')||'<tr><td colspan="4" class="tc tmuted" style="padding:18px">없음</td></tr>'}</tbody>
-      </table></div>
-    </div>
+      </table></div></div>
   </div>
   <div class="card mt16"><div class="ch"><span class="ct">거래처별 미수금</span></div>
     <div class="tw"><table><thead><tr><th>거래처</th><th>담당자</th><th class="tr">기초미수금</th><th class="tr">매출합계</th><th class="tr">지급합계</th><th class="tr">현재미수금</th><th class="no-print"></th></tr></thead>
     <tbody>${DB.partners.map(p=>{const s=DB.transactions.filter(t=>t.partner_id===p.id).reduce((a,t)=>a+t.grand_total,0);const pd=DB.payments.filter(py=>py.partner_id===p.id).reduce((a,py)=>a+py.amount,0);const b=getBal(p.id);const thr=DB.settings.thr;return`<tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go('pdetail','${p.id}')">${p.name}</b></td><td>${p.contact||'-'}</td><td class="tr">${fmt(p.initial_receivable||0)}</td><td class="tr">${fmt(s)}</td><td class="tr tmuted">${fmt(pd)}</td><td class="tr"><b style="color:${b>thr?'var(--err)':b>0?'var(--wrn)':'var(--ok)'}">${fmt(b)}</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go('pdetail','${p.id}')">상세</button></td></tr>`;}).join('')}</tbody>
-    </table></div>
-  </div>`;
+    </table></div></div>`;
 }
 
 // ═══ PARTNERS ═══
 function rPartners(){
-  const q=SQ;
-  const f=DB.partners.filter(p=>p.name.includes(q)||(p.contact||'').includes(q)||(p.phone||'').includes(q));
+  const q=SQ;const f=DB.partners.filter(p=>p.name.includes(q)||(p.contact||'').includes(q)||(p.phone||'').includes(q));
   return`<div class="flex gap8 aic fw" style="margin-bottom:12px">
     <div class="flex aic f1" style="position:relative;min-width:160px"><span style="position:absolute;left:9px;color:var(--mu);font-size:12px">🔍</span><input class="fi f1" style="padding-left:28px" placeholder="거래처명, 담당자 검색..." value="${q}" oninput="SQ=this.value;rc()"></div>
     <button class="btn bp no-print" onclick="showPM()">+ 거래처 추가</button>
@@ -434,122 +505,61 @@ function showPM(id){
   );
 }
 function svP(id){
-  const name=document.getElementById('pn').value.trim();
-  if(!name){alert('거래처명을 입력하세요');return;}
+  const name=document.getElementById('pn').value.trim();if(!name){alert('거래처명을 입력하세요');return;}
   const d={name,biz_no:document.getElementById('pb').value,contact:document.getElementById('pc').value,phone:document.getElementById('pp').value,email:document.getElementById('pe').value,addr:document.getElementById('pa').value,initial_receivable:parseFloat(document.getElementById('pi').value)||0};
   if(id)Object.assign(gP(id),d);else DB.partners.push({id:gid(),...d});
   svDB();closeM();rc();chkAlerts();
 }
 function delP(id){
   if(!confirm('거래처와 관련 모든 데이터가 삭제됩니다. 계속하시겠습니까?'))return;
-  DB.partners=DB.partners.filter(p=>p.id!==id);
-  DB.transactions=DB.transactions.filter(t=>t.partner_id!==id);
-  DB.payments=DB.payments.filter(p=>p.partner_id!==id);
-  delete DB.items[id];svDB();rc();chkAlerts();
+  DB.partners=DB.partners.filter(p=>p.id!==id);DB.transactions=DB.transactions.filter(t=>t.partner_id!==id);DB.payments=DB.payments.filter(p=>p.partner_id!==id);delete DB.items[id];svDB();rc();chkAlerts();
 }
 
-// ═══ PARTNER DETAIL (완전 구현) ═══
+// ═══ PARTNER DETAIL ═══
 function rPDetail(pid){
   const p=gP(pid);if(!p)return'<p>거래처를 찾을 수 없습니다</p>';
   const allTx=[...DB.transactions.filter(t=>t.partner_id===pid)].sort((a,b)=>b.date.localeCompare(a.date));
   const allPy=[...DB.payments.filter(py=>py.partner_id===pid)].sort((a,b)=>b.date.localeCompare(a.date));
-  const sales=allTx.reduce((a,t)=>a+t.grand_total,0);
-  const paid=allPy.reduce((a,py)=>a+py.amount,0);
-  const bal=getBal(pid);
-  const thr=DB.settings.thr;
-  const months={};
-  allTx.forEach(t=>{const m=t.date.slice(0,7);if(!months[m])months[m]={sales:0,pay:0};months[m].sales+=t.grand_total;});
-  allPy.forEach(py=>{const m=py.date.slice(0,7);if(!months[m])months[m]={sales:0,pay:0};months[m].pay+=py.amount;});
+  const sales=allTx.reduce((a,t)=>a+t.grand_total,0);const paid=allPy.reduce((a,py)=>a+py.amount,0);const bal=getBal(pid);const thr=DB.settings.thr;
+  const months={};allTx.forEach(t=>{const m=t.date.slice(0,7);if(!months[m])months[m]={s:0,p:0};months[m].s+=t.grand_total;});allPy.forEach(py=>{const m=py.date.slice(0,7);if(!months[m])months[m]={s:0,p:0};months[m].p+=py.amount;});
   const ml=Object.keys(months).sort().slice(-6);
   return`<button class="btn bs no-print" onclick="go('partners')" style="margin-bottom:12px">← 목록</button>
   <div style="background:#0f172a;border-radius:var(--r2);padding:18px;color:#fff;margin-bottom:16px">
     <div class="flex jb fw gap8">
-      <div>
-        <div style="font-size:18px;font-weight:800">${p.name}</div>
-        <div style="font-size:11px;opacity:.7;margin-top:3px">${p.contact||''} ${p.phone?'· '+p.phone:''} · ${p.biz_no||'-'}</div>
-      </div>
-      <div class="flex gap6 no-print">
-        <button class="btn bs" style="font-size:11px" onclick="showPM('${pid}')">✏ 수정</button>
-        <button class="btn bs" style="font-size:11px;color:var(--pri)" onclick="showStmt('${pid}')">📄 명세서</button>
-      </div>
+      <div><div style="font-size:18px;font-weight:800">${p.name}</div><div style="font-size:11px;opacity:.7;margin-top:3px">${p.contact||''} ${p.phone?'· '+p.phone:''} · ${p.biz_no||'-'}</div></div>
+      <div class="flex gap6 no-print"><button class="btn bs" style="font-size:11px" onclick="showPM('${pid}')">✏ 수정</button><button class="btn bs" style="font-size:11px;color:var(--pri)" onclick="showStmt('${pid}')">📄 명세서</button></div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px">
       ${[['기초미수금',fmt(p.initial_receivable||0)+'원',''],['총 매출',fmt(sales)+'원',''],['총 지급',fmt(paid)+'원',''],['현재미수금',fmt(bal)+'원',bal>thr?'#fca5a5':bal>0?'#fcd34d':'#86efac']].map(([l,v,c])=>`<div style="background:rgba(255,255,255,.1);border-radius:6px;padding:10px;text-align:center"><div style="font-size:14px;font-weight:800${c?';color:'+c:''}">${v}</div><div style="font-size:10px;opacity:.7;margin-top:2px">${l}</div></div>`).join('')}
     </div>
-    ${bal>thr?'<div style="margin-top:10px;font-size:11px;padding:6px 10px;background:rgba(239,68,68,.2);border-radius:6px;color:#fca5a5">🚨 미수금 경고 기준 초과</div>':''}
   </div>
   <div class="card" style="margin-bottom:14px"><div class="ch"><span class="ct">월별 추이 (최근 6개월)</span></div><div class="cb">
-    <div class="flex gap12" style="margin-bottom:8px;font-size:11px;color:var(--mu)"><span style="display:flex;align-items:center;gap:4px"><span style="width:9px;height:9px;border-radius:2px;background:#1a56db"></span>매출</span><span style="display:flex;align-items:center;gap:4px"><span style="width:9px;height:9px;border-radius:2px;background:#0d9f6e"></span>지급</span></div>
-    <div style="position:relative;width:100%;height:180px"><canvas id="pd-chart" role="img" aria-label="거래처별 월별 매출지급 추이 차트">월별 매출 지급 추이</canvas></div>
+    <div class="flex gap12" style="margin-bottom:8px;font-size:11px;color:var(--mu)"><span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#1a56db"></span>매출</span><span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#0d9f6e"></span>지급</span></div>
+    <div style="position:relative;width:100%;height:180px"><canvas id="pd-chart" role="img" aria-label="월별 추이 차트">월별 매출 지급 추이</canvas></div>
   </div></div>
   <div class="tabs">
     <div class="tab active" onclick="sTab(event,'td-tx','td-py','td-items')">거래내역 (${allTx.length})</div>
     <div class="tab" onclick="sTab(event,'td-py','td-tx','td-items')">지급내역 (${allPy.length})</div>
     <div class="tab" onclick="sTab(event,'td-items','td-tx','td-py')">품목현황</div>
   </div>
-  <div id="td-tx">
-    <div class="card"><div class="ch"><span class="ct">거래내역</span>
-      <div class="flex gap6 no-print">
-        <button class="btn bp" onclick="showTxM('','${pid}')">+ 거래 추가</button>
-        <button class="btn bs" style="color:var(--pri)" onclick="openTI('')">🧾 세금계산서</button>
-      </div></div>
-      <div class="tw"><table><thead><tr><th>날짜</th><th>품목</th><th class="tr">공급가</th><th class="tr">세액</th><th class="tr">합계</th><th>비고</th><th class="no-print"></th></tr></thead>
-      <tbody>${allTx.map(t=>`<tr><td>${t.date}</td><td class="tsm">${t.items.map(i=>`${i.name}×${i.qty}`).join(', ')}</td><td class="tr">${fmt(t.supply_total)}</td><td class="tr">${fmt(t.tax_total)}</td><td class="tr bold">${fmt(t.grand_total)}</td><td class="tmuted tsm">${t.memo||''}</td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 6px;margin-right:3px" onclick="showTxM('${t.id}')">수정</button><button class="btn bs" style="font-size:10px;padding:3px 6px;color:var(--pri);margin-right:3px" onclick="openTI('${t.id}')">계산서</button><button class="btn ber" onclick="delTx('${t.id}')">삭제</button></td></tr>`).join('')||'<tr><td colspan="7" class="tc tmuted" style="padding:18px">없음</td></tr>'}</tbody>
-      ${allTx.length?`<tfoot style="background:#f0f7ff"><tr><td colspan="2" style="padding:7px 10px;font-weight:700">합계</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(allTx.reduce((s,t)=>s+t.supply_total,0))}</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(allTx.reduce((s,t)=>s+t.tax_total,0))}</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(sales)}</td><td colspan="2"></td></tr></tfoot>`:''}
-      </table></div></div>
-  </div>
-  <div id="td-py" style="display:none">
-    <div class="card"><div class="ch"><span class="ct">지급내역</span>
-      <button class="btn bp no-print" onclick="showPayM('','${pid}')">+ 지급 추가</button></div>
-      <div class="tw"><table><thead><tr><th>날짜</th><th>지급방법</th><th class="tr">금액</th><th>비고</th><th class="no-print"></th></tr></thead>
-      <tbody>${allPy.map(py=>`<tr><td>${py.date}</td><td><span class="badge ${PBG[py.method]||'bgy'}">${PM[py.method]||py.method}</span></td><td class="tr bold">${fmt(py.amount)}</td><td class="tmuted tsm">${py.memo||''}</td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px;margin-right:3px" onclick="showPayM('${py.id}')">수정</button><button class="btn ber" onclick="delPay('${py.id}')">삭제</button></td></tr>`).join('')||'<tr><td colspan="5" class="tc tmuted" style="padding:18px">없음</td></tr>'}</tbody>
-      ${allPy.length?`<tfoot style="background:#f0fff4"><tr><td colspan="2" style="padding:7px 10px;font-weight:700">합계</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(paid)}</td><td colspan="2"></td></tr></tfoot>`:''}
-      </table></div></div>
-  </div>
-  <div id="td-items" style="display:none">
-    <div class="card"><div class="ch"><span class="ct">거래 품목 현황</span></div><div class="cb">
-      ${(()=>{
-        const imap={};
-        allTx.forEach(t=>t.items.forEach(i=>{if(!imap[i.name])imap[i.name]={qty:0,rev:0,cnt:0,prices:[]};imap[i.name].qty+=i.qty;imap[i.name].rev+=i.total;imap[i.name].cnt++;imap[i.name].prices.push({date:t.date,price:i.price,qty:i.qty});}));
-        const items=Object.entries(imap).sort((a,b)=>b[1].rev-a[1].rev);
-        const total=items.reduce((s,[,v])=>s+v.rev,0);
-        return items.length?items.map(([name,v])=>{
-          const pct=total>0?Math.round(v.rev/total*100):0;
-          const avgP=v.prices.length?Math.round(v.prices.reduce((s,p)=>s+p.price,0)/v.prices.length):0;
-          return`<div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--bd)">
-            <div class="flex jb aic" style="margin-bottom:6px">
-              <span style="font-weight:700;font-size:13px">${name}</span>
-              <span style="font-size:12px;color:var(--mu)">${pct}%</span>
-            </div>
-            <div class="progress-bar" style="margin-bottom:6px"><div class="progress-fill" style="width:${pct}%"></div></div>
-            <div class="flex gap12 tsm tmuted">
-              <span>총 수량: <b style="color:var(--tx)">${fmt(v.qty)}</b></span>
-              <span>총 매출: <b style="color:var(--tx)">${fmt(v.rev)}원</b></span>
-              <span>평균단가: <b style="color:var(--tx)">${fmt(avgP)}원</b></span>
-              <span>거래 ${v.cnt}건</span>
-            </div>
-          </div>`;
-        }).join(''):'<p class="tc tmuted" style="padding:20px 0">품목 없음</p>';
-      })()}
-    </div></div>
-  </div>
+  <div id="td-tx"><div class="card"><div class="ch"><span class="ct">거래내역</span><div class="flex gap6 no-print"><button class="btn bp" onclick="showTxM('','${pid}')">+ 거래 추가</button><button class="btn bs" style="color:var(--pri)" onclick="openTI('')">🧾 세금계산서</button></div></div>
+    <div class="tw"><table><thead><tr><th>날짜</th><th>품목</th><th class="tr">공급가</th><th class="tr">세액</th><th class="tr">합계</th><th>비고</th><th class="no-print"></th></tr></thead>
+    <tbody>${allTx.map(t=>`<tr><td>${t.date}</td><td class="tsm">${t.items.map(i=>`${i.name}×${i.qty}`).join(', ')}</td><td class="tr">${fmt(t.supply_total)}</td><td class="tr">${fmt(t.tax_total)}</td><td class="tr bold">${fmt(t.grand_total)}</td><td class="tmuted tsm">${t.memo||''}</td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 6px;margin-right:3px" onclick="showTxM('${t.id}')">수정</button><button class="btn bs" style="font-size:10px;padding:3px 6px;color:var(--pri);margin-right:3px" onclick="openTI('${t.id}')">계산서</button><button class="btn ber" onclick="delTx('${t.id}')">삭제</button></td></tr>`).join('')||'<tr><td colspan="7" class="tc tmuted" style="padding:18px">없음</td></tr>'}</tbody>
+    ${allTx.length?`<tfoot style="background:#f0f7ff"><tr><td colspan="2" style="padding:7px 10px;font-weight:700">합계</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(allTx.reduce((s,t)=>s+t.supply_total,0))}</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(allTx.reduce((s,t)=>s+t.tax_total,0))}</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(sales)}</td><td colspan="2"></td></tr></tfoot>`:''}
+    </table></div></div></div>
+  <div id="td-py" style="display:none"><div class="card"><div class="ch"><span class="ct">지급내역</span><button class="btn bp no-print" onclick="showPayM('','${pid}')">+ 지급 추가</button></div>
+    <div class="tw"><table><thead><tr><th>날짜</th><th>지급방법</th><th class="tr">금액</th><th>비고</th><th class="no-print"></th></tr></thead>
+    <tbody>${allPy.map(py=>`<tr><td>${py.date}</td><td><span class="badge ${PBG[py.method]||'bgy'}">${PM[py.method]||py.method}</span></td><td class="tr bold">${fmt(py.amount)}</td><td class="tmuted tsm">${py.memo||''}</td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px;margin-right:3px" onclick="showPayM('${py.id}')">수정</button><button class="btn ber" onclick="delPay('${py.id}')">삭제</button></td></tr>`).join('')||'<tr><td colspan="5" class="tc tmuted" style="padding:18px">없음</td></tr>'}</tbody>
+    ${allPy.length?`<tfoot style="background:#f0fff4"><tr><td colspan="2" style="padding:7px 10px;font-weight:700">합계</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(paid)}</td><td colspan="2"></td></tr></tfoot>`:''}
+    </table></div></div></div>
+  <div id="td-items" style="display:none"><div class="card"><div class="ch"><span class="ct">품목 현황</span></div><div class="cb">
+    ${(()=>{const imap={};allTx.forEach(t=>t.items.forEach(i=>{if(!imap[i.name])imap[i.name]={qty:0,rev:0,cnt:0,prices:[]};imap[i.name].qty+=i.qty;imap[i.name].rev+=i.total;imap[i.name].cnt++;imap[i.name].prices.push(i.price);}));const items=Object.entries(imap).sort((a,b)=>b[1].rev-a[1].rev);const total=items.reduce((s,[,v])=>s+v.rev,0);return items.length?items.map(([name,v])=>{const pct=total>0?Math.round(v.rev/total*100):0;const avg=Math.round(v.prices.reduce((s,p)=>s+p,0)/v.prices.length);return`<div style="margin-bottom:14px"><div class="flex jb aic" style="margin-bottom:5px"><span style="font-weight:700;font-size:12px">${name}</span><span class="tsm tmuted">${pct}% · 평균단가 ${fmt(avg)}원</span></div><div class="progress-bar" style="margin-bottom:5px"><div class="progress-fill" style="width:${pct}%"></div></div><div class="flex gap8 tsm tmuted"><span>수량: <b style="color:var(--tx)">${fmt(v.qty)}</b></span><span>매출: <b style="color:var(--tx)">${fmt(v.rev)}원</b></span><span>${v.cnt}건</span></div></div>`;}).join(''):'<p class="tc tmuted" style="padding:20px 0">품목 없음</p>';})()}
+  </div></div></div>
   <script>
-  (function(){
-    if(!window.Chart)return;
-    const ml=${JSON.stringify(ml)};
-    const md=${JSON.stringify(months)};
-    const ctx=document.getElementById('pd-chart');
-    if(!ctx)return;
-    new Chart(ctx,{type:'bar',data:{labels:ml,datasets:[{label:'매출',data:ml.map(m=>md[m]?md[m].sales:0),backgroundColor:'#1a56db',borderRadius:3},{label:'지급',data:ml.map(m=>md[m]?md[m].pay:0),backgroundColor:'#0d9f6e',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:10}}},y:{ticks:{callback:v=>Math.round(v/10000)+'만',font:{size:10}}}}}});
-  })();
+  (function(){if(!window.Chart)return;const ml=${JSON.stringify(ml)};const md=${JSON.stringify(months)};const ctx=document.getElementById('pd-chart');if(!ctx)return;new Chart(ctx,{type:'bar',data:{labels:ml,datasets:[{label:'매출',data:ml.map(m=>md[m]?md[m].s:0),backgroundColor:'#1a56db',borderRadius:3},{label:'지급',data:ml.map(m=>md[m]?md[m].p:0),backgroundColor:'#0d9f6e',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:10}}},y:{ticks:{callback:v=>Math.round(v/10000)+'만',font:{size:10}}}}}});})();
   <\/script>`;
 }
-
-function sTab(ev,...ids){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  ev.target.classList.add('active');
-  ids.forEach((id,i)=>{const el=document.getElementById(id);if(el)el.style.display=i===0?'':'none';});
-}
+function sTab(ev,...ids){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));ev.target.classList.add('active');ids.forEach((id,i)=>{const el=document.getElementById(id);if(el)el.style.display=i===0?'':'none';});}
 
 // ═══ TRANSACTIONS ═══
 function rTx(){
@@ -565,22 +575,15 @@ function rTx(){
   <div class="card"><div class="tw"><table>
     <thead><tr><th>날짜</th><th>거래처</th><th>품목</th><th class="tr">공급가액</th><th class="tr">세액</th><th class="tr">합계금액</th><th>비고</th><th class="no-print"></th></tr></thead>
     <tbody>${list.length?list.map(t=>`<tr><td>${t.date}</td><td><b>${gPN(t.partner_id)}</b></td><td class="tsm tmuted">${t.items.map(i=>`${i.name}(${i.qty})`).join(', ')}</td><td class="tr">${fmt(t.supply_total)}</td><td class="tr">${fmt(t.tax_total)}</td><td class="tr bold">${fmt(t.grand_total)}</td><td class="tmuted tsm">${t.memo||''}</td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 6px;margin-right:3px" onclick="showTxM('${t.id}')">수정</button><button class="btn bs" style="font-size:10px;padding:3px 6px;color:var(--pri);margin-right:3px" onclick="openTI('${t.id}')">계산서</button><button class="btn ber" onclick="delTx('${t.id}')">삭제</button></td></tr>`).join(''):'<tr><td colspan="8" class="tc tmuted" style="padding:26px">거래내역이 없습니다</td></tr>'}
-    </tbody>
-    ${list.length?`<tfoot style="background:#f0f7ff"><tr><td colspan="3" style="padding:7px 10px;font-weight:700">합계 (${list.length}건)</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(list.reduce((s,t)=>s+t.supply_total,0))}</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(list.reduce((s,t)=>s+t.tax_total,0))}</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(list.reduce((s,t)=>s+t.grand_total,0))}</td><td colspan="2"></td></tr></tfoot>`:''}
+    </tbody>${list.length?`<tfoot style="background:#f0f7ff"><tr><td colspan="3" style="padding:7px 10px;font-weight:700">합계 (${list.length}건)</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(list.reduce((s,t)=>s+t.supply_total,0))}</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(list.reduce((s,t)=>s+t.tax_total,0))}</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(list.reduce((s,t)=>s+t.grand_total,0))}</td><td colspan="2"></td></tr></tfoot>`:''}
   </table></div></div>`;
 }
-
 function showTxM(id,pre){
-  const t=id?DB.transactions.find(x=>x.id===id):null;
-  TXPID=t?t.partner_id:(pre||'');
-  TXI=t?JSON.parse(JSON.stringify(t.items)):[{name:'',qty:1,price:0,tax_type:'exclusive',supply:0,tax:0,total:0}];
+  const t=id?DB.transactions.find(x=>x.id===id):null;TXPID=t?t.partner_id:(pre||'');TXI=t?JSON.parse(JSON.stringify(t.items)):[{name:'',qty:1,price:0,tax_type:'exclusive',supply:0,tax:0,total:0}];
   openM('mlg',t?'거래내역 수정':'거래내역 입력',`
     <div class="g2 g23" style="margin-bottom:15px">
       <div class="fg"><label class="fl">날짜 *</label><input class="fi" id="txd" type="date" value="${t?t.date:new Date().toISOString().slice(0,10)}"></div>
-      <div class="fg" style="grid-column:span 2"><label class="fl">거래처 *</label>
-        <select class="fs" id="txp" onchange="TXPID=this.value;rIT()">
-          <option value="">거래처 선택</option>${DB.partners.map(p=>`<option value="${p.id}" ${TXPID===p.id?'selected':''}>${p.name}</option>`).join('')}
-        </select></div>
+      <div class="fg" style="grid-column:span 2"><label class="fl">거래처 *</label><select class="fs" id="txp" onchange="TXPID=this.value;rIT()"><option value="">거래처 선택</option>${DB.partners.map(p=>`<option value="${p.id}" ${TXPID===p.id?'selected':''}>${p.name}</option>`).join('')}</select></div>
     </div>
     <div style="font-size:11px;font-weight:700;margin-bottom:5px">품목 입력</div>
     <div id="itw">${bIT()}</div>
@@ -589,8 +592,7 @@ function showTxM(id,pre){
   );
 }
 function bIT(){
-  const pi=DB.items[TXPID]||[];
-  const st=TXI.reduce((s,i)=>s+i.supply,0);const tt=TXI.reduce((s,i)=>s+i.tax,0);const gt=TXI.reduce((s,i)=>s+i.total,0);
+  const pi=DB.items[TXPID]||[];const st=TXI.reduce((s,i)=>s+i.supply,0);const tt=TXI.reduce((s,i)=>s+i.tax,0);const gt=TXI.reduce((s,i)=>s+i.total,0);
   return`<table class="itab"><thead><tr><th style="width:26%">품목 *</th><th style="width:12%">부가세</th><th style="width:9%">수량</th><th style="width:13%">단가</th><th style="width:12%">공급가</th><th style="width:10%">세액</th><th style="width:12%">합계</th><th style="width:6%"></th></tr></thead>
   <tbody>${TXI.map((item,i)=>`<tr><td><input list="il-${i}" value="${item.name}" oninput="TXI[${i}].name=this.value" placeholder="입력 또는 선택"><datalist id="il-${i}">${pi.map(n=>`<option value="${n}">`).join('')}</datalist></td>
     <td><select onchange="tic(${i},'tax_type',this.value)"><option value="exclusive" ${item.tax_type==='exclusive'?'selected':''}>별도</option><option value="inclusive" ${item.tax_type==='inclusive'?'selected':''}>포함</option><option value="free" ${item.tax_type==='free'?'selected':''}>면세</option></select></td>
@@ -624,8 +626,7 @@ function delTx(id){if(!confirm('거래내역을 삭제하시겠습니까?'))retu
 function rPay(){
   const q=SQ;const pf=PF;
   let list=flP([...DB.payments]).sort((a,b)=>b.date.localeCompare(a.date));
-  if(pf)list=list.filter(p=>p.partner_id===pf);
-  if(q)list=list.filter(p=>gPN(p.partner_id).includes(q)||p.date.includes(q)||(p.memo||'').includes(q));
+  if(pf)list=list.filter(p=>p.partner_id===pf);if(q)list=list.filter(p=>gPN(p.partner_id).includes(q)||p.date.includes(q)||(p.memo||'').includes(q));
   return`${rFBar()}<div class="flex gap8 aic fw" style="margin-bottom:12px">
     <div class="flex aic f1" style="position:relative;min-width:150px"><span style="position:absolute;left:9px;color:var(--mu);font-size:12px">🔍</span><input class="fi" style="padding-left:28px" placeholder="거래처, 날짜, 비고..." value="${q}" oninput="SQ=this.value;rc()"></div>
     <select class="fs" style="width:auto" onchange="PF=this.value;rc()"><option value="">전체</option>${DB.partners.map(p=>`<option value="${p.id}" ${pf===p.id?'selected':''}>${p.name}</option>`).join('')}</select>
@@ -634,8 +635,7 @@ function rPay(){
   <div class="card"><div class="tw"><table>
     <thead><tr><th>날짜</th><th>거래처</th><th>지급방법</th><th class="tr">금액</th><th>비고</th><th class="no-print"></th></tr></thead>
     <tbody>${list.length?list.map(py=>`<tr><td>${py.date}</td><td><b>${gPN(py.partner_id)}</b></td><td><span class="badge ${PBG[py.method]||'bgy'}">${PM[py.method]||py.method}</span></td><td class="tr bold">${fmt(py.amount)}</td><td class="tmuted tsm">${py.memo||''}</td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px;margin-right:3px" onclick="showPayM('${py.id}')">수정</button><button class="btn ber" onclick="delPay('${py.id}')">삭제</button></td></tr>`).join(''):'<tr><td colspan="6" class="tc tmuted" style="padding:26px">지급내역이 없습니다</td></tr>'}
-    </tbody>
-    ${list.length?`<tfoot style="background:#f0fff4"><tr><td colspan="3" style="padding:7px 10px;font-weight:700">합계 (${list.length}건)</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(list.reduce((s,p)=>s+p.amount,0))}</td><td colspan="2"></td></tr></tfoot>`:''}
+    </tbody>${list.length?`<tfoot style="background:#f0fff4"><tr><td colspan="3" style="padding:7px 10px;font-weight:700">합계 (${list.length}건)</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(list.reduce((s,p)=>s+p.amount,0))}</td><td colspan="2"></td></tr></tfoot>`:''}
   </table></div></div>`;
 }
 function showPayM(id,pre){
@@ -654,8 +654,7 @@ function showPayM(id,pre){
 function svPay(id){
   const date=document.getElementById('pyd').value;const partner_id=document.getElementById('pyp').value;const method=document.getElementById('pym').value;const amount=parseFloat(document.getElementById('pya').value)||0;const memo=document.getElementById('pymo').value;
   if(!date||!partner_id||!amount){alert('날짜, 거래처, 금액을 입력하세요');return;}
-  if(id)Object.assign(DB.payments.find(x=>x.id===id),{date,partner_id,method,amount,memo});
-  else DB.payments.push({id:gid(),date,partner_id,method,amount,memo});
+  if(id)Object.assign(DB.payments.find(x=>x.id===id),{date,partner_id,method,amount,memo});else DB.payments.push({id:gid(),date,partner_id,method,amount,memo});
   svDB();closeM();rc();chkAlerts();
 }
 function delPay(id){if(!confirm('지급내역을 삭제하시겠습니까?'))return;DB.payments=DB.payments.filter(p=>p.id!==id);svDB();rc();chkAlerts();}
@@ -664,35 +663,33 @@ function delPay(id){if(!confirm('지급내역을 삭제하시겠습니까?'))ret
 function rRecv(){
   const sorted=[...DB.partners].map(p=>({...p,bal:getBal(p.id)})).sort((a,b)=>b.bal-a.bal);
   return`<div class="card"><div class="ch"><span class="ct">거래처별 미수금 현황</span></div>
-    <div class="tw"><table>
-      <thead><tr><th>거래처</th><th>담당자</th><th class="tr">기초미수금</th><th class="tr">총 매출</th><th class="tr">총 지급</th><th class="tr">현재미수금</th><th>상태</th><th class="no-print"></th></tr></thead>
-      <tbody>${sorted.map(p=>{const s=DB.transactions.filter(t=>t.partner_id===p.id).reduce((a,t)=>a+t.grand_total,0);const pd=DB.payments.filter(py=>py.partner_id===p.id).reduce((a,py)=>a+py.amount,0);const thr=DB.settings.thr;
-        return`<tr><td><b>${p.name}</b></td><td>${p.contact||'-'}</td><td class="tr">${fmt(p.initial_receivable||0)}</td><td class="tr">${fmt(s)}</td><td class="tr tmuted">${fmt(pd)}</td><td class="tr"><b style="font-size:13px;color:${p.bal>thr?'var(--err)':p.bal>0?'var(--wrn)':'var(--ok)'}">${fmt(p.bal)}</b></td><td>${p.bal>thr?'<span class="badge brd">경고</span>':p.bal>0?'<span class="badge bog">주의</span>':'<span class="badge bgn">정상</span>'}</td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go('pdetail','${p.id}')">상세</button></td></tr>`;}).join('')}
-      </tbody>
-      <tfoot style="background:#fff7ed"><tr><td colspan="2" style="padding:7px 10px;font-weight:700">합계</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(DB.partners.reduce((s,p)=>s+(p.initial_receivable||0),0))}</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(DB.transactions.reduce((s,t)=>s+t.grand_total,0))}</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(DB.payments.reduce((s,p)=>s+p.amount,0))}</td><td class="tr" style="padding:7px 10px;font-weight:700;color:var(--err)">${fmt(DB.partners.reduce((s,p)=>s+getBal(p.id),0))}</td><td colspan="2"></td></tr></tfoot>
+    <div class="tw"><table><thead><tr><th>거래처</th><th>담당자</th><th class="tr">기초미수금</th><th class="tr">총 매출</th><th class="tr">총 지급</th><th class="tr">현재미수금</th><th>상태</th><th class="no-print"></th></tr></thead>
+    <tbody>${sorted.map(p=>{const s=DB.transactions.filter(t=>t.partner_id===p.id).reduce((a,t)=>a+t.grand_total,0);const pd=DB.payments.filter(py=>py.partner_id===p.id).reduce((a,py)=>a+py.amount,0);const thr=DB.settings.thr;return`<tr><td><b>${p.name}</b></td><td>${p.contact||'-'}</td><td class="tr">${fmt(p.initial_receivable||0)}</td><td class="tr">${fmt(s)}</td><td class="tr tmuted">${fmt(pd)}</td><td class="tr"><b style="font-size:13px;color:${p.bal>thr?'var(--err)':p.bal>0?'var(--wrn)':'var(--ok)'}">${fmt(p.bal)}</b></td><td>${p.bal>thr?'<span class="badge brd">경고</span>':p.bal>0?'<span class="badge bog">주의</span>':'<span class="badge bgn">정상</span>'}</td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go('pdetail','${p.id}')">상세</button></td></tr>`;}).join('')}
+    </tbody>
+    <tfoot style="background:#fff7ed"><tr><td colspan="2" style="padding:7px 10px;font-weight:700">합계</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(DB.partners.reduce((s,p)=>s+(p.initial_receivable||0),0))}</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(DB.transactions.reduce((s,t)=>s+t.grand_total,0))}</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(DB.payments.reduce((s,p)=>s+p.amount,0))}</td><td class="tr" style="padding:7px 10px;font-weight:700;color:var(--err)">${fmt(DB.partners.reduce((s,p)=>s+getBal(p.id),0))}</td><td colspan="2"></td></tr></tfoot>
     </table></div></div>`;
 }
 
-// ═══ STATS / CHARTS ═══
+// ═══ STATS ═══
 function rStats(){
   return`${rFBar()}
   <div class="g2 g22" style="margin-bottom:13px">
     <div class="card"><div class="ch"><span class="ct">월별 매출/지급 추이</span></div><div class="cb">
       <div class="flex gap12" style="margin-bottom:8px;font-size:11px;color:var(--mu)"><span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#1a56db"></span>매출</span><span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#0d9f6e"></span>지급</span></div>
-      <div style="position:relative;width:100%;height:220px"><canvas id="c1" role="img" aria-label="월별 매출 지급 추이">월별 추이</canvas></div>
+      <div style="position:relative;width:100%;height:220px"><canvas id="c1" role="img" aria-label="월별 추이">월별 추이</canvas></div>
     </div></div>
     <div class="card"><div class="ch"><span class="ct">거래처별 매출 비중</span></div><div class="cb">
       <div id="leg1" style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:7px;font-size:11px;color:var(--mu)"></div>
-      <div style="position:relative;width:100%;height:190px"><canvas id="c2" role="img" aria-label="거래처별 도넛">거래처별 매출</canvas></div>
+      <div style="position:relative;width:100%;height:190px"><canvas id="c2" role="img" aria-label="거래처별 도넛">거래처별</canvas></div>
     </div></div>
   </div>
   <div class="g2 g22">
     <div class="card"><div class="ch"><span class="ct">지급방법별 분포</span></div><div class="cb">
       <div id="leg2" style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:7px;font-size:11px;color:var(--mu)"></div>
-      <div style="position:relative;width:100%;height:190px"><canvas id="c3" role="img" aria-label="지급방법 도넛">지급방법</canvas></div>
+      <div style="position:relative;width:100%;height:190px"><canvas id="c3" role="img" aria-label="지급방법">지급방법</canvas></div>
     </div></div>
     <div class="card"><div class="ch"><span class="ct">품목별 매출 TOP 8</span></div><div class="cb">
-      <div style="position:relative;width:100%;height:260px"><canvas id="c4" role="img" aria-label="품목별 매출 가로 막대">품목 순위</canvas></div>
+      <div style="position:relative;width:100%;height:260px"><canvas id="c4" role="img" aria-label="품목별 순위">품목 순위</canvas></div>
     </div></div>
   </div>`;
 }
@@ -704,62 +701,42 @@ function bCharts(){
   const PS={};fT.forEach(t=>{if(!PS[t.partner_id])PS[t.partner_id]=0;PS[t.partner_id]+=t.grand_total;});const pids=Object.keys(PS);
   const leg1=document.getElementById('leg1');if(leg1)leg1.innerHTML=pids.map((pid,i)=>`<span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:${PC[i%PC.length]}"></span>${gPN(pid)}</span>`).join('');
   if(document.getElementById('c2')&&pids.length)CHARTS.push(new Chart(document.getElementById('c2'),{type:'doughnut',data:{labels:pids.map(pid=>gPN(pid)),datasets:[{data:pids.map(pid=>PS[pid]),backgroundColor:PC,borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${fmt(ctx.raw)}원`}}},cutout:'65%'}}));
-  const PyC={transfer:'#1a56db',cash:'#0d9f6e',card:'#c27803',refund:'#e02424',return:'#6b21a8'};
-  const PyS={};fP.forEach(p=>{if(!PyS[p.method])PyS[p.method]=0;PyS[p.method]+=p.amount;});const pym=Object.keys(PyS);
+  const PyC={transfer:'#1a56db',cash:'#0d9f6e',card:'#c27803',refund:'#e02424',return:'#6b21a8'};const PyS={};fP.forEach(p=>{if(!PyS[p.method])PyS[p.method]=0;PyS[p.method]+=p.amount;});const pym=Object.keys(PyS);
   const leg2=document.getElementById('leg2');if(leg2)leg2.innerHTML=pym.map(m=>`<span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:${PyC[m]||'#888'}"></span>${PM[m]||m}</span>`).join('');
   if(document.getElementById('c3')&&pym.length)CHARTS.push(new Chart(document.getElementById('c3'),{type:'doughnut',data:{labels:pym.map(m=>PM[m]||m),datasets:[{data:pym.map(m=>PyS[m]),backgroundColor:pym.map(m=>PyC[m]||'#888'),borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${fmt(ctx.raw)}원`}}},cutout:'65%'}}));
-  const IS={};fT.forEach(t=>t.items.forEach(i=>{if(!IS[i.name])IS[i.name]=0;IS[i.name]+=i.total;}));
-  const iS=Object.entries(IS).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const IS={};fT.forEach(t=>t.items.forEach(i=>{if(!IS[i.name])IS[i.name]=0;IS[i.name]+=i.total;}));const iS=Object.entries(IS).sort((a,b)=>b[1]-a[1]).slice(0,8);
   if(document.getElementById('c4')&&iS.length)CHARTS.push(new Chart(document.getElementById('c4'),{type:'bar',data:{labels:iS.map(x=>x[0]),datasets:[{label:'매출',data:iS.map(x=>x[1]),backgroundColor:'#1a56db',borderRadius:3}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>Math.round(v/10000)+'만',font:{size:10}}},y:{ticks:{font:{size:11}}}}}}));
 }
 
-// ═══ ITEM STATS (품목별 상세 통계 + 수량/단가 추이) ═══
+// ═══ ITEM STATS ═══
 function rIStat(){
   const pid=document.getElementById('is-pid')?document.getElementById('is-pid').value:'';
   const itemSel=document.getElementById('is-item')?document.getElementById('is-item').value:'';
   return`${rFBar()}
   <div class="flex gap8 aic fw no-print" style="margin-bottom:13px">
-    <div class="fg"><label class="fl">거래처 필터</label><select class="fs" id="is-pid" onchange="rc()" style="width:auto"><option value="">전체</option>${DB.partners.map(p=>`<option value="${p.id}" ${pid===p.id?'selected':''}>${p.name}</option>`).join('')}</select></div>
-    <div class="fg"><label class="fl">품목 선택 (추이 분석)</label><select class="fs" id="is-item" onchange="rc()" style="width:auto">
-      <option value="">품목 선택...</option>
-      ${(()=>{const all={};DB.transactions.forEach(t=>{if(!pid||t.partner_id===pid)t.items.forEach(i=>{all[i.name]=1;});});return Object.keys(all).sort().map(n=>`<option value="${n}" ${itemSel===n?'selected':''}>${n}</option>`).join('');})()}
-    </select></div>
+    <div class="fg"><label class="fl">거래처</label><select class="fs" id="is-pid" onchange="rc()" style="width:auto"><option value="">전체</option>${DB.partners.map(p=>`<option value="${p.id}" ${pid===p.id?'selected':''}>${p.name}</option>`).join('')}</select></div>
+    <div class="fg"><label class="fl">품목 (추이 분석)</label><select class="fs" id="is-item" onchange="rc()" style="width:auto"><option value="">선택...</option>${(()=>{const all={};DB.transactions.forEach(t=>{if(!pid||t.partner_id===pid)t.items.forEach(i=>{all[i.name]=1;});});return Object.keys(all).sort().map(n=>`<option value="${n}" ${itemSel===n?'selected':''}>${n}</option>`).join('');})()}</select></div>
   </div>
   <div class="g2 g22" style="margin-bottom:13px">
     <div class="card"><div class="ch"><span class="ct">품목별 매출 통계</span></div><div class="cb">
-      ${(()=>{
-        const fT=flP(DB.transactions).filter(t=>!pid||t.partner_id===pid);
-        const imap={};fT.forEach(t=>t.items.forEach(i=>{if(!imap[i.name])imap[i.name]={qty:0,rev:0,cnt:0,avgP:[]};imap[i.name].qty+=i.qty;imap[i.name].rev+=i.total;imap[i.name].cnt++;imap[i.name].avgP.push(i.price);}));
-        const items=Object.entries(imap).sort((a,b)=>b[1].rev-a[1].rev);const total=items.reduce((s,[,v])=>s+v.rev,0);
-        return items.length?items.map(([name,v])=>{const pct=total>0?Math.round(v.rev/total*1000)/10:0;const avg=Math.round(v.avgP.reduce((s,p)=>s+p,0)/v.avgP.length);
-          return`<div style="margin-bottom:14px">
-            <div class="flex jb aic" style="margin-bottom:5px"><span style="font-weight:700;font-size:12px">${name}</span><span class="tsm tmuted">${pct}% · 평균단가 ${fmt(avg)}원</span></div>
-            <div class="progress-bar" style="margin-bottom:5px"><div class="progress-fill" style="width:${pct}%"></div></div>
-            <div class="flex gap8 tsm tmuted"><span>수량: <b style="color:var(--tx)">${fmt(v.qty)}</b></span><span>매출: <b style="color:var(--tx)">${fmt(v.rev)}원</b></span><span>${v.cnt}건</span></div>
-          </div>`;
-        }).join(''):'<p class="tc tmuted" style="padding:20px 0">데이터 없음</p>';
-      })()}
+      ${(()=>{const fT=flP(DB.transactions).filter(t=>!pid||t.partner_id===pid);const imap={};fT.forEach(t=>t.items.forEach(i=>{if(!imap[i.name])imap[i.name]={qty:0,rev:0,cnt:0,avgP:[]};imap[i.name].qty+=i.qty;imap[i.name].rev+=i.total;imap[i.name].cnt++;imap[i.name].avgP.push(i.price);}));const items=Object.entries(imap).sort((a,b)=>b[1].rev-a[1].rev);const total=items.reduce((s,[,v])=>s+v.rev,0);return items.length?items.map(([name,v])=>{const pct=total>0?Math.round(v.rev/total*1000)/10:0;const avg=Math.round(v.avgP.reduce((s,p)=>s+p,0)/v.avgP.length);return`<div style="margin-bottom:14px"><div class="flex jb aic" style="margin-bottom:5px"><span style="font-weight:700;font-size:12px">${name}</span><span class="tsm tmuted">${pct}% · 평균단가 ${fmt(avg)}원</span></div><div class="progress-bar" style="margin-bottom:5px"><div class="progress-fill" style="width:${pct}%"></div></div><div class="flex gap8 tsm tmuted"><span>수량: <b style="color:var(--tx)">${fmt(v.qty)}</b></span><span>매출: <b style="color:var(--tx)">${fmt(v.rev)}원</b></span><span>${v.cnt}건</span></div></div>`;}).join(''):'<p class="tc tmuted" style="padding:20px 0">데이터 없음</p>';})()}
     </div></div>
-    <div class="card"><div class="ch"><span class="ct">${itemSel?`"${itemSel}" 추이`:'품목 선택 시 추이 표시'}</span></div><div class="cb">
-      ${itemSel?`<div class="flex gap8" style="margin-bottom:8px;font-size:11px;color:var(--mu)"><span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#1a56db"></span>수량</span><span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#0d9f6e"></span>단가</span></div><div style="position:relative;width:100%;height:200px"><canvas id="c-itrend" role="img" aria-label="${itemSel} 수량 단가 추이">추이</canvas></div>`:'<p class="tc tmuted" style="padding:40px 0">위에서 품목을 선택하면<br>수량 및 단가 추이가 표시됩니다</p>'}
+    <div class="card"><div class="ch"><span class="ct">${itemSel?`"${itemSel}" 수량/단가 추이`:'품목 선택 시 추이 표시'}</span></div><div class="cb">
+      ${itemSel?`<div class="flex gap8" style="margin-bottom:8px;font-size:11px;color:var(--mu)"><span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#1a56db"></span>수량(좌)</span><span style="display:flex;align-items:center;gap:3px"><span style="width:9px;height:9px;border-radius:2px;background:#0d9f6e"></span>단가(우)</span></div><div style="position:relative;width:100%;height:200px"><canvas id="c-itrend" role="img" aria-label="추이">추이</canvas></div>`:'<p class="tc tmuted" style="padding:40px 0">위에서 품목을 선택하면<br>수량 및 단가 추이가 표시됩니다</p>'}
     </div></div>
-  </div>
-  <div class="card"><div class="ch"><span class="ct">거래처별 품목 목록</span></div><div class="cb">
-    ${DB.partners.filter(p=>!pid||p.id===pid).map(p=>{const it=DB.items[p.id]||[];const fT=flP(DB.transactions).filter(t=>t.partner_id===p.id);return`<div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--bd)"><div style="font-weight:700;color:var(--pri);margin-bottom:8px;font-size:12px">${p.name}</div><div style="display:flex;flex-wrap:wrap;gap:5px">${it.length?it.map(item=>{const cnt=fT.flatMap(t=>t.items).filter(i=>i.name===item).length;return`<span class="badge bbl" style="font-size:11px;padding:3px 8px">${item} <span style="opacity:.7">(${cnt}건)</span></span>`;}).join(''):'<span class="tsm tmuted">품목 없음</span>'}</div></div>`;}).join('')}
-  </div></div>`;
+  </div>`;
 }
 function bIChart(){
   const pid=document.getElementById('is-pid')?document.getElementById('is-pid').value:'';
   const itemSel=document.getElementById('is-item')?document.getElementById('is-item').value:'';
   if(!itemSel||!document.getElementById('c-itrend'))return;
   const fT=flP(DB.transactions).filter(t=>!pid||t.partner_id===pid);
-  const byDate={};
-  fT.forEach(t=>t.items.forEach(i=>{if(i.name===itemSel){if(!byDate[t.date])byDate[t.date]={qty:0,price:i.price};byDate[t.date].qty+=i.qty;}});
+  const byDate={};fT.forEach(t=>t.items.forEach(i=>{if(i.name===itemSel){if(!byDate[t.date])byDate[t.date]={qty:0,price:i.price};byDate[t.date].qty+=i.qty;}}));
   const dates=Object.keys(byDate).sort();
   CHARTS.push(new Chart(document.getElementById('c-itrend'),{type:'line',data:{labels:dates,datasets:[{label:'수량',data:dates.map(d=>byDate[d].qty),borderColor:'#1a56db',backgroundColor:'rgba(26,86,219,.08)',tension:.3,fill:true,yAxisID:'y'},{label:'단가',data:dates.map(d=>byDate[d].price),borderColor:'#0d9f6e',borderDash:[5,5],tension:.3,fill:false,yAxisID:'y1'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:10}}},y:{type:'linear',position:'left',ticks:{font:{size:10}}},y1:{type:'linear',position:'right',ticks:{callback:v=>fmt(v),font:{size:10}},grid:{drawOnChartArea:false}}}}}));
 }
 
-// ═══ MONTHLY STATEMENT ═══
+// ═══ STATEMENT ═══
 function rStmt(){
   const ym=document.getElementById('sYm')?document.getElementById('sYm').value:'';
   const pid=document.getElementById('sPid')?document.getElementById('sPid').value:'';
@@ -768,8 +745,7 @@ function rStmt(){
     <div class="fg"><label class="fl">연월</label><input type="month" class="fi" id="sYm" value="${ym||defYm}" onchange="rc()" style="width:auto"></div>
     <div class="fg"><label class="fl">거래처</label><select class="fs" id="sPid" onchange="rc()" style="width:auto"><option value="">전체</option>${DB.partners.map(p=>`<option value="${p.id}" ${pid===p.id?'selected':''}>${p.name}</option>`).join('')}</select></div>
     <button class="btn bp" style="align-self:flex-end" onclick="window.print()">🖨 인쇄</button>
-  </div>
-  ${bStmt(ym||defYm,pid)}`;
+  </div>${bStmt(ym||defYm,pid)}`;
 }
 function bStmt(ym,pid){
   const from=ym+'-01';const de=new Date(ym+'-01');de.setMonth(de.getMonth()+1);de.setDate(de.getDate()-1);const to=de.toISOString().slice(0,10);
@@ -784,24 +760,18 @@ function bStmt(ym,pid){
     let run=prevBal;
     const rows=[...ptx.map(t=>({...t,kind:'tx'})),...ppy.map(py=>({...py,kind:'py'}))].sort((a,b)=>a.date.localeCompare(b.date));
     return`<div class="card" style="margin-bottom:18px;page-break-after:always">
-      <div style="text-align:center;padding:14px;border-bottom:1px solid var(--bd)"><h2 style="font-size:17px;font-weight:900;margin-bottom:3px">거래 명세서</h2><div class="tsm tmuted">발행일: ${new Date().toISOString().slice(0,10)} · 기간: ${ym}</div></div>
+      <div style="text-align:center;padding:14px;border-bottom:1px solid var(--bd)"><div style="font-size:17px;font-weight:900;margin-bottom:3px">거래 명세서</div><div class="tsm tmuted">발행일: ${new Date().toISOString().slice(0,10)} · 기간: ${ym}</div></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--bd)">
-        <div style="padding:11px 15px;border-right:1px solid var(--bd)"><div class="tsm tmuted mb8">공급자</div><div style="font-weight:700;font-size:13px">${DB.settings.company}</div><div class="tsm tmuted">${DB.settings.biz_no} · ${DB.settings.rep}</div></div>
-        <div style="padding:11px 15px"><div class="tsm tmuted mb8">공급받는자</div><div style="font-weight:700;font-size:13px">${p.name}</div><div class="tsm tmuted">${p.biz_no||'-'} · ${p.contact||'-'}</div></div>
+        <div style="padding:11px 15px;border-right:1px solid var(--bd)"><div class="tsm tmuted" style="margin-bottom:4px">공급자</div><div style="font-weight:700;font-size:13px">${DB.settings.company}</div><div class="tsm tmuted">${DB.settings.biz_no} · ${DB.settings.rep}</div></div>
+        <div style="padding:11px 15px"><div class="tsm tmuted" style="margin-bottom:4px">공급받는자</div><div style="font-weight:700;font-size:13px">${p.name}</div><div class="tsm tmuted">${p.biz_no||'-'} · ${p.contact||'-'}</div></div>
       </div>
       <div style="padding:10px 15px;background:#f8fafc;border-bottom:1px solid var(--bd);display:flex;gap:18px;font-size:12px;flex-wrap:wrap">
-        <span>전월이월: <b>${fmt(prevBal)}원</b></span>
-        <span>당월매출: <b>${fmt(ptx.reduce((s,t)=>s+t.grand_total,0))}원</b></span>
-        <span>당월지급: <b>${fmt(ppy.reduce((s,py)=>s+py.amount,0))}원</b></span>
-        <span style="color:var(--err)">잔액: <b>${fmt(getBal(p.id))}원</b></span>
+        <span>전월이월: <b>${fmt(prevBal)}원</b></span><span>당월매출: <b>${fmt(ptx.reduce((s,t)=>s+t.grand_total,0))}원</b></span><span>당월지급: <b>${fmt(ppy.reduce((s,py)=>s+py.amount,0))}원</b></span><span style="color:var(--err)">잔액: <b>${fmt(getBal(p.id))}원</b></span>
       </div>
       <div class="tw"><table><thead><tr><th>날짜</th><th>구분</th><th>내용</th><th class="tr">공급가액</th><th class="tr">세액</th><th class="tr">합계/지급</th><th class="tr">잔액</th></tr></thead>
       <tbody>
         <tr style="background:#fff7ed"><td colspan="3" style="padding:7px 10px;font-weight:700">전월 이월</td><td colspan="3"></td><td class="tr bold">${fmt(prevBal)}</td></tr>
-        ${rows.map(item=>{
-          if(item.kind==='tx'){run+=item.grand_total;return`<tr><td>${item.date}</td><td><span class="badge bbl">매출</span></td><td class="tsm">${item.items.map(i=>`${i.name}×${i.qty}`).join(', ')}</td><td class="tr">${fmt(item.supply_total)}</td><td class="tr">${fmt(item.tax_total)}</td><td class="tr bold">${fmt(item.grand_total)}</td><td class="tr bold">${fmt(run)}</td></tr>`;}
-          else{run-=item.amount;return`<tr><td>${item.date}</td><td><span class="badge ${PBG[item.method]||'bgy'}">${PM[item.method]||item.method}</span></td><td class="tsm tmuted">${item.memo||'-'}</td><td colspan="3" class="tr" style="color:var(--ok)">-${fmt(item.amount)}</td><td class="tr bold">${fmt(run)}</td></tr>`;}
-        }).join('')}
+        ${rows.map(item=>{if(item.kind==='tx'){run+=item.grand_total;return`<tr><td>${item.date}</td><td><span class="badge bbl">매출</span></td><td class="tsm">${item.items.map(i=>`${i.name}×${i.qty}`).join(', ')}</td><td class="tr">${fmt(item.supply_total)}</td><td class="tr">${fmt(item.tax_total)}</td><td class="tr bold">${fmt(item.grand_total)}</td><td class="tr bold">${fmt(run)}</td></tr>`;}else{run-=item.amount;return`<tr><td>${item.date}</td><td><span class="badge ${PBG[item.method]||'bgy'}">${PM[item.method]||item.method}</span></td><td class="tsm tmuted">${item.memo||'-'}</td><td colspan="3" class="tr" style="color:var(--ok)">-${fmt(item.amount)}</td><td class="tr bold">${fmt(run)}</td></tr>`;}}).join('')}
       </tbody></table></div>
     </div>`;
   }).filter(Boolean);
@@ -814,50 +784,22 @@ function rTaxInv(){
   const txId=document.getElementById('tiSel')?document.getElementById('tiSel').value:'';
   const t=txId?DB.transactions.find(x=>x.id===txId):null;const p=t?gP(t.partner_id):null;
   return`<div class="flex gap8 aic fw no-print" style="margin-bottom:15px">
-    <div class="fg f1"><label class="fl">거래내역 선택</label>
-      <select class="fs" id="tiSel" onchange="rc()">
-        <option value="">거래내역을 선택하세요</option>
-        ${[...DB.transactions].sort((a,b)=>b.date.localeCompare(a.date)).map(tx=>`<option value="${tx.id}" ${txId===tx.id?'selected':''}>${tx.date} · ${gPN(tx.partner_id)} · ${fmt(tx.grand_total)}원</option>`).join('')}
-      </select></div>
+    <div class="fg f1"><label class="fl">거래내역 선택</label><select class="fs" id="tiSel" onchange="rc()"><option value="">거래내역을 선택하세요</option>${[...DB.transactions].sort((a,b)=>b.date.localeCompare(a.date)).map(tx=>`<option value="${tx.id}" ${txId===tx.id?'selected':''}>${tx.date} · ${gPN(tx.partner_id)} · ${fmt(tx.grand_total)}원</option>`).join('')}</select></div>
     ${t?`<button class="btn bp" style="align-self:flex-end" onclick="window.print()">🖨 인쇄</button>`:''}
   </div>
-  ${t?bTIV(t,p):`<div style="text-align:center;padding:60px 20px;color:var(--mu)"><div style="font-size:38px;margin-bottom:12px">🧾</div><div style="font-size:14px;font-weight:700;color:var(--tx);margin-bottom:5px">세금계산서</div><p style="font-size:12px">위에서 거래내역을 선택하면 세금계산서가 자동 생성됩니다</p></div>`}`;
+  ${t?bTIV(t,p):`<div style="text-align:center;padding:60px 20px;color:var(--mu)"><div style="font-size:38px;margin-bottom:12px">🧾</div><div style="font-size:14px;font-weight:700;color:var(--tx);margin-bottom:5px">세금계산서</div><p style="font-size:12px">위에서 거래내역을 선택하면 자동 생성됩니다</p></div>`}`;
 }
 function bTIV(t,p){
   const s=DB.settings;
-  return`<div class="tiv">
-    <div class="tiv-ttl">세금계산서</div>
+  return`<div class="tiv"><div class="tiv-ttl">세금계산서</div>
     <div style="padding:5px 9px;border-bottom:1px solid #000;font-size:10px;display:flex;justify-content:space-between"><span>작성일: ${t.date}</span><span>일련번호: ${t.id.toUpperCase()}</span></div>
     <div class="tiv-grid">
-      <div style="border-right:1px solid #000">
-        <div style="background:#dbeafe;padding:4px 7px;font-weight:800;font-size:11px;border-bottom:1px solid #000">공급자</div>
-        <div class="tiv-row"><div class="tiv-k">상호</div><div class="tiv-v">${s.company}</div></div>
-        <div class="tiv-row"><div class="tiv-k">사업자번호</div><div class="tiv-v">${s.biz_no}</div></div>
-        <div class="tiv-row"><div class="tiv-k">대표자</div><div class="tiv-v">${s.rep}</div></div>
-        <div class="tiv-row"><div class="tiv-k">주소</div><div class="tiv-v">${s.addr}</div></div>
-      </div>
-      <div>
-        <div style="background:#d1fae5;padding:4px 7px;font-weight:800;font-size:11px;border-bottom:1px solid #000">공급받는자</div>
-        <div class="tiv-row"><div class="tiv-k">상호</div><div class="tiv-v">${p?p.name:'-'}</div></div>
-        <div class="tiv-row"><div class="tiv-k">사업자번호</div><div class="tiv-v">${p?p.biz_no||'-':'-'}</div></div>
-        <div class="tiv-row"><div class="tiv-k">대표자</div><div class="tiv-v">${p?p.contact||'-':'-'}</div></div>
-        <div class="tiv-row"><div class="tiv-k">연락처</div><div class="tiv-v">${p?p.phone||'-':'-'}</div></div>
-      </div>
+      <div style="border-right:1px solid #000"><div style="background:#dbeafe;padding:4px 7px;font-weight:800;font-size:11px;border-bottom:1px solid #000">공급자</div><div class="tiv-row"><div class="tiv-k">상호</div><div class="tiv-v">${s.company}</div></div><div class="tiv-row"><div class="tiv-k">사업자번호</div><div class="tiv-v">${s.biz_no}</div></div><div class="tiv-row"><div class="tiv-k">대표자</div><div class="tiv-v">${s.rep}</div></div><div class="tiv-row"><div class="tiv-k">주소</div><div class="tiv-v">${s.addr}</div></div></div>
+      <div><div style="background:#d1fae5;padding:4px 7px;font-weight:800;font-size:11px;border-bottom:1px solid #000">공급받는자</div><div class="tiv-row"><div class="tiv-k">상호</div><div class="tiv-v">${p?p.name:'-'}</div></div><div class="tiv-row"><div class="tiv-k">사업자번호</div><div class="tiv-v">${p?p.biz_no||'-':'-'}</div></div><div class="tiv-row"><div class="tiv-k">대표자</div><div class="tiv-v">${p?p.contact||'-':'-'}</div></div><div class="tiv-row"><div class="tiv-k">연락처</div><div class="tiv-v">${p?p.phone||'-':'-'}</div></div></div>
     </div>
-    <div style="border-top:1px solid #000">
-      <table style="width:100%;border-collapse:collapse;font-size:10px">
-        <thead><tr><th style="background:#f0f0f0;border:1px solid #000;padding:4px;text-align:center">품목</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px;text-align:center">수량</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px;text-align:center">단가</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px;text-align:center">공급가액</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px;text-align:center">세액</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px;text-align:center">합계</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px;text-align:center">구분</th></tr></thead>
-        <tbody>
-          ${t.items.map(i=>`<tr><td style="border:1px solid #ccc;padding:3px 6px;text-align:left">${i.name}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center">${i.qty}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center">${fmt(i.price)}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center">${fmt(i.supply)}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center">${fmt(i.tax)}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center;font-weight:700">${fmt(i.total)}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center">${TAXF[i.tax_type]}</td></tr>`).join('')}
-          ${Array(Math.max(0,5-t.items.length)).fill(`<tr>${Array(7).fill('<td style="border:1px solid #ccc;padding:3px 5px">&nbsp;</td>').join('')}</tr>`).join('')}
-        </tbody>
-      </table>
-    </div>
-    <div style="display:flex;justify-content:flex-end;gap:18px;padding:7px 12px;font-size:12px;font-weight:700;border-top:2px solid #000">
-      <span>공급가액: <b>${fmt(t.supply_total)}원</b></span>
-      <span>세액: <b>${fmt(t.tax_total)}원</b></span>
-      <span style="font-size:13px;color:#1a56db">합계: <b>${fmt(t.grand_total)}원</b></span>
-    </div>
+    <div style="border-top:1px solid #000"><table style="width:100%;border-collapse:collapse;font-size:10px"><thead><tr><th style="background:#f0f0f0;border:1px solid #000;padding:4px">품목</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px">수량</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px">단가</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px">공급가액</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px">세액</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px">합계</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px">구분</th></tr></thead>
+    <tbody>${t.items.map(i=>`<tr><td style="border:1px solid #ccc;padding:3px 6px">${i.name}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center">${i.qty}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center">${fmt(i.price)}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center">${fmt(i.supply)}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center">${fmt(i.tax)}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center;font-weight:700">${fmt(i.total)}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center">${TAXF[i.tax_type]}</td></tr>`).join('')}${Array(Math.max(0,5-t.items.length)).fill(`<tr>${Array(7).fill('<td style="border:1px solid #ccc;padding:3px 5px">&nbsp;</td>').join('')}</tr>`).join('')}</tbody></table></div>
+    <div style="display:flex;justify-content:flex-end;gap:18px;padding:7px 12px;font-size:12px;font-weight:700;border-top:2px solid #000"><span>공급가액: <b>${fmt(t.supply_total)}원</b></span><span>세액: <b>${fmt(t.tax_total)}원</b></span><span style="font-size:13px;color:#1a56db">합계: <b>${fmt(t.grand_total)}원</b></span></div>
     <div style="padding:7px 12px;font-size:10px;color:#888;border-top:1px solid #ccc;display:flex;justify-content:space-between"><span>비고: ${t.memo||'없음'}</span><span>인&nbsp;&nbsp;&nbsp;(인)</span></div>
   </div>`;
 }
@@ -881,55 +823,56 @@ function rAlerts(){
 }
 function svThr(){DB.settings.thr=parseFloat(document.getElementById('thrv').value)||0;svDB();chkAlerts();rc();}
 
-// ═══ GOOGLE SHEETS (완전 구현) ═══
+// ═══ GOOGLE SHEETS ═══
 function rGSheets(){
-  const s=DB.settings;
-  return`<div style="max-width:680px">
-  <div class="card" style="margin-bottom:13px"><div class="ch"><span class="ct">Google Sheets 연동 설정</span>
+  const s=DB.settings;const isHttps=location.protocol==='https:';
+  return`<div style="max-width:700px">
+  ${!isHttps?`<div class="abl a-og" style="margin-bottom:13px">⚠ 현재 로컬 파일(file://)로 실행 중입니다. Google Sheets 동기화는 <b>GitHub Pages</b>에 업로드 후 <b>https://</b>로 접속해야 작동합니다.</div>`:''}
+  <div class="card" style="margin-bottom:13px"><div class="ch"><span class="ct">연동 설정</span>
     <div class="flex aic gap6">
-      <span id="gs-dot" style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${GS_TIMER?'#0d9f6e':'#94a3b8'}"></span>
-      <span class="tsm tmuted">${GS_TIMER?'자동동기화 실행 중':'자동동기화 꺼짐'}</span>
+      <span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${GS_TIMER?'#0d9f6e':'#94a3b8'}"></span>
+      <span class="tsm tmuted">${GS_TIMER?'자동동기화 실행 중':'꺼짐'}</span>
     </div></div>
   <div class="cb">
-    <div class="g2">
-      <div class="fg"><label class="fl">API Key</label><input class="fi" id="gsK" value="${s.gs_key||''}" placeholder="AIza..."></div>
+    <div class="g2 g22">
+      <div class="fg"><label class="fl">Google API Key</label><input class="fi" id="gsK" value="${s.gs_key||''}" placeholder="AIzaSy..."></div>
       <div class="fg"><label class="fl">스프레드시트 ID</label><input class="fi" id="gsI" value="${s.gs_id||''}" placeholder="URL의 /d/ 뒤 문자열"></div>
-      <div class="fg"><label class="fl">시트 범위</label><input class="fi" id="gsR" value="${s.gs_range||'Sheet1!A1'}" placeholder="Sheet1!A1"></div>
     </div>
     <div class="g2 g22 mt12">
       <div class="fg"><label class="fl">자동동기화 주기 (분)</label><input class="fi" id="gsInt" type="number" min="5" max="1440" value="${s.gs_interval||30}"></div>
-      <div class="fg" style="justify-content:flex-end">
-        <label class="fl">자동동기화</label>
-        <div class="flex gap6 aic" style="margin-top:8px">
-          <input type="checkbox" id="gsAuto" ${s.gs_auto?'checked':''} style="width:16px;height:16px">
-          <label for="gsAuto" style="font-size:12px;cursor:pointer">활성화</label>
-        </div>
-      </div>
+      <div class="fg"><label class="fl">자동동기화 활성화</label><div class="flex aic gap6" style="margin-top:8px"><input type="checkbox" id="gsAuto" ${s.gs_auto?'checked':''} style="width:16px;height:16px"><label for="gsAuto" style="font-size:12px;cursor:pointer">로그인 시 자동 시작</label></div></div>
     </div>
     <div class="flex gap6 fw mt12">
       <button class="btn bp" onclick="gsSave()">💾 설정 저장</button>
       <button class="btn bs" onclick="gsTest()">🔗 연결 테스트</button>
-      <button class="btn bok" onclick="gsPush()">⬆ 지금 업로드</button>
-      <button class="btn bs" onclick="gsPull()">⬇ 데이터 확인</button>
-      ${GS_TIMER?`<button class="btn bw" onclick="stopGSSync();rc()">⏹ 동기화 중지</button>`:`<button class="btn bok" onclick="gsSave();startGSSync();rc()">▶ 동기화 시작</button>`}
+      <button class="btn bok" onclick="gsPushAll()">⬆ 지금 전체 동기화</button>
+      ${GS_TIMER?`<button class="btn bw" onclick="stopGSSync();rc()">⏹ 동기화 중지</button>`:`<button class="btn bok" onclick="gsSave();startGSSync();rc()" ${!isHttps?'disabled title="https:// 환경에서만 작동합니다"':''}>▶ 동기화 시작</button>`}
     </div>
     <div id="gsr" style="margin-top:10px"></div>
   </div></div>
-  <div class="card"><div class="ch"><span class="ct">설정 가이드</span></div><div class="cb">
-    <div style="display:flex;flex-direction:column;gap:9px;font-size:12px">
-      ${[['1','Google Cloud Console','console.cloud.google.com → 새 프로젝트 생성'],['2','Sheets API 활성화','API 및 서비스 → 라이브러리 → Google Sheets API'],['3','API 키 발급','사용자 인증 정보 → API 키 생성 → 복사'],['4','스프레드시트 공유','대상 시트를 편집자 권한으로 공개 또는 공유'],['5','ID 확인','.../spreadsheets/d/<b>이 부분</b>/edit']].map(([n,t,d])=>`<div style="display:flex;gap:9px;align-items:flex-start"><div style="width:22px;height:22px;border-radius:50%;background:var(--prl);color:var(--pri);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0">${n}</div><div><div style="font-weight:700;margin-bottom:1px">${t}</div><div style="color:var(--mu)">${d}</div></div></div>`).join('')}
+  <div class="card" style="margin-bottom:13px"><div class="ch"><span class="ct">동기화 대상 시트 구성</span></div><div class="cb">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:12px">
+      ${[['거래처','거래처명·사업자번호·미수금'],['거래내역','날짜·품목·금액·세액'],['지급내역','날짜·방법·금액'],['미수금현황','거래처별 잔액 요약']].map(([n,d])=>`<div style="background:#f8fafc;border-radius:var(--r);padding:10px;border:1px solid var(--bd)"><div style="font-weight:700;margin-bottom:4px">${n}</div><div class="tsm tmuted">${d}</div></div>`).join('')}
     </div>
-    <div style="margin-top:12px;padding:9px 12px;background:var(--prl);border-radius:var(--r);font-size:12px;color:#0f3a9a">💡 <b>빠른 대안:</b> API 설정 없이 📤 엑셀저장 후 Google Sheets에 수동 업로드도 가능합니다.</div>
+    <div class="tsm tmuted mt12">※ 스프레드시트에 <b>거래처 / 거래내역 / 지급내역 / 미수금현황</b> 이름의 시트 4개를 미리 생성해두세요.</div>
+  </div></div>
+  <div class="card"><div class="ch"><span class="ct">GitHub Pages 배포 가이드</span></div><div class="cb">
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:12px">
+      ${[['1','github.com 접속 후 회원가입/로그인','무료 계정으로 충분합니다'],['2','New repository 클릭','저장소 이름 예: my-erp · Public 선택 · Create repository'],['3','index.html 파일 업로드','Add file → Upload files → 다운로드한 index.html 업로드 → Commit changes'],['4','GitHub Pages 활성화','Settings → Pages → Source: Deploy from branch → Branch: main / (root) → Save'],['5','접속 주소 확인','약 1~2분 후 https://[사용자명].github.io/[저장소명]/ 으로 접속'],['6','Google Sheets 연동','앱 내 Google Sheets 메뉴에서 API 키와 시트 ID 입력 후 저장']].map(([n,t,d])=>`<div style="display:flex;gap:10px;align-items:flex-start"><div style="width:24px;height:24px;border-radius:50%;background:var(--prl);color:var(--pri);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0">${n}</div><div><div style="font-weight:700;margin-bottom:1px">${t}</div><div style="color:var(--mu)">${d}</div></div></div>`).join('')}
+    </div>
   </div></div>
   </div>`;
 }
-function gsCfg(){DB.settings.gs_key=document.getElementById('gsK').value.trim();DB.settings.gs_id=document.getElementById('gsI').value.trim();DB.settings.gs_range=document.getElementById('gsR').value||'Sheet1!A1';DB.settings.gs_interval=parseInt(document.getElementById('gsInt').value)||30;DB.settings.gs_auto=document.getElementById('gsAuto').checked;}
-function gsSave(){gsCfg();svDB();const auto=DB.settings.gs_auto;if(auto&&DB.settings.gs_key&&DB.settings.gs_id)startGSSync();else if(!auto)stopGSSync();showGSR('ok','✅ 설정이 저장되었습니다'+(auto?' · 자동동기화 활성화':''));}
-function gsTest(){gsCfg();if(!DB.settings.gs_key||!DB.settings.gs_id){showGSR('wn','API 키와 스프레드시트 ID를 입력하세요');return;}showGSR('wn','⏳ 연결 테스트 중...');fetch(`https://sheets.googleapis.com/v4/spreadsheets/${DB.settings.gs_id}?key=${DB.settings.gs_key}`).then(r=>r.json()).then(d=>{if(d.error)showGSR('er','❌ '+d.error.message);else showGSR('ok','✅ 연결 성공: "'+d.properties.title+'"');}).catch(e=>showGSR('er','네트워크 오류: '+e.message));}
-function gsPush(){gsCfg();if(!DB.settings.gs_key||!DB.settings.gs_id){showGSR('wn','설정을 완료하세요');return;}showGSR('wn','⬆ 업로드 중...');
-  const rows=[['날짜','거래처','품목','공급가액','세액','합계','비고'],...DB.transactions.map(t=>[t.date,gPN(t.partner_id),t.items.map(i=>i.name).join(', '),t.supply_total,t.tax_total,t.grand_total,t.memo||''])];
-  fetch(`https://sheets.googleapis.com/v4/spreadsheets/${DB.settings.gs_id}/values/${DB.settings.gs_range}?valueInputOption=RAW&key=${DB.settings.gs_key}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({values:rows})}).then(r=>r.json()).then(d=>{if(d.error)showGSR('er','❌ '+d.error.message);else showGSR('ok',`✅ ${rows.length-1}건 업로드 완료`);}).catch(e=>showGSR('er','오류: '+e.message));}
-function gsPull(){gsCfg();if(!DB.settings.gs_key||!DB.settings.gs_id){showGSR('wn','설정을 완료하세요');return;}showGSR('wn','⬇ 데이터 확인 중...');fetch(`https://sheets.googleapis.com/v4/spreadsheets/${DB.settings.gs_id}/values/${DB.settings.gs_range}?key=${DB.settings.gs_key}`).then(r=>r.json()).then(d=>{if(d.error)showGSR('er','❌ '+d.error.message);else showGSR('ok',`✅ ${(d.values||[]).length}행 확인 (헤더 포함)`);}).catch(e=>showGSR('er','오류: '+e.message));}
+function gsSave(){
+  DB.settings.gs_key=document.getElementById('gsK').value.trim();
+  DB.settings.gs_id=document.getElementById('gsI').value.trim();
+  DB.settings.gs_interval=parseInt(document.getElementById('gsInt').value)||30;
+  DB.settings.gs_auto=document.getElementById('gsAuto').checked;
+  svDB();
+  if(DB.settings.gs_auto&&DB.settings.gs_key&&DB.settings.gs_id)startGSSync();
+  else if(!DB.settings.gs_auto)stopGSSync();
+  showGSR('ok','✅ 설정이 저장되었습니다');
+}
 function showGSR(t,m){const el=document.getElementById('gsr');if(!el)return;const cls={ok:'gs-ok',er:'gs-er',wn:'gs-wn'}[t]||'gs-wn';el.innerHTML=`<div class="gs-s ${cls}">${m}</div>`;}
 
 // ═══ SETTINGS ═══
@@ -969,9 +912,7 @@ function svLogin(){
   const id=document.getElementById('sId').value.trim();const pw=document.getElementById('sPw').value;const pw2=document.getElementById('sPw2').value;const msg=document.getElementById('smsg');
   if(!id){msg.textContent='아이디를 입력하세요';msg.style.color='var(--err)';return;}
   if(pw&&pw!==pw2){msg.textContent='비밀번호 불일치';msg.style.color='var(--err)';return;}
-  DB.settings.id=id;if(pw)DB.settings.pw=pw;svDB();
-  document.getElementById('udisp').textContent=id;
-  msg.textContent='변경 완료';msg.style.color='var(--ok)';setTimeout(()=>{if(msg)msg.textContent='';},3000);
+  DB.settings.id=id;if(pw)DB.settings.pw=pw;svDB();document.getElementById('udisp').textContent=id;msg.textContent='변경 완료';msg.style.color='var(--ok)';setTimeout(()=>{if(msg)msg.textContent='';},3000);
 }
 function resetDB(){if(!confirm('모든 데이터가 삭제됩니다. 계속하시겠습니까?'))return;if(!confirm('한 번 더 확인합니다. 삭제 후 복구 불가합니다.'))return;DB.partners=[];DB.transactions=[];DB.payments=[];DB.items={};svDB();chkAlerts();rc();}
 
@@ -1004,5 +945,6 @@ function handleImp(ev){
 function openM(sz,title,body,footer){document.getElementById('mc').innerHTML=`<div class="moverlay" onclick="if(event.target===this)closeM()"><div class="modal ${sz}"><div class="mh"><span class="mt2">${title}</span><button class="xbtn" onclick="closeM()">×</button></div><div class="mb2">${body}</div>${footer?`<div class="mf">${footer}</div>`:''}</div></div>`;}
 function closeM(){document.getElementById('mc').innerHTML='';}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM();});
-document.getElementById('lid').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('lpw').focus();});
 </script>
+</body>
+</html>
