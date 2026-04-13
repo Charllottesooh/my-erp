@@ -635,15 +635,15 @@ function tic(i,f,v){
   if(f==='qty'||f==='price'||f==='tax_type'){
     const c=calcI(TXI[i].qty,TXI[i].price,TXI[i].tax_type);
     TXI[i].supply=c.supply;TXI[i].tax=c.tax;TXI[i].total=c.total;
-    // 합계만 업데이트 (전체 리렌더링 없이)
+    // 규격 추가로 셀 인덱스: 품목(0) 부가세(1) 규격(2) 수량(3) 단가(4) 공급가(5) 세액(6) 합계(7) 삭제(8)
     const row=document.querySelectorAll('#itw tbody tr')[i];
     if(row){
       const cells=row.querySelectorAll('td');
-      if(cells[4])cells[4].textContent=TXI[i].supply.toLocaleString('ko-KR');
-      if(cells[5])cells[5].textContent=TXI[i].tax.toLocaleString('ko-KR');
-      if(cells[6])cells[6].textContent=TXI[i].total.toLocaleString('ko-KR');
+      if(cells[5])cells[5].textContent=TXI[i].supply.toLocaleString('ko-KR');
+      if(cells[6])cells[6].textContent=TXI[i].tax.toLocaleString('ko-KR');
+      if(cells[7])cells[7].textContent=TXI[i].total.toLocaleString('ko-KR');
     }
-    // tfoot 합계 업데이트
+    // tfoot 합계 업데이트 (colspan=5 이므로 fcells[1,2,3])
     const tfoot=document.querySelector('#itw tfoot');
     if(tfoot){
       const st2=TXI.reduce((s,it)=>s+it.supply,0);
