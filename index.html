@@ -615,11 +615,13 @@ function showTxM(id,pre){
 function bIT(){
   const pi=DB.items[TXPID]||[];const st=TXI.reduce((s,i)=>s+i.supply,0);const tt=TXI.reduce((s,i)=>s+i.tax,0);const gt=TXI.reduce((s,i)=>s+i.total,0);
   return`<table class="itab"><thead><tr><th style="width:26%">품목 *</th><th style="width:12%">부가세</th><th style="width:9%">수량</th><th style="width:13%">단가</th><th style="width:12%">공급가</th><th style="width:10%">세액</th><th style="width:12%">합계</th><th style="width:6%"></th></tr></thead>
-  <tbody>${TXI.map((item,i)=>`<tr><td><input list="il-${i}" value="${item.name}" oninput="TXI[${i}].name=this.value" placeholder="입력 또는 선택"><datalist id="il-${i}">${pi.map(n=>`<option value="${n}">`).join('')}</datalist></td>
+  <tbody>${TXI.map((item,i)=>`<tr>
+    <td><input list="il-${i}" value="${item.name}" onchange="TXI[${i}].name=this.value" placeholder="입력 또는 선택"><datalist id="il-${i}">${pi.map(n=>`<option value="${n}">`).join('')}</datalist></td>
     <td><select onchange="tic(${i},'tax_type',this.value)"><option value="exclusive" ${item.tax_type==='exclusive'?'selected':''}>별도</option><option value="inclusive" ${item.tax_type==='inclusive'?'selected':''}>포함</option><option value="free" ${item.tax_type==='free'?'selected':''}>면세</option></select></td>
-    <td><input type="number" min="0" value="${item.qty}" oninput="tic(${i},'qty',this.value)" style="text-align:right"></td>
-    <td><input type="number" min="0" value="${item.price}" oninput="tic(${i},'price',this.value)" style="text-align:right"></td>
-    <td style="text-align:right;font-size:11px">${fmt(item.supply)}</td><td style="text-align:right;font-size:11px">${fmt(item.tax)}</td>
+    <td><input type="text" inputmode="numeric" pattern="[0-9]*" value="${item.qty||''}" placeholder="수량" onchange="tic(${i},'qty',this.value)" style="text-align:right;-moz-appearance:textfield"></td>
+    <td><input type="text" inputmode="numeric" pattern="[0-9]*" value="${item.price||''}" placeholder="단가" onchange="tic(${i},'price',this.value)" style="text-align:right;-moz-appearance:textfield"></td>
+    <td style="text-align:right;font-size:11px">${fmt(item.supply)}</td>
+    <td style="text-align:right;font-size:11px">${fmt(item.tax)}</td>
     <td style="text-align:right;font-weight:700;font-size:11px">${fmt(item.total)}</td>
     <td><button onclick="rmI(${i})" style="background:none;border:none;cursor:pointer;color:var(--err);font-size:14px;font-family:inherit">×</button></td>
   </tr>`).join('')}</tbody>
@@ -627,7 +629,32 @@ function bIT(){
   </table><button class="btn bs mt8" onclick="addI()" style="font-size:11px">+ 품목 추가</button>`;
 }
 function rIT(){document.getElementById('itw').innerHTML=bIT();}
-function tic(i,f,v){TXI[i][f]=v;if(f==='qty'||f==='price'||f==='tax_type'){const c=calcI(TXI[i].qty,TXI[i].price,TXI[i].tax_type);TXI[i].supply=c.supply;TXI[i].tax=c.tax;TXI[i].total=c.total;}rIT();}
+function tic(i,f,v){
+  TXI[i][f]=v;
+  if(f==='qty'||f==='price'||f==='tax_type'){
+    const c=calcI(TXI[i].qty,TXI[i].price,TXI[i].tax_type);
+    TXI[i].supply=c.supply;TXI[i].tax=c.tax;TXI[i].total=c.total;
+    // 합계만 업데이트 (전체 리렌더링 없이)
+    const row=document.querySelectorAll('#itw tbody tr')[i];
+    if(row){
+      const cells=row.querySelectorAll('td');
+      if(cells[4])cells[4].textContent=TXI[i].supply.toLocaleString('ko-KR');
+      if(cells[5])cells[5].textContent=TXI[i].tax.toLocaleString('ko-KR');
+      if(cells[6])cells[6].textContent=TXI[i].total.toLocaleString('ko-KR');
+    }
+    // tfoot 합계 업데이트
+    const tfoot=document.querySelector('#itw tfoot');
+    if(tfoot){
+      const st2=TXI.reduce((s,it)=>s+it.supply,0);
+      const tt2=TXI.reduce((s,it)=>s+it.tax,0);
+      const gt2=TXI.reduce((s,it)=>s+it.total,0);
+      const fcells=tfoot.querySelectorAll('td');
+      if(fcells[1])fcells[1].textContent=st2.toLocaleString('ko-KR');
+      if(fcells[2])fcells[2].textContent=tt2.toLocaleString('ko-KR');
+      if(fcells[3])fcells[3].textContent=gt2.toLocaleString('ko-KR');
+    }
+  }
+}
 function addI(){TXI.push({name:'',qty:1,price:0,tax_type:'exclusive',supply:0,tax:0,total:0});rIT();}
 function rmI(i){if(TXI.length===1){alert('최소 1개 품목 필요');return;}TXI.splice(i,1);rIT();}
 function svTx(id){
