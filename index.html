@@ -633,17 +633,26 @@ function rIT(){document.getElementById('itw').innerHTML=bIT();}
 function tic(i,f,v){
   TXI[i][f]=v;
   if(f==='qty'||f==='price'||f==='tax_type'){
+    // DOM에서 현재 수량·단가 직접 읽기 (tax_type 변경 시 최신값 반영)
+    const row=document.querySelectorAll('#itw tbody tr')[i];
+    if(row){
+      const inputs=row.querySelectorAll('input');
+      // inputs: 품목(0) 규격(1) 수량(2) 단가(3)
+      const qtyVal=inputs[2]?parseFloat(inputs[2].value)||0:parseFloat(TXI[i].qty)||0;
+      const priceVal=inputs[3]?parseFloat(inputs[3].value)||0:parseFloat(TXI[i].price)||0;
+      TXI[i].qty=qtyVal;
+      TXI[i].price=priceVal;
+    }
     const c=calcI(TXI[i].qty,TXI[i].price,TXI[i].tax_type);
     TXI[i].supply=c.supply;TXI[i].tax=c.tax;TXI[i].total=c.total;
-    // 규격 추가로 셀 인덱스: 품목(0) 부가세(1) 규격(2) 수량(3) 단가(4) 공급가(5) 세액(6) 합계(7) 삭제(8)
-    const row=document.querySelectorAll('#itw tbody tr')[i];
+    // 셀 인덱스: 품목(0) 부가세(1) 규격(2) 수량(3) 단가(4) 공급가(5) 세액(6) 합계(7) 삭제(8)
     if(row){
       const cells=row.querySelectorAll('td');
       if(cells[5])cells[5].textContent=TXI[i].supply.toLocaleString('ko-KR');
       if(cells[6])cells[6].textContent=TXI[i].tax.toLocaleString('ko-KR');
       if(cells[7])cells[7].textContent=TXI[i].total.toLocaleString('ko-KR');
     }
-    // tfoot 합계 업데이트 (colspan=5 이므로 fcells[1,2,3])
+    // tfoot 합계 업데이트
     const tfoot=document.querySelector('#itw tfoot');
     if(tfoot){
       const st2=TXI.reduce((s,it)=>s+it.supply,0);
