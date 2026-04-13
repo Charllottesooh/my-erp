@@ -373,7 +373,7 @@ async function gsSyncNow(){
       ]
     };
     DB.transactions.forEach(t=>t.items.forEach((item,i)=>{
-      payload['거래내역'].push([t.date,gPN(t.partner_id),item.name,TAXF[item.tax_type],item.qty,item.price,item.supply,item.tax,item.total,i===0?t.memo||'':'']);
+      payload['거래내역'].push([t.date,gPN(t.partner_id),item.name,item.spec||'',TAXF[item.tax_type],item.qty,item.price,item.supply,item.tax,item.total,i===0?t.memo||'':'']);
     }));
 
     const res=await fetch(GS_SCRIPT_URL,{
@@ -565,7 +565,7 @@ function rPDetail(pid){
   </div>
   <div id="td-tx"><div class="card"><div class="ch"><span class="ct">거래내역</span><div class="flex gap6 no-print"><button class="btn bp" onclick="showTxM('','${pid}')">+ 거래 추가</button><button class="btn bs" style="color:var(--pri)" onclick="openTI('')">🧾 세금계산서</button></div></div>
     <div class="tw"><table><thead><tr><th>날짜</th><th>품목</th><th class="tr">공급가</th><th class="tr">세액</th><th class="tr">합계</th><th>비고</th><th class="no-print"></th></tr></thead>
-    <tbody>${allTx.map(t=>`<tr><td>${t.date}</td><td class="tsm">${t.items.map(i=>`${i.name}×${i.qty}`).join(', ')}</td><td class="tr">${fmt(t.supply_total)}</td><td class="tr">${fmt(t.tax_total)}</td><td class="tr bold">${fmt(t.grand_total)}</td><td class="tmuted tsm">${t.memo||''}</td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 6px;margin-right:3px" onclick="showTxM('${t.id}')">수정</button><button class="btn bs" style="font-size:10px;padding:3px 6px;color:var(--pri);margin-right:3px" onclick="openTI('${t.id}')">계산서</button><button class="btn ber" onclick="delTx('${t.id}')">삭제</button></td></tr>`).join('')||'<tr><td colspan="7" class="tc tmuted" style="padding:18px">없음</td></tr>'}</tbody>
+    <tbody>${allTx.map(t=>`<tr><td>${t.date}</td><td class="tsm">${t.items.map(i=>`${i.name}${i.spec?' ('+i.spec+')':''} ×${i.qty}`).join(', ')}</td><td class="tr">${fmt(t.supply_total)}</td><td class="tr">${fmt(t.tax_total)}</td><td class="tr bold">${fmt(t.grand_total)}</td><td class="tmuted tsm">${t.memo||''}</td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 6px;margin-right:3px" onclick="showTxM('${t.id}')">수정</button><button class="btn bs" style="font-size:10px;padding:3px 6px;color:var(--pri);margin-right:3px" onclick="openTI('${t.id}')">계산서</button><button class="btn ber" onclick="delTx('${t.id}')">삭제</button></td></tr>`).join('')||'<tr><td colspan="7" class="tc tmuted" style="padding:18px">없음</td></tr>'}</tbody>
     ${allTx.length?`<tfoot style="background:#f0f7ff"><tr><td colspan="2" style="padding:7px 10px;font-weight:700">합계</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(allTx.reduce((s,t)=>s+t.supply_total,0))}</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(allTx.reduce((s,t)=>s+t.tax_total,0))}</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(sales)}</td><td colspan="2"></td></tr></tfoot>`:''}
     </table></div></div></div>
   <div id="td-py" style="display:none"><div class="card"><div class="ch"><span class="ct">지급내역</span><button class="btn bp no-print" onclick="showPayM('','${pid}')">+ 지급 추가</button></div>
@@ -595,12 +595,12 @@ function rTx(){
   </div>
   <div class="card"><div class="tw"><table>
     <thead><tr><th>날짜</th><th>거래처</th><th>품목</th><th class="tr">공급가액</th><th class="tr">세액</th><th class="tr">합계금액</th><th>비고</th><th class="no-print"></th></tr></thead>
-    <tbody>${list.length?list.map(t=>`<tr><td>${t.date}</td><td><b>${gPN(t.partner_id)}</b></td><td class="tsm tmuted">${t.items.map(i=>`${i.name}(${i.qty})`).join(', ')}</td><td class="tr">${fmt(t.supply_total)}</td><td class="tr">${fmt(t.tax_total)}</td><td class="tr bold">${fmt(t.grand_total)}</td><td class="tmuted tsm">${t.memo||''}</td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 6px;margin-right:3px" onclick="showTxM('${t.id}')">수정</button><button class="btn bs" style="font-size:10px;padding:3px 6px;color:var(--pri);margin-right:3px" onclick="openTI('${t.id}')">계산서</button><button class="btn ber" onclick="delTx('${t.id}')">삭제</button></td></tr>`).join(''):'<tr><td colspan="8" class="tc tmuted" style="padding:26px">거래내역이 없습니다</td></tr>'}
+    <tbody>${list.length?list.map(t=>`<tr><td>${t.date}</td><td><b>${gPN(t.partner_id)}</b></td><td class="tsm tmuted">${t.items.map(i=>`${i.name}${i.spec?' ('+i.spec+')':''} ×${i.qty}`).join(', ')}</td><td class="tr">${fmt(t.supply_total)}</td><td class="tr">${fmt(t.tax_total)}</td><td class="tr bold">${fmt(t.grand_total)}</td><td class="tmuted tsm">${t.memo||''}</td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 6px;margin-right:3px" onclick="showTxM('${t.id}')">수정</button><button class="btn bs" style="font-size:10px;padding:3px 6px;color:var(--pri);margin-right:3px" onclick="openTI('${t.id}')">계산서</button><button class="btn ber" onclick="delTx('${t.id}')">삭제</button></td></tr>`).join(''):'<tr><td colspan="8" class="tc tmuted" style="padding:26px">거래내역이 없습니다</td></tr>'}
     </tbody>${list.length?`<tfoot style="background:#f0f7ff"><tr><td colspan="3" style="padding:7px 10px;font-weight:700">합계 (${list.length}건)</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(list.reduce((s,t)=>s+t.supply_total,0))}</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(list.reduce((s,t)=>s+t.tax_total,0))}</td><td class="tr" style="padding:7px 10px;font-weight:700">${fmt(list.reduce((s,t)=>s+t.grand_total,0))}</td><td colspan="2"></td></tr></tfoot>`:''}
   </table></div></div>`;
 }
 function showTxM(id,pre){
-  const t=id?DB.transactions.find(x=>x.id===id):null;TXPID=t?t.partner_id:(pre||'');TXI=t?JSON.parse(JSON.stringify(t.items)):[{name:'',qty:1,price:0,tax_type:'exclusive',supply:0,tax:0,total:0}];
+  const t=id?DB.transactions.find(x=>x.id===id):null;TXPID=t?t.partner_id:(pre||'');TXI=t?JSON.parse(JSON.stringify(t.items)):[{name:'',spec:'',qty:1,price:0,tax_type:'exclusive',supply:0,tax:0,total:0}];
   openM('mlg',t?'거래내역 수정':'거래내역 입력',`
     <div class="g2 g23" style="margin-bottom:15px">
       <div class="fg"><label class="fl">날짜 *</label><input class="fi" id="txd" type="date" value="${t?t.date:new Date().toISOString().slice(0,10)}"></div>
@@ -614,18 +614,19 @@ function showTxM(id,pre){
 }
 function bIT(){
   const pi=DB.items[TXPID]||[];const st=TXI.reduce((s,i)=>s+i.supply,0);const tt=TXI.reduce((s,i)=>s+i.tax,0);const gt=TXI.reduce((s,i)=>s+i.total,0);
-  return`<table class="itab"><thead><tr><th style="width:26%">품목 *</th><th style="width:12%">부가세</th><th style="width:9%">수량</th><th style="width:13%">단가</th><th style="width:12%">공급가</th><th style="width:10%">세액</th><th style="width:12%">합계</th><th style="width:6%"></th></tr></thead>
+  return`<table class="itab"><thead><tr><th style="width:22%">품목 *</th><th style="width:10%">부가세</th><th style="width:10%">규격</th><th style="width:8%">수량</th><th style="width:12%">단가</th><th style="width:11%">공급가</th><th style="width:9%">세액</th><th style="width:11%">합계</th><th style="width:7%"></th></tr></thead>
   <tbody>${TXI.map((item,i)=>`<tr>
     <td><input list="il-${i}" value="${item.name}" onchange="TXI[${i}].name=this.value" placeholder="입력 또는 선택"><datalist id="il-${i}">${pi.map(n=>`<option value="${n}">`).join('')}</datalist></td>
     <td><select onchange="tic(${i},'tax_type',this.value)"><option value="exclusive" ${item.tax_type==='exclusive'?'selected':''}>별도</option><option value="inclusive" ${item.tax_type==='inclusive'?'selected':''}>포함</option><option value="free" ${item.tax_type==='free'?'selected':''}>면세</option></select></td>
-    <td><input type="text" inputmode="numeric" pattern="[0-9]*" value="${item.qty||''}" placeholder="수량" onchange="tic(${i},'qty',this.value)" style="text-align:right;-moz-appearance:textfield"></td>
-    <td><input type="text" inputmode="numeric" pattern="[0-9]*" value="${item.price||''}" placeholder="단가" onchange="tic(${i},'price',this.value)" style="text-align:right;-moz-appearance:textfield"></td>
+    <td><input type="text" value="${item.spec||''}" placeholder="규격" onchange="TXI[${i}].spec=this.value"></td>
+    <td><input type="text" inputmode="numeric" pattern="[0-9]*" value="${item.qty||''}" placeholder="수량" onchange="tic(${i},'qty',this.value)" style="text-align:right"></td>
+    <td><input type="text" inputmode="numeric" pattern="[0-9]*" value="${item.price||''}" placeholder="단가" onchange="tic(${i},'price',this.value)" style="text-align:right"></td>
     <td style="text-align:right;font-size:11px">${fmt(item.supply)}</td>
     <td style="text-align:right;font-size:11px">${fmt(item.tax)}</td>
     <td style="text-align:right;font-weight:700;font-size:11px">${fmt(item.total)}</td>
     <td><button onclick="rmI(${i})" style="background:none;border:none;cursor:pointer;color:var(--err);font-size:14px;font-family:inherit">×</button></td>
   </tr>`).join('')}</tbody>
-  <tfoot><tr class="itr-t"><td colspan="4" style="padding:6px 7px">합계</td><td style="text-align:right;padding:6px 7px">${fmt(st)}</td><td style="text-align:right;padding:6px 7px">${fmt(tt)}</td><td style="text-align:right;padding:6px 7px">${fmt(gt)}</td><td></td></tr></tfoot>
+  <tfoot><tr class="itr-t"><td colspan="5" style="padding:6px 7px">합계</td><td style="text-align:right;padding:6px 7px">${fmt(st)}</td><td style="text-align:right;padding:6px 7px">${fmt(tt)}</td><td style="text-align:right;padding:6px 7px">${fmt(gt)}</td><td></td></tr></tfoot>
   </table><button class="btn bs mt8" onclick="addI()" style="font-size:11px">+ 품목 추가</button>`;
 }
 function rIT(){document.getElementById('itw').innerHTML=bIT();}
@@ -655,7 +656,7 @@ function tic(i,f,v){
     }
   }
 }
-function addI(){TXI.push({name:'',qty:1,price:0,tax_type:'exclusive',supply:0,tax:0,total:0});rIT();}
+function addI(){TXI.push({name:'',spec:'',qty:1,price:0,tax_type:'exclusive',supply:0,tax:0,total:0});rIT();}
 function rmI(i){if(TXI.length===1){alert('최소 1개 품목 필요');return;}TXI.splice(i,1);rIT();}
 function svTx(id){
   const date=document.getElementById('txd').value;const partner_id=document.getElementById('txp').value;const memo=document.getElementById('txm').value;
@@ -772,7 +773,7 @@ function rIStat(){
     imap[i.name].tax+=i.tax;
     imap[i.name].cnt++;
     imap[i.name].prices.push(i.price);
-    imap[i.name].rows.push({date:t.date,partner:gPN(t.partner_id),qty:i.qty,price:i.price,supply:i.supply,tax:i.tax,total:i.total,tax_type:TAX[i.tax_type]||i.tax_type});
+    imap[i.name].rows.push({date:t.date,partner:gPN(t.partner_id),spec:i.spec||'',qty:i.qty,price:i.price,supply:i.supply,tax:i.tax,total:i.total,tax_type:TAX[i.tax_type]||i.tax_type});
   }));
   const items=Object.entries(imap).sort((a,b)=>b[1].rev-a[1].rev);
   const grandTotal=items.reduce((s,[,v])=>s+v.rev,0);
@@ -824,14 +825,14 @@ function rIStat(){
     <span class="tsm tmuted">${itemSel?detailRows.length+'건':(fT.flatMap(t=>t.items).length)+'건'}</span>
   </div>
   <div class="tw"><table>
-    <thead><tr><th>날짜</th><th>거래처</th><th>품목명</th><th>부가세</th><th class="tr">수량</th><th class="tr">단가</th><th class="tr">공급가액</th><th class="tr">세액</th><th class="tr">합계</th></tr></thead>
+    <thead><tr><th>날짜</th><th>거래처</th><th>품목명</th><th>규격</th><th>부가세</th><th class="tr">수량</th><th class="tr">단가</th><th class="tr">공급가액</th><th class="tr">세액</th><th class="tr">합계</th></tr></thead>
     <tbody>
     ${(()=>{
       let rows=[];
       if(itemSel){
         rows=detailRows;
         return rows.map(r=>`<tr>
-          <td>${r.date}</td><td>${r.partner}</td><td><b>${itemSel}</b></td><td><span class="badge bgy">${r.tax_type}</span></td>
+          <td>${r.date}</td><td>${r.partner}</td><td><b>${itemSel}</b></td><td class="tsm tmuted">${r.spec||'-'}</td><td><span class="badge bgy">${r.tax_type}</span></td>
           <td class="tr">${fmt(r.qty)}</td>
           <td class="tr"><b>${fmt(r.price)}</b></td>
           <td class="tr">${fmt(r.supply)}</td>
@@ -843,7 +844,7 @@ function rIStat(){
         fT.forEach(t=>t.items.forEach(i=>allRows.push({date:t.date,partner:gPN(t.partner_id),name:i.name,tax_type:TAX[i.tax_type]||i.tax_type,qty:i.qty,price:i.price,supply:i.supply,tax:i.tax,total:i.total})));
         allRows.sort((a,b)=>b.date.localeCompare(a.date));
         return allRows.map(r=>`<tr>
-          <td>${r.date}</td><td>${r.partner}</td><td><b>${r.name}</b></td><td><span class="badge bgy">${r.tax_type}</span></td>
+          <td>${r.date}</td><td>${r.partner}</td><td><b>${r.name}</b></td><td class="tsm tmuted">${r.spec||'-'}</td><td><span class="badge bgy">${r.tax_type}</span></td>
           <td class="tr">${fmt(r.qty)}</td>
           <td class="tr"><b>${fmt(r.price)}</b></td>
           <td class="tr">${fmt(r.supply)}</td>
@@ -911,7 +912,7 @@ function bStmt(ym,pid){
       <div class="tw"><table><thead><tr><th>날짜</th><th>구분</th><th>내용</th><th class="tr">공급가액</th><th class="tr">세액</th><th class="tr">합계/지급</th><th class="tr">잔액</th></tr></thead>
       <tbody>
         <tr style="background:#fff7ed"><td colspan="3" style="padding:7px 10px;font-weight:700">전월 이월</td><td colspan="3"></td><td class="tr bold">${fmt(prevBal)}</td></tr>
-        ${rows.map(item=>{if(item.kind==='tx'){run+=item.grand_total;return`<tr><td>${item.date}</td><td><span class="badge bbl">매입</span></td><td class="tsm">${item.items.map(i=>`${i.name}×${i.qty}`).join(', ')}</td><td class="tr">${fmt(item.supply_total)}</td><td class="tr">${fmt(item.tax_total)}</td><td class="tr bold">${fmt(item.grand_total)}</td><td class="tr bold">${fmt(run)}</td></tr>`;}else{run-=item.amount;return`<tr><td>${item.date}</td><td><span class="badge ${PBG[item.method]||'bgy'}">${PM[item.method]||item.method}</span></td><td class="tsm tmuted">${item.memo||'-'}</td><td colspan="3" class="tr" style="color:var(--ok)">-${fmt(item.amount)}</td><td class="tr bold">${fmt(run)}</td></tr>`;}}).join('')}
+        ${rows.map(item=>{if(item.kind==='tx'){run+=item.grand_total;return`<tr><td>${item.date}</td><td><span class="badge bbl">매입</span></td><td class="tsm">${item.items.map(i=>`${i.name}${i.spec?' ('+i.spec+')':''} ×${i.qty}`).join(', ')}</td><td class="tr">${fmt(item.supply_total)}</td><td class="tr">${fmt(item.tax_total)}</td><td class="tr bold">${fmt(item.grand_total)}</td><td class="tr bold">${fmt(run)}</td></tr>`;}else{run-=item.amount;return`<tr><td>${item.date}</td><td><span class="badge ${PBG[item.method]||'bgy'}">${PM[item.method]||item.method}</span></td><td class="tsm tmuted">${item.memo||'-'}</td><td colspan="3" class="tr" style="color:var(--ok)">-${fmt(item.amount)}</td><td class="tr bold">${fmt(run)}</td></tr>`;}}).join('')}
       </tbody></table></div>
     </div>`;
   }).filter(Boolean);
@@ -937,8 +938,8 @@ function bTIV(t,p){
       <div style="border-right:1px solid #000"><div style="background:#dbeafe;padding:4px 7px;font-weight:800;font-size:11px;border-bottom:1px solid #000">공급자</div><div class="tiv-row"><div class="tiv-k">상호</div><div class="tiv-v">${s.company}</div></div><div class="tiv-row"><div class="tiv-k">사업자번호</div><div class="tiv-v">${s.biz_no}</div></div><div class="tiv-row"><div class="tiv-k">대표자</div><div class="tiv-v">${s.rep}</div></div><div class="tiv-row"><div class="tiv-k">주소</div><div class="tiv-v">${s.addr}</div></div></div>
       <div><div style="background:#d1fae5;padding:4px 7px;font-weight:800;font-size:11px;border-bottom:1px solid #000">공급받는자</div><div class="tiv-row"><div class="tiv-k">상호</div><div class="tiv-v">${p?p.name:'-'}</div></div><div class="tiv-row"><div class="tiv-k">사업자번호</div><div class="tiv-v">${p?p.biz_no||'-':'-'}</div></div><div class="tiv-row"><div class="tiv-k">대표자</div><div class="tiv-v">${p?p.contact||'-':'-'}</div></div><div class="tiv-row"><div class="tiv-k">연락처</div><div class="tiv-v">${p?p.phone||'-':'-'}</div></div></div>
     </div>
-    <div style="border-top:1px solid #000"><table style="width:100%;border-collapse:collapse;font-size:10px"><thead><tr><th style="background:#f0f0f0;border:1px solid #000;padding:4px">품목</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px">수량</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px">단가</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px">공급가액</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px">세액</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px">합계</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px">구분</th></tr></thead>
-    <tbody>${t.items.map(i=>`<tr><td style="border:1px solid #ccc;padding:3px 6px">${i.name}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center">${i.qty}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center">${fmt(i.price)}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center">${fmt(i.supply)}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center">${fmt(i.tax)}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center;font-weight:700">${fmt(i.total)}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center">${TAXF[i.tax_type]}</td></tr>`).join('')}${Array(Math.max(0,5-t.items.length)).fill(`<tr>${Array(7).fill('<td style="border:1px solid #ccc;padding:3px 5px">&nbsp;</td>').join('')}</tr>`).join('')}</tbody></table></div>
+    <div style="border-top:1px solid #000"><table style="width:100%;border-collapse:collapse;font-size:10px"><thead><tr><th style="background:#f0f0f0;border:1px solid #000;padding:4px">품목</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px">규격</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px">수량</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px">단가</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px">공급가액</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px">세액</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px">합계</th><th style="background:#f0f0f0;border:1px solid #000;padding:4px">구분</th></tr></thead>
+    <tbody>${t.items.map(i=>`<tr><td style="border:1px solid #ccc;padding:3px 6px">${i.name}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center">${i.spec||''}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center">${i.qty}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center">${fmt(i.price)}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center">${fmt(i.supply)}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center">${fmt(i.tax)}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center;font-weight:700">${fmt(i.total)}</td><td style="border:1px solid #ccc;padding:3px 5px;text-align:center">${TAXF[i.tax_type]}</td></tr>`).join('')}${Array(Math.max(0,5-t.items.length)).fill(`<tr>${Array(7).fill('<td style="border:1px solid #ccc;padding:3px 5px">&nbsp;</td>').join('')}</tr>`).join('')}</tbody></table></div>
     <div style="display:flex;justify-content:flex-end;gap:18px;padding:7px 12px;font-size:12px;font-weight:700;border-top:2px solid #000"><span>공급가액: <b>${fmt(t.supply_total)}원</b></span><span>세액: <b>${fmt(t.tax_total)}원</b></span><span style="font-size:13px;color:#1a56db">합계: <b>${fmt(t.grand_total)}원</b></span></div>
     <div style="padding:7px 12px;font-size:10px;color:#888;border-top:1px solid #ccc;display:flex;justify-content:space-between"><span>비고: ${t.memo||'없음'}</span><span>인&nbsp;&nbsp;&nbsp;(인)</span></div>
   </div>`;
@@ -1062,7 +1063,7 @@ function doExport(){
   if(!window.XLSX){alert('잠시 후 다시 시도해주세요');return;}
   const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(DB.partners.map(p=>({거래처명:p.name,사업자번호:p.biz_no||'',담당자:p.contact||'',연락처:p.phone||'',이메일:p.email||'',기초미수금:p.initial_receivable||0,현재미수금:getBal(p.id)}))),'거래처');
-  const txRows=[];DB.transactions.forEach(t=>t.items.forEach((item,i)=>txRows.push({날짜:t.date,거래처:gPN(t.partner_id),품목:item.name,부가세:TAXF[item.tax_type],수량:item.qty,단가:item.price,공급가액:item.supply,세액:item.tax,합계:item.total,비고:i===0?t.memo||'':''})));
+  const txRows=[];DB.transactions.forEach(t=>t.items.forEach((item,i)=>txRows.push({날짜:t.date,거래처:gPN(t.partner_id),품목:item.name,규격:item.spec||'',부가세:TAXF[item.tax_type],수량:item.qty,단가:item.price,공급가액:item.supply,세액:item.tax,합계:item.total,비고:i===0?t.memo||'':''})));
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(txRows),'거래내역');
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(DB.payments.map(py=>({날짜:py.date,거래처:gPN(py.partner_id),지급방법:PM[py.method]||py.method,금액:py.amount,비고:py.memo||''}))),'지급내역');
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(DB.partners.map(p=>{const s=DB.transactions.filter(t=>t.partner_id===p.id).reduce((a,t)=>a+t.grand_total,0);const pd=DB.payments.filter(py=>py.partner_id===p.id).reduce((a,py)=>a+py.amount,0);return{거래처:p.name,기초미수금:p.initial_receivable||0,총매입:s,총지급:pd,현재미수금:getBal(p.id)};})),'미수금현황');
