@@ -357,7 +357,7 @@ async function gsSyncNow(){
         ['거래처명','사업자번호','담당자','연락처','이메일','기초미수금','현재미수금'],
         ...DB.partners.map(p=>[p.name,p.biz_no||'',p.contact||'',p.phone||'',p.email||'',p.initial_receivable||0,getBal(p.id)])
       ],
-      '거래내역':[['날짜','거래처','품목','부가세','수량','단가','공급가액','세액','합계','비고']],
+      '거래내역':[['날짜','거래처','품목','규격','부가세','수량','단가','공급가액','세액','합계','비고']],
       '지급내역':[
         ['날짜','거래처','지급방법','금액','비고'],
         ...DB.payments.map(py=>[py.date,gPN(py.partner_id),PM[py.method]||py.method,py.amount,py.memo||''])
