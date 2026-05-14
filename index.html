@@ -1,9 +1,26 @@
+
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- saved from url=(0040)https://charllottesooh.github.io/my-erp/ -->
+<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>거래관리시스템 v4.0</title>
+
+<!-- PWA: 앱으로 설치 -->
+<meta name="theme-color" content="#0a0d12">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="일일결제">
+<meta name="application-name" content="일일결제">
+<meta name="format-detection" content="telephone=no">
+
+<!-- 아이콘: 그린 그라데이션 (카드/영수증 모티프) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2310b981'/%3E%3Cstop offset='50%25' stop-color='%2322c55e'/%3E%3Cstop offset='100%25' stop-color='%2384cc16'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='180' height='180' rx='40' fill='%230a0d12'/%3E%3Crect x='34' y='48' width='112' height='74' rx='10' fill='url(%23g)'/%3E%3Crect x='34' y='58' width='112' height='14' fill='%230a0d12' opacity='0.5'/%3E%3Crect x='42' y='100' width='48' height='3' rx='1' fill='rgba(255,255,255,0.5)'/%3E%3Crect x='42' y='108' width='32' height='3' rx='1' fill='rgba(255,255,255,0.3)'/%3E%3Ccircle cx='128' cy='106' r='8' fill='rgba(255,255,255,0.25)'/%3E%3Crect x='50' y='130' width='80' height='22' rx='4' fill='url(%23g)' opacity='0.4'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2310b981'/%3E%3Cstop offset='50%25' stop-color='%2322c55e'/%3E%3Cstop offset='100%25' stop-color='%2384cc16'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='180' height='180' rx='40' fill='%230a0d12'/%3E%3Crect x='34' y='48' width='112' height='74' rx='10' fill='url(%23g)'/%3E%3Crect x='34' y='58' width='112' height='14' fill='%230a0d12' opacity='0.5'/%3E%3Crect x='42' y='100' width='48' height='3' rx='1' fill='rgba(255,255,255,0.5)'/%3E%3Crect x='42' y='108' width='32' height='3' rx='1' fill='rgba(255,255,255,0.3)'/%3E%3Ccircle cx='128' cy='106' r='8' fill='rgba(255,255,255,0.25)'/%3E%3Crect x='50' y='130' width='80' height='22' rx='4' fill='url(%23g)' opacity='0.4'/%3E%3C/svg%3E">
+
+<!-- PWA Manifest -->
+<link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22%EA%B1%B0%EB%9E%98%EA%B4%80%EB%A6%AC%EC%8B%9C%EC%8A%A4%ED%85%9C%22%2C%22short_name%22%3A%22%EC%9D%BC%EC%9D%BC%EA%B2%B0%EC%A0%9C%22%2C%22start_url%22%3A%22.%22%2C%22scope%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22orientation%22%3A%22any%22%2C%22background_color%22%3A%22%23ffffff%22%2C%22theme_color%22%3A%22%230a0d12%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%253D%2527http%253A%252F%252Fwww.w3.org%252F2000%252Fsvg%2527%2520viewBox%253D%25270%25200%2520180%2520180%2527%253E%253Crect%2520width%253D%2527180%2527%2520height%253D%2527180%2527%2520rx%253D%252740%2527%2520fill%253D%2527%252322c55e%2527%252F%253E%253C%252Fsvg%253E%22%2C%22sizes%22%3A%22180x180%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -144,11 +161,11 @@ tbody tr:last-child td{border-bottom:none}
     <div class="lerr" id="lerr">아이디 또는 비밀번호가 올바르지 않습니다.</div>
     <div class="fg" style="margin-bottom:11px">
       <label class="fl">아이디</label>
-      <input class="fi" id="lid" value="admin" onkeydown="if(event.key==='Enter')document.getElementById('lpw').focus()">
+      <input class="fi" id="lid" value="admin" onkeydown="if(event.key===&#39;Enter&#39;)document.getElementById(&#39;lpw&#39;).focus()">
     </div>
     <div class="fg" style="margin-bottom:18px">
       <label class="fl">비밀번호</label>
-      <input class="fi" id="lpw" type="password" value="1234" onkeydown="if(event.key==='Enter')doLogin()">
+      <input class="fi" id="lpw" type="password" value="1234" onkeydown="if(event.key===&#39;Enter&#39;)doLogin()">
     </div>
     <button class="btn bp" style="width:100%;justify-content:center;padding:10px;font-size:13px" onclick="doLogin()">로그인</button>
     <div style="margin-top:14px;padding:9px;background:#f8fafc;border-radius:var(--r);font-size:11px;color:var(--mu);text-align:center">
@@ -166,24 +183,24 @@ tbody tr:last-child td{border-bottom:none}
   </div>
   <nav class="snav">
     <div class="nsec">메인</div>
-    <div class="ni" data-p="dash" onclick="go('dash')"><span class="nico">📊</span><span>대시보드</span></div>
+    <div class="ni active" data-p="dash" onclick="go(&#39;dash&#39;)"><span class="nico">📊</span><span>대시보드</span></div>
     <div class="nsec">거래입력</div>
-    <div class="ni" data-p="partners" onclick="go('partners')"><span class="nico">🏢</span><span>거래처관리</span></div>
-    <div class="ni" data-p="tx" onclick="go('tx')"><span class="nico">📋</span><span>거래내역</span></div>
-    <div class="ni" data-p="pay" onclick="go('pay')"><span class="nico">💳</span><span>지급내역</span></div>
+    <div class="ni" data-p="partners" onclick="go(&#39;partners&#39;)"><span class="nico">🏢</span><span>거래처관리</span></div>
+    <div class="ni" data-p="tx" onclick="go(&#39;tx&#39;)"><span class="nico">📋</span><span>거래내역</span></div>
+    <div class="ni" data-p="pay" onclick="go(&#39;pay&#39;)"><span class="nico">💳</span><span>지급내역</span></div>
     <div class="nsec">조회/분석</div>
-    <div class="ni" data-p="recv" onclick="go('recv')"><span class="nico">💰</span><span>미수금현황</span></div>
-    <div class="ni" data-p="stats" onclick="go('stats')"><span class="nico">📈</span><span>통계/차트</span></div>
-    <div class="ni" data-p="istat" onclick="go('istat')"><span class="nico">📦</span><span>품목통계</span></div>
+    <div class="ni" data-p="recv" onclick="go(&#39;recv&#39;)"><span class="nico">💰</span><span>미수금현황</span></div>
+    <div class="ni" data-p="stats" onclick="go(&#39;stats&#39;)"><span class="nico">📈</span><span>통계/차트</span></div>
+    <div class="ni" data-p="istat" onclick="go(&#39;istat&#39;)"><span class="nico">📦</span><span>품목통계</span></div>
     <div class="nsec">문서출력</div>
-    <div class="ni" data-p="stmt" onclick="go('stmt')"><span class="nico">📄</span><span>월별 명세서</span></div>
-    <div class="ni" data-p="taxinv" onclick="go('taxinv')"><span class="nico">🧾</span><span>세금계산서</span></div>
-    <div class="ni" data-p="alerts" onclick="go('alerts')"><span class="nico">🔔</span><span>미수금알림</span></div>
+    <div class="ni" data-p="stmt" onclick="go(&#39;stmt&#39;)"><span class="nico">📄</span><span>월별 명세서</span></div>
+    <div class="ni" data-p="taxinv" onclick="go(&#39;taxinv&#39;)"><span class="nico">🧾</span><span>세금계산서</span></div>
+    <div class="ni" data-p="alerts" onclick="go(&#39;alerts&#39;)"><span class="nico">🔔</span><span>미수금알림</span></div>
     <div class="nsec">데이터</div>
-    <div class="ni" data-p="gsheets" onclick="go('gsheets')"><span class="nico">🔗</span><span>Google Sheets</span></div>
+    <div class="ni" data-p="gsheets" onclick="go(&#39;gsheets&#39;)"><span class="nico">🔗</span><span>Google Sheets</span></div>
     <div class="ni" onclick="doExport()"><span class="nico">📤</span><span>엑셀저장</span></div>
     <div class="ni" onclick="trigImp()"><span class="nico">📥</span><span>불러오기</span></div>
-    <div class="ni" data-p="settings" onclick="go('settings')"><span class="nico">⚙</span><span>설정</span></div>
+    <div class="ni" data-p="settings" onclick="go(&#39;settings&#39;)"><span class="nico">⚙</span><span>설정</span></div>
   </nav>
   <div class="sbot">
     <div style="font-size:11px;color:var(--lt);margin-bottom:7px" id="udisp">admin</div>
@@ -196,21 +213,50 @@ tbody tr:last-child td{border-bottom:none}
     <div class="tbtl" id="ptitle">대시보드</div>
     <div class="tba">
       <span id="sync-status" style="font-size:11px;color:var(--mu)"></span>
-      <span id="adot" style="display:none;background:var(--err);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;cursor:pointer" onclick="go('alerts')">알림</span>
-      <span id="pdisp" style="font-size:11px;color:var(--mu);padding:0 5px"></span>
+      <span id="adot" style="background: var(--err); color: rgb(255, 255, 255); font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 10px; cursor: pointer;" onclick="go(&#39;alerts&#39;)">알림 7</span>
+      <span id="pdisp" style="font-size:11px;color:var(--mu);padding:0 5px">📅 전체</span>
       <button class="btn bs no-print" style="font-size:11px;padding:5px 9px" onclick="window.print()">🖨 인쇄</button>
       <button class="btn bs no-print" style="font-size:11px;padding:5px 9px" onclick="doExport()">📤 엑셀</button>
       <input type="file" id="impf" accept=".xlsx,.xls" style="display:none" onchange="handleImp(event)">
     </div>
   </div>
-  <div class="content" id="pcont"></div>
+  <div class="content" id="pcont"><div class="fbar no-print">
+    <label>기간</label>
+    <div class="qbtns"><button class="qbtn on" onclick="setPer(&#39;all&#39;)">전체</button><button class="qbtn " onclick="setPer(&#39;month&#39;)">이번달</button><button class="qbtn " onclick="setPer(&#39;q1&#39;)">1분기</button><button class="qbtn " onclick="setPer(&#39;q2&#39;)">2분기</button><button class="qbtn " onclick="setPer(&#39;q3&#39;)">3분기</button><button class="qbtn " onclick="setPer(&#39;q4&#39;)">4분기</button><button class="qbtn " onclick="setPer(&#39;year&#39;)">올해</button><button class="qbtn " onclick="setPer(&#39;prev&#39;)">전년</button></div>
+    <input type="date" id="fdf" value="" onchange="PER.from=this.value;PER.mode=&#39;custom&#39;;updPD();rc()">
+    <span style="color:var(--mu);font-size:11px">~</span>
+    <input type="date" id="fdt" value="" onchange="PER.to=this.value;PER.mode=&#39;custom&#39;;updPD();rc()">
+    <button class="btn bgh" style="font-size:11px;padding:4px 7px" onclick="PER={mode:&#39;all&#39;,from:&#39;&#39;,to:&#39;&#39;};updPD();rc()">초기화</button>
+  </div>
+  <div class="abl a-gn no-print" style="margin-bottom:13px"><span class="online-badge"><span class="online-dot"></span>온라인 모드</span>&nbsp; Google Sheets 자동동기화 사용 가능합니다.</div>
+  <div class="sgrid">
+    <div class="sc"><div class="sl">거래처</div><div class="sv bl">24개</div><div class="sdiff">경고 7개</div></div>
+    <div class="sc"><div class="sl">기간 매입</div><div class="sv">1,399,697,130<span style="font-size:10px;color:var(--mu)">원</span></div><div class="sdiff">195건</div></div>
+    <div class="sc"><div class="sl">기간 지급</div><div class="sv gn">1,404,722,455<span style="font-size:10px;color:var(--mu)">원</span></div><div class="sdiff">210건</div></div>
+    <div class="sc"><div class="sl">총 미수금</div><div class="sv rd">199,049,124<span style="font-size:10px;color:var(--mu)">원</span></div><div class="sdiff">전체기간</div></div>
+  </div>
+  <div class="abl a-rd no-print" style="cursor:pointer;margin-bottom:13px" onclick="go(&#39;alerts&#39;)">🚨 미수금 경고 7개 거래처 — 클릭하여 확인</div>
+  <div class="g2 g22">
+    <div class="card"><div class="ch"><span class="ct">최근 거래내역</span><button class="btn bs no-print" style="font-size:11px;padding:4px 7px" onclick="go(&#39;tx&#39;)">전체</button></div>
+      <div class="tw"><table><thead><tr><th>날짜</th><th>거래처</th><th class="tr">합계</th></tr></thead>
+      <tbody><tr><td>2026-05-14</td><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgpi5dulg&#39;)">원미식품</b></td><td class="tr bold">1,732,500</td></tr><tr><td>2026-05-14</td><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgms0upy8&#39;)">한울식품</b></td><td class="tr bold">11,031,400</td></tr><tr><td>2026-05-13</td><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgms0upy8&#39;)">한울식품</b></td><td class="tr bold">9,873,550</td></tr><tr><td>2026-05-13</td><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwfbxnoiyp&#39;)">유니푸드</b></td><td class="tr bold">96,250</td></tr><tr><td>2026-05-12</td><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgms0upy8&#39;)">한울식품</b></td><td class="tr bold">8,945,650</td></tr><tr><td>2026-05-11</td><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgms0upy8&#39;)">한울식품</b></td><td class="tr bold">8,041,600</td></tr></tbody>
+      </table></div></div>
+    <div class="card"><div class="ch"><span class="ct">최근 지급내역</span><button class="btn bs no-print" style="font-size:11px;padding:4px 7px" onclick="go(&#39;pay&#39;)">전체</button></div>
+      <div class="tw"><table><thead><tr><th>날짜</th><th>거래처</th><th>방법</th><th class="tr">금액</th></tr></thead>
+      <tbody><tr><td>2026-05-13</td><td><b>한울식품</b></td><td><span class="badge bbl">계좌이체</span></td><td class="tr bold">9,873,550</td></tr><tr><td>2026-05-13</td><td><b>유니푸드</b></td><td><span class="badge bbl">계좌이체</span></td><td class="tr bold">96,250</td></tr><tr><td>2026-05-12</td><td><b>한울식품</b></td><td><span class="badge bbl">계좌이체</span></td><td class="tr bold">8,945,650</td></tr><tr><td>2026-05-11</td><td><b>씨제이대한통운</b></td><td><span class="badge bbl">계좌이체</span></td><td class="tr bold">-147,920</td></tr><tr><td>2026-05-11</td><td><b>한울식품</b></td><td><span class="badge bbl">계좌이체</span></td><td class="tr bold">8,041,600</td></tr><tr><td>2026-05-11</td><td><b>(주)성우푸드</b></td><td><span class="badge bbl">계좌이체</span></td><td class="tr bold">1,100,000</td></tr></tbody>
+      </table></div></div>
+  </div>
+  <div class="card mt16"><div class="ch"><span class="ct">거래처별 미수금</span></div>
+    <div class="tw"><table><thead><tr><th>거래처</th><th>담당자</th><th class="tr">기초미수금</th><th class="tr">매입합계</th><th class="tr">지급합계</th><th class="tr">현재미수금</th><th class="no-print"></th></tr></thead>
+    <tbody><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwfbxnoiyp&#39;)">유니푸드</b></td><td>-</td><td class="tr">549,120</td><td class="tr">61,258,670</td><td class="tr tmuted">61,807,790</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwfbxnoiyp&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwfci56b03&#39;)">정동일님(김포임대사업자)</b></td><td>-</td><td class="tr">8,857,545</td><td class="tr">0</td><td class="tr tmuted">0</td><td class="tr"><b style="color:var(--err)">8,857,545</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwfci56b03&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwfdr6q653&#39;)">씨엔티테크</b></td><td>-</td><td class="tr">660,000</td><td class="tr">2,640,000</td><td class="tr tmuted">3,300,000</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwfdr6q653&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwfeectyuf&#39;)">텍스원세무법인</b></td><td>-</td><td class="tr">500,000</td><td class="tr">5,720,000</td><td class="tr tmuted">3,820,000</td><td class="tr"><b style="color:var(--err)">2,400,000</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwfeectyuf&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwff53cviw&#39;)">씨제이대한통운</b></td><td>-</td><td class="tr">3,096,370</td><td class="tr">9,709,180</td><td class="tr tmuted">12,646,630</td><td class="tr"><b style="color:var(--wrn)">158,920</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwff53cviw&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgctsjdfd&#39;)">삼화에프앤씨(미수)</b></td><td>-</td><td class="tr">112,912,300</td><td class="tr">0</td><td class="tr tmuted">6,000,000</td><td class="tr"><b style="color:var(--err)">106,912,300</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwgctsjdfd&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgd9sgr25&#39;)">하나에프씨(미수)</b></td><td>-</td><td class="tr">38,976,200</td><td class="tr">0</td><td class="tr tmuted">0</td><td class="tr"><b style="color:var(--err)">38,976,200</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwgd9sgr25&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgms0upy8&#39;)">한울식품</b></td><td>-</td><td class="tr">0</td><td class="tr">1,162,630,040</td><td class="tr tmuted">1,151,598,640</td><td class="tr"><b style="color:var(--err)">11,031,400</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwgms0upy8&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgnguviao&#39;)">에이치디앤텍</b></td><td>-</td><td class="tr">0</td><td class="tr">48,132,370</td><td class="tr tmuted">48,132,370</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwgnguviao&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgnzdr2ao&#39;)">제일기름(보리가루)</b></td><td>-</td><td class="tr">0</td><td class="tr">1,820,000</td><td class="tr tmuted">1,820,000</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwgnzdr2ao&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgoqow62c&#39;)">아름다운세상</b></td><td>-</td><td class="tr">0</td><td class="tr">1,065,900</td><td class="tr tmuted">1,065,900</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwgoqow62c&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgp4mim5c&#39;)">대한푸드콤</b></td><td>-</td><td class="tr">0</td><td class="tr">17,537,000</td><td class="tr tmuted">17,537,000</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwgp4mim5c&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgpi5dulg&#39;)">원미식품</b></td><td>-</td><td class="tr">0</td><td class="tr">25,190,000</td><td class="tr tmuted">23,457,500</td><td class="tr"><b style="color:var(--err)">1,732,500</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwgpi5dulg&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgpvs241v&#39;)">진성물류</b></td><td>-</td><td class="tr">0</td><td class="tr">35,432,760</td><td class="tr tmuted">35,432,760</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwgpvs241v&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgq6ovsvv&#39;)">에스시에스코리아</b></td><td>-</td><td class="tr">0</td><td class="tr">3,790,600</td><td class="tr tmuted">3,790,600</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwgq6ovsvv&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwkwa63t8t&#39;)">KB캐피탈(35656할부)</b></td><td>-</td><td class="tr">38,522,914</td><td class="tr">0</td><td class="tr tmuted">9,452,095</td><td class="tr"><b style="color:var(--err)">29,070,819</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwkwa63t8t&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwllq2r1h0&#39;)">기림식품(치킨시즈닝)</b></td><td>-</td><td class="tr">0</td><td class="tr">4,180,000</td><td class="tr tmuted">4,180,000</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwllq2r1h0&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwlo6fgyff&#39;)">나진카센타(814두2849)</b></td><td>박정훈</td><td class="tr">0</td><td class="tr">335,000</td><td class="tr tmuted">335,000</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwlo6fgyff&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwntaca5rk&#39;)">신성공업사(튀김기)</b></td><td>-</td><td class="tr">0</td><td class="tr">5,280,000</td><td class="tr tmuted">5,280,000</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwntaca5rk&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;moasgniew2b&#39;)">(주)한국이러닝교육센터</b></td><td>정유환</td><td class="tr">0</td><td class="tr">0</td><td class="tr tmuted">90,560</td><td class="tr"><b style="color:var(--ok)">-90,560</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;moasgniew2b&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;moashjat4a5&#39;)">(국세)부가가치세</b></td><td>-</td><td class="tr">0</td><td class="tr">3,315,610</td><td class="tr tmuted">3,315,610</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;moashjat4a5&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;moqnlekxcdv&#39;)">주식회사 프랩</b></td><td>-</td><td class="tr">0</td><td class="tr">10,450,000</td><td class="tr tmuted">10,450,000</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;moqnlekxcdv&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;moqnpog4nps&#39;)">제일기획</b></td><td>-</td><td class="tr">0</td><td class="tr">110,000</td><td class="tr tmuted">110,000</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;moqnpog4nps&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mp0lnhk6f1i&#39;)">(주)성우푸드</b></td><td>-</td><td class="tr">0</td><td class="tr">1,100,000</td><td class="tr tmuted">1,100,000</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mp0lnhk6f1i&#39;)">상세</button></td></tr></tbody>
+    </table></div></div></div>
 </div>
 </div>
 
 <div id="mc"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="./my-erp_files/xlsx.full.min.js.다운로드"></script>
+<script src="./my-erp_files/chart.umd.js.다운로드"></script>
 <script>
 // ═══ DB ═══
 let DB={partners:[],transactions:[],payments:[],items:{},settings:{
@@ -1151,5 +1197,6 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")closeM();});
 // 자동 시작
 ldDB();seed();go("dash");chkAlerts();
 </script>
-</body>
-</html>
+
+
+</body></html>
