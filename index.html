@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <!-- saved from url=(0040)https://charllottesooh.github.io/my-erp/ -->
 <html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -220,43 +219,11 @@ tbody tr:last-child td{border-bottom:none}
       <input type="file" id="impf" accept=".xlsx,.xls" style="display:none" onchange="handleImp(event)">
     </div>
   </div>
-  <div class="content" id="pcont"><div class="fbar no-print">
-    <label>기간</label>
-    <div class="qbtns"><button class="qbtn on" onclick="setPer(&#39;all&#39;)">전체</button><button class="qbtn " onclick="setPer(&#39;month&#39;)">이번달</button><button class="qbtn " onclick="setPer(&#39;q1&#39;)">1분기</button><button class="qbtn " onclick="setPer(&#39;q2&#39;)">2분기</button><button class="qbtn " onclick="setPer(&#39;q3&#39;)">3분기</button><button class="qbtn " onclick="setPer(&#39;q4&#39;)">4분기</button><button class="qbtn " onclick="setPer(&#39;year&#39;)">올해</button><button class="qbtn " onclick="setPer(&#39;prev&#39;)">전년</button></div>
-    <input type="date" id="fdf" value="" onchange="PER.from=this.value;PER.mode=&#39;custom&#39;;updPD();rc()">
-    <span style="color:var(--mu);font-size:11px">~</span>
-    <input type="date" id="fdt" value="" onchange="PER.to=this.value;PER.mode=&#39;custom&#39;;updPD();rc()">
-    <button class="btn bgh" style="font-size:11px;padding:4px 7px" onclick="PER={mode:&#39;all&#39;,from:&#39;&#39;,to:&#39;&#39;};updPD();rc()">초기화</button>
-  </div>
-  <div class="abl a-gn no-print" style="margin-bottom:13px"><span class="online-badge"><span class="online-dot"></span>온라인 모드</span>&nbsp; Google Sheets 자동동기화 사용 가능합니다.</div>
-  <div class="sgrid">
-    <div class="sc"><div class="sl">거래처</div><div class="sv bl">24개</div><div class="sdiff">경고 7개</div></div>
-    <div class="sc"><div class="sl">기간 매입</div><div class="sv">1,399,697,130<span style="font-size:10px;color:var(--mu)">원</span></div><div class="sdiff">195건</div></div>
-    <div class="sc"><div class="sl">기간 지급</div><div class="sv gn">1,404,722,455<span style="font-size:10px;color:var(--mu)">원</span></div><div class="sdiff">210건</div></div>
-    <div class="sc"><div class="sl">총 미수금</div><div class="sv rd">199,049,124<span style="font-size:10px;color:var(--mu)">원</span></div><div class="sdiff">전체기간</div></div>
-  </div>
-  <div class="abl a-rd no-print" style="cursor:pointer;margin-bottom:13px" onclick="go(&#39;alerts&#39;)">🚨 미수금 경고 7개 거래처 — 클릭하여 확인</div>
-  <div class="g2 g22">
-    <div class="card"><div class="ch"><span class="ct">최근 거래내역</span><button class="btn bs no-print" style="font-size:11px;padding:4px 7px" onclick="go(&#39;tx&#39;)">전체</button></div>
-      <div class="tw"><table><thead><tr><th>날짜</th><th>거래처</th><th class="tr">합계</th></tr></thead>
-      <tbody><tr><td>2026-05-14</td><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgpi5dulg&#39;)">원미식품</b></td><td class="tr bold">1,732,500</td></tr><tr><td>2026-05-14</td><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgms0upy8&#39;)">한울식품</b></td><td class="tr bold">11,031,400</td></tr><tr><td>2026-05-13</td><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgms0upy8&#39;)">한울식품</b></td><td class="tr bold">9,873,550</td></tr><tr><td>2026-05-13</td><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwfbxnoiyp&#39;)">유니푸드</b></td><td class="tr bold">96,250</td></tr><tr><td>2026-05-12</td><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgms0upy8&#39;)">한울식품</b></td><td class="tr bold">8,945,650</td></tr><tr><td>2026-05-11</td><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgms0upy8&#39;)">한울식품</b></td><td class="tr bold">8,041,600</td></tr></tbody>
-      </table></div></div>
-    <div class="card"><div class="ch"><span class="ct">최근 지급내역</span><button class="btn bs no-print" style="font-size:11px;padding:4px 7px" onclick="go(&#39;pay&#39;)">전체</button></div>
-      <div class="tw"><table><thead><tr><th>날짜</th><th>거래처</th><th>방법</th><th class="tr">금액</th></tr></thead>
-      <tbody><tr><td>2026-05-13</td><td><b>한울식품</b></td><td><span class="badge bbl">계좌이체</span></td><td class="tr bold">9,873,550</td></tr><tr><td>2026-05-13</td><td><b>유니푸드</b></td><td><span class="badge bbl">계좌이체</span></td><td class="tr bold">96,250</td></tr><tr><td>2026-05-12</td><td><b>한울식품</b></td><td><span class="badge bbl">계좌이체</span></td><td class="tr bold">8,945,650</td></tr><tr><td>2026-05-11</td><td><b>씨제이대한통운</b></td><td><span class="badge bbl">계좌이체</span></td><td class="tr bold">-147,920</td></tr><tr><td>2026-05-11</td><td><b>한울식품</b></td><td><span class="badge bbl">계좌이체</span></td><td class="tr bold">8,041,600</td></tr><tr><td>2026-05-11</td><td><b>(주)성우푸드</b></td><td><span class="badge bbl">계좌이체</span></td><td class="tr bold">1,100,000</td></tr></tbody>
-      </table></div></div>
-  </div>
-  <div class="card mt16"><div class="ch"><span class="ct">거래처별 미수금</span></div>
-    <div class="tw"><table><thead><tr><th>거래처</th><th>담당자</th><th class="tr">기초미수금</th><th class="tr">매입합계</th><th class="tr">지급합계</th><th class="tr">현재미수금</th><th class="no-print"></th></tr></thead>
-    <tbody><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwfbxnoiyp&#39;)">유니푸드</b></td><td>-</td><td class="tr">549,120</td><td class="tr">61,258,670</td><td class="tr tmuted">61,807,790</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwfbxnoiyp&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwfci56b03&#39;)">정동일님(김포임대사업자)</b></td><td>-</td><td class="tr">8,857,545</td><td class="tr">0</td><td class="tr tmuted">0</td><td class="tr"><b style="color:var(--err)">8,857,545</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwfci56b03&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwfdr6q653&#39;)">씨엔티테크</b></td><td>-</td><td class="tr">660,000</td><td class="tr">2,640,000</td><td class="tr tmuted">3,300,000</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwfdr6q653&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwfeectyuf&#39;)">텍스원세무법인</b></td><td>-</td><td class="tr">500,000</td><td class="tr">5,720,000</td><td class="tr tmuted">3,820,000</td><td class="tr"><b style="color:var(--err)">2,400,000</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwfeectyuf&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwff53cviw&#39;)">씨제이대한통운</b></td><td>-</td><td class="tr">3,096,370</td><td class="tr">9,709,180</td><td class="tr tmuted">12,646,630</td><td class="tr"><b style="color:var(--wrn)">158,920</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwff53cviw&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgctsjdfd&#39;)">삼화에프앤씨(미수)</b></td><td>-</td><td class="tr">112,912,300</td><td class="tr">0</td><td class="tr tmuted">6,000,000</td><td class="tr"><b style="color:var(--err)">106,912,300</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwgctsjdfd&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgd9sgr25&#39;)">하나에프씨(미수)</b></td><td>-</td><td class="tr">38,976,200</td><td class="tr">0</td><td class="tr tmuted">0</td><td class="tr"><b style="color:var(--err)">38,976,200</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwgd9sgr25&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgms0upy8&#39;)">한울식품</b></td><td>-</td><td class="tr">0</td><td class="tr">1,162,630,040</td><td class="tr tmuted">1,151,598,640</td><td class="tr"><b style="color:var(--err)">11,031,400</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwgms0upy8&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgnguviao&#39;)">에이치디앤텍</b></td><td>-</td><td class="tr">0</td><td class="tr">48,132,370</td><td class="tr tmuted">48,132,370</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwgnguviao&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgnzdr2ao&#39;)">제일기름(보리가루)</b></td><td>-</td><td class="tr">0</td><td class="tr">1,820,000</td><td class="tr tmuted">1,820,000</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwgnzdr2ao&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgoqow62c&#39;)">아름다운세상</b></td><td>-</td><td class="tr">0</td><td class="tr">1,065,900</td><td class="tr tmuted">1,065,900</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwgoqow62c&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgp4mim5c&#39;)">대한푸드콤</b></td><td>-</td><td class="tr">0</td><td class="tr">17,537,000</td><td class="tr tmuted">17,537,000</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwgp4mim5c&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgpi5dulg&#39;)">원미식품</b></td><td>-</td><td class="tr">0</td><td class="tr">25,190,000</td><td class="tr tmuted">23,457,500</td><td class="tr"><b style="color:var(--err)">1,732,500</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwgpi5dulg&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgpvs241v&#39;)">진성물류</b></td><td>-</td><td class="tr">0</td><td class="tr">35,432,760</td><td class="tr tmuted">35,432,760</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwgpvs241v&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwgq6ovsvv&#39;)">에스시에스코리아</b></td><td>-</td><td class="tr">0</td><td class="tr">3,790,600</td><td class="tr tmuted">3,790,600</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwgq6ovsvv&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwkwa63t8t&#39;)">KB캐피탈(35656할부)</b></td><td>-</td><td class="tr">38,522,914</td><td class="tr">0</td><td class="tr tmuted">9,452,095</td><td class="tr"><b style="color:var(--err)">29,070,819</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwkwa63t8t&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwllq2r1h0&#39;)">기림식품(치킨시즈닝)</b></td><td>-</td><td class="tr">0</td><td class="tr">4,180,000</td><td class="tr tmuted">4,180,000</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwllq2r1h0&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwlo6fgyff&#39;)">나진카센타(814두2849)</b></td><td>박정훈</td><td class="tr">0</td><td class="tr">335,000</td><td class="tr tmuted">335,000</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwlo6fgyff&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mnwntaca5rk&#39;)">신성공업사(튀김기)</b></td><td>-</td><td class="tr">0</td><td class="tr">5,280,000</td><td class="tr tmuted">5,280,000</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mnwntaca5rk&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;moasgniew2b&#39;)">(주)한국이러닝교육센터</b></td><td>정유환</td><td class="tr">0</td><td class="tr">0</td><td class="tr tmuted">90,560</td><td class="tr"><b style="color:var(--ok)">-90,560</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;moasgniew2b&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;moashjat4a5&#39;)">(국세)부가가치세</b></td><td>-</td><td class="tr">0</td><td class="tr">3,315,610</td><td class="tr tmuted">3,315,610</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;moashjat4a5&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;moqnlekxcdv&#39;)">주식회사 프랩</b></td><td>-</td><td class="tr">0</td><td class="tr">10,450,000</td><td class="tr tmuted">10,450,000</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;moqnlekxcdv&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;moqnpog4nps&#39;)">제일기획</b></td><td>-</td><td class="tr">0</td><td class="tr">110,000</td><td class="tr tmuted">110,000</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;moqnpog4nps&#39;)">상세</button></td></tr><tr><td><b style="cursor:pointer;color:var(--pri)" onclick="go(&#39;pdetail&#39;,&#39;mp0lnhk6f1i&#39;)">(주)성우푸드</b></td><td>-</td><td class="tr">0</td><td class="tr">1,100,000</td><td class="tr tmuted">1,100,000</td><td class="tr"><b style="color:var(--ok)">0</b></td><td class="no-print"><button class="btn bs" style="font-size:10px;padding:3px 7px" onclick="go(&#39;pdetail&#39;,&#39;mp0lnhk6f1i&#39;)">상세</button></td></tr></tbody>
-    </table></div></div></div>
-</div>
-</div>
-
+  <div class="content" id="pcont"></div>
 <div id="mc"></div>
 
-<script src="./my-erp_files/xlsx.full.min.js.다운로드"></script>
-<script src="./my-erp_files/chart.umd.js.다운로드"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
 // ═══ DB ═══
 let DB={partners:[],transactions:[],payments:[],items:{},settings:{
@@ -293,7 +260,10 @@ function ldDB(){
   if(!DB.settings.gs_interval)DB.settings.gs_interval=30;
 }
 function svDB(){
-  try{localStorage.setItem('erpv4_gh',JSON.stringify(DB));return true;}catch(e){console.log('DB save error:',e);return false;}
+  let ok=true;
+  try{localStorage.setItem('erpv4_gh',JSON.stringify(DB));}catch(e){console.log('DB save error:',e);ok=false;}
+  fbSaveDebounced();
+  return ok;
 }
 
 function seed(){
@@ -318,7 +288,7 @@ function seed(){
   ];
   svDB();
 }
-ldDB();seed();
+ldDB();
 
 // ═══ HELPERS ═══
 const fmt=n=>Number(n||0).toLocaleString('ko-KR');
@@ -1194,8 +1164,128 @@ function openM(sz,title,body,footer){document.getElementById('mc').innerHTML=`<d
 function closeM(){document.getElementById('mc').innerHTML='';}
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeM();});
 
-// 자동 시작
-ldDB();seed();go("dash");chkAlerts();
+// ═══ FIREBASE 자동저장/자동복원 ═══
+const FB_CONFIG={
+  apiKey:"AIzaSyAOsLUnvj_rYH2-nRwm7ZkLJhxOTZE5S6g",
+  authDomain:"my-erp-e3c9d.firebaseapp.com",
+  projectId:"my-erp-e3c9d",
+  storageBucket:"my-erp-e3c9d.firebasestorage.app",
+  messagingSenderId:"933731022336",
+  appId:"1:933731022336:web:157b50bdfe104636ec8ae5"
+};
+const FB_DOC='erp/main';
+let fbDb=null, fbReady=false, fbSaveTimer=null, fbBusy=false;
+
+function fbStatus(msg,color){
+  const el=document.getElementById('sync-status');
+  if(el)el.innerHTML=msg?`<span class="sync-dot" style="background:${color||'#94a3b8'}"></span>${msg}`:'';
+}
+
+async function initFB(){
+  try{
+    const {initializeApp}=await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
+    const {getFirestore,doc,getDoc,setDoc}=await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+    const app=initializeApp(FB_CONFIG);
+    fbDb=getFirestore(app);
+    window._fb={doc,getDoc,setDoc};
+    fbReady=true;
+    fbStatus('클라우드 연결됨','#0d9f6e');
+    return true;
+  }catch(e){
+    fbReady=false;
+    fbStatus('클라우드 연결 실패(로컬만 사용)','#e02424');
+    console.log('FB init error:',e);
+    return false;
+  }
+}
+
+// 파이어베이스에서 전체 DB 읽기
+async function fbLoad(){
+  if(!fbReady)return null;
+  try{
+    const {doc,getDoc}=window._fb;
+    const snap=await getDoc(doc(fbDb,'erp','main'));
+    if(snap.exists()){
+      const d=snap.data();
+      if(d && d.payload){return JSON.parse(d.payload);}
+    }
+    return null;
+  }catch(e){console.log('FB load error:',e);return null;}
+}
+
+// 파이어베이스에 전체 DB 저장 (단일 문서, 통째로 — 부분삭제 손실 원천차단)
+async function fbSave(){
+  if(!fbReady||fbBusy)return;
+  fbBusy=true;
+  try{
+    const {doc,setDoc}=window._fb;
+    const payload=JSON.stringify(DB);
+    await setDoc(doc(fbDb,'erp','main'),{
+      payload,
+      counts:{p:DB.partners.length,t:DB.transactions.length,y:DB.payments.length},
+      updatedAt:new Date().toISOString()
+    });
+    fbStatus('클라우드 저장완료 '+new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'}),'#0d9f6e');
+  }catch(e){
+    fbStatus('클라우드 저장오류(로컬은 정상)','#e02424');
+    console.log('FB save error:',e);
+  }finally{fbBusy=false;}
+}
+
+// 연속 저장 시 과도한 쓰기 방지 (2초 디바운스)
+function fbSaveDebounced(){
+  if(!fbReady)return;
+  clearTimeout(fbSaveTimer);
+  fbSaveTimer=setTimeout(fbSave,2000);
+}
+
+// ═══ 자동 엑셀 백업 (하루 1회 첫 접속 시 디스크로 저장) ═══
+function autoExcelBackup(){
+  try{
+    const today=new Date().toISOString().slice(0,10);
+    const last=localStorage.getItem('erpv4_lastXlsxBackup');
+    if(last===today)return; // 오늘 이미 백업함
+    if(!DB.partners.length&&!DB.transactions.length)return; // 빈 데이터면 스킵
+    if(!window.XLSX)return;
+    doExport(); // 기존 엑셀 저장 함수 재사용
+    localStorage.setItem('erpv4_lastXlsxBackup',today);
+    console.log('자동 엑셀 백업 완료:',today);
+  }catch(e){console.log('auto backup error:',e);}
+}
+
+// ═══ 자동 시작 (파이어베이스 우선 복원) ═══
+async function bootApp(){
+  ldDB();               // 1) 로컬 먼저 로드
+  await initFB();       // 2) 파이어베이스 연결
+  const remote=await fbLoad();  // 3) 클라우드 데이터 읽기
+  const localCnt=(DB.partners?DB.partners.length:0)+(DB.transactions?DB.transactions.length:0)+(DB.payments?DB.payments.length:0);
+  if(remote){
+    const remoteCnt=(remote.partners?remote.partners.length:0)+(remote.transactions?remote.transactions.length:0)+(remote.payments?remote.payments.length:0);
+    // 안전장치: 클라우드가 로컬보다 데이터가 많거나 같으면 클라우드 사용(초기화 사고 방어)
+    // 로컬이 더 많으면(=클라우드가 오래됨) 로컬 유지 후 클라우드에 밀어올림
+    if(remoteCnt>=localCnt){
+      // settings는 로컬 우선 보존(로그인/회사정보)
+      const keepSettings=DB.settings;
+      DB=remote;
+      if(keepSettings&&keepSettings.id)DB.settings=Object.assign({},remote.settings||{},keepSettings);
+      if(!DB.items)DB.items={};
+      if(!DB.settings)DB.settings={};
+      try{localStorage.setItem('erpv4_gh',JSON.stringify(DB));}catch(e){}
+      console.log('클라우드에서 복원:',remoteCnt,'건');
+    }else{
+      console.log('로컬이 최신(로컬',localCnt,'>클라우드',remoteCnt,') → 클라우드 갱신');
+      fbSaveDebounced();
+    }
+  }else{
+    // 클라우드에 데이터 없음 → 현재 로컬을 최초 업로드
+    if(localCnt>0)fbSaveDebounced();
+  }
+  seed();
+  go("dash");
+  chkAlerts();
+  autoExcelBackup();  // 하루 1회 엑셀 자동백업
+}
+bootApp();
 </script>
 
 
